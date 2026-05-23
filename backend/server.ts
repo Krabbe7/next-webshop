@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-// Routes (WEB SHOP API)
+// Routes
 //app.use("/api/products", productRoutes);
 
 // Start server
