@@ -17,8 +17,6 @@ export default async function Home() {
 
   return (
     <>
-      <NavBar />
-
       <main style={{ padding: "2rem" }}>
         <h1>Game Store</h1>
 
@@ -43,6 +41,7 @@ export default async function Home() {
                 <p>{game.genre}</p>
                 <p>{game.platform}</p>
                 <b>{game.price} kr.</b>
+                <button>Tilføj til kurv</button>
               </div>
             </Link>
           ))}

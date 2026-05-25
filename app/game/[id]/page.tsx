@@ -27,9 +27,22 @@ export default async function GamePage({
   return (
     <main style={{ padding: "2rem" }}>
       <h1>{game.title}</h1>
-      {game.image_url && (
-        <Image src={game.image_url} alt={game.title} width={400} height={500} />
+
+      {game.image_url ? (
+        <Image
+          src={game.image_url}
+          alt={game.title}
+          width={400}
+          height={500}
+          style={{
+            width: "auto",
+            height: "500px",
+          }}
+        />
+      ) : (
+        <div>No image available</div>
       )}
+
       <p>{game.description}</p>
 
       <p>
@@ -43,6 +56,7 @@ export default async function GamePage({
       <p>
         <b>Pris:</b> {game.price} kr.
       </p>
+      <button>Tilføj til kurv</button>
     </main>
   );
 }
