@@ -1,23 +1,27 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-
-// Routes
-//import x from "./routes/x";
+import gameRoute from "./routes/gameRoute";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(express.json());
 app.use(cors());
 
 // Routes
-//app.use("/api/products", productRoutes);
+app.use("/api/games", gameRoute);
 
-// Start server
+// Health check
+app.get("/api", (req, res) => {
+  res.json({
+    message: "Game API running 🚀",
+    status: "OK",
+  });
+});
+
 app.listen(PORT, () => {
-  console.log(`Webshop API running on http://localhost:${PORT}`);
+  console.log(`🎮 Server running on http://localhost:${PORT}`);
 });
