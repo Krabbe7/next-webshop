@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import gameRoute from "./routes/gameRoute";
+import userRoute from "./routes/userRoute";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(cors());
 
 // Routes
 app.use("/api/games", gameRoute);
+app.use("/api/users", userRoute);
 
 // Health check
 app.get("/api", (req, res) => {
