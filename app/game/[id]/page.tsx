@@ -1,3 +1,4 @@
+import styles from "./gamepage.module.css";
 import Image from "next/image";
 
 async function getGame(id: string) {
@@ -25,38 +26,42 @@ export default async function GamePage({
   console.log(game.image_url);
 
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1>{game.title}</h1>
+    <main className={styles.page}>
+      <div className={styles.gameContainer}>
+        <div className={styles.imageWrapper}>
+          {game.image_url ? (
+            <Image
+              src={game.image_url}
+              alt={game.title}
+              width={400}
+              height={500}
+              className={styles.image}
+            />
+          ) : (
+            <div className={styles.noImage}>No image available</div>
+          )}
+        </div>
 
-      {game.image_url ? (
-        <Image
-          src={game.image_url}
-          alt={game.title}
-          width={400}
-          height={500}
-          style={{
-            width: "auto",
-            height: "500px",
-          }}
-        />
-      ) : (
-        <div>No image available</div>
-      )}
+        <div className={styles.content}>
+          <h1 className={styles.title}>{game.title}</h1>
 
-      <p>{game.description}</p>
+          <p className={styles.description}>{game.description}</p>
 
-      <p>
-        <b>Genre:</b> {game.genre}
-      </p>
+          <div className={styles.meta}>
+            <p>
+              <b>Genre:</b> {game.genre}
+            </p>
 
-      <p>
-        <b>Platform:</b> {game.platform}
-      </p>
+            <p>
+              <b>Platform:</b> {game.platform}
+            </p>
 
-      <p>
-        <b>Pris:</b> {game.price} kr.
-      </p>
-      <button>Tilføj til kurv</button>
+            <p className={styles.price}>{game.price} kr.</p>
+          </div>
+
+          <button className={styles.button}>Tilføj til kurv</button>
+        </div>
+      </div>
     </main>
   );
 }

@@ -1,5 +1,8 @@
 import NavBar from "./components/navbar-component";
 import Link from "next/link";
+import styles from "./page.module.css";
+import Image from "next/image";
+
 async function getGames() {
   const res = await fetch("http://localhost:5000/api/games", {
     cache: "no-store",
@@ -16,37 +19,46 @@ export default async function Home() {
   const games = await getGames();
 
   return (
-    <>
-      <main style={{ padding: "2rem" }}>
-        <h1>Game Store</h1>
+    <main className={styles.page}>
+      <h1 className={styles.title}>Game Store</h1>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-            gap: "1rem",
-          }}
-        >
-          {games.map((game: any) => (
-            <Link key={game.id} href={`/game/${game.id}`}>
-              <div
-                key={game.id}
-                style={{
-                  border: "1px solid #ccc",
-                  padding: "1rem",
-                  borderRadius: "8px",
-                }}
-              >
-                <h3>{game.title}</h3>
-                <p>{game.genre}</p>
-                <p>{game.platform}</p>
-                <b>{game.price} kr.</b>
-                <button>Tilføj til kurv</button>
+      <div className={styles.gamesGrid}>
+        {games.map((game: any) => (
+          <Link
+            key={game.id}
+            href={`/game/${game.id}`}
+            className={styles.cardLink}
+          >
+            <div className={styles.card}>
+              <div className={styles.imageWrapper}>
+                {game.image_url ? (
+                  <Image
+                    src={game.image_url}
+                    alt={game.title}
+                    width={400}
+                    height={500}
+                    className={styles.image}
+                  />
+                ) : (
+                  <div className={styles.noImage}>No image available</div>
+                )}
               </div>
-            </Link>
-          ))}
-        </div>
-      </main>
-    </>
+
+              <div className={styles.content}>
+                <h3 className={styles.gameTitle}>{game.title}</h3>
+
+                <p className={styles.meta}>{game.genre}</p>
+
+                <p className={styles.meta}>{game.platform}</p>
+
+                <p className={styles.price}>{game.price} kr.</p>
+
+                <button className={styles.button}>Tilføj til kurv</button>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </main>
   );
 }
