@@ -11,8 +11,9 @@
 
 .gamesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.2rem;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
 }
 
 .cardLink {
@@ -38,17 +39,15 @@
 
 /* IMAGE (mindre højde = mindre cards) */
 .imageWrapper {
+  aspect-ratio: 4 / 5;
   width: 100%;
-  height: 200px;
   overflow: hidden;
-  background: #f4f4f5;
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
 }
 
 .noImage {
@@ -72,6 +71,9 @@
 .gameTitle {
   font-size: 1.1rem;
   margin: 0;
+
+  line-height: 1.3;
+  min-height: calc(1.3em * 2);
 }
 
 .meta {
