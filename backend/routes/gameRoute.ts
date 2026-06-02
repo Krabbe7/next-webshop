@@ -1,10 +1,16 @@
 import express from "express";
-import { getGames, getGameById } from "../controllers/gameController";
+import {
+  getGamesController,
+  getGameByIdController,
+  createGameController,
+} from "../controllers/gameController";
 
 const gameRoute = express.Router();
 
-gameRoute.get("/", getGames);
+gameRoute.get("/", getGamesController);
 
-gameRoute.get("/:id", getGameById);
+gameRoute.get("/:id", getGameByIdController);
+
+gameRoute.post("/", createGameController);
 
 export default gameRoute;
