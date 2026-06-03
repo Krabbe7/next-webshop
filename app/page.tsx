@@ -2,8 +2,9 @@ import NavBar from "./components/navbar-component";
 import Link from "next/link";
 import styles from "./page.module.css";
 import Image from "next/image";
+import AddToCartButton from "./components/addToCartButton";
 
-async function getGames() {
+export async function getGames() {
   const res = await fetch("http://localhost:5000/api/games", {
     cache: "no-store",
   });
@@ -53,7 +54,7 @@ export default async function Home() {
 
                 <p className={styles.price}>{game.price} kr.</p>
 
-                <button className={styles.button}>Tilføj til kurv</button>
+                <AddToCartButton game={game} />
               </div>
             </div>
           </Link>

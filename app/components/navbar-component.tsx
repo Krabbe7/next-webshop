@@ -6,12 +6,33 @@ import Link from "next/link";
 export default function NavBar() {
   const [user, setUser] = useState<any>(null);
   const [open, setOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
+
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+      const totalItems = cart.reduce(
+        (sum: number, item: any) => sum + item.quantity,
+        0,
+      );
+
+      setCartCount(totalItems);
+    };
+
+    updateCartCount();
+
+    window.addEventListener("cartUpdated", updateCartCount);
+
+    return () => {
+      window.removeEventListener("cartUpdated", updateCartCount);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -48,6 +69,15 @@ export default function NavBar() {
           <a href="#">Kontakt</a>
         </li>
       </ul>
+      <Link
+        href="/cart"
+        style={{
+          textDecoration: "none",
+          marginRight: "1rem",
+        }}
+      >
+        🛒 {cartCount}
+      </Link>
       <div
         style={{ position: "relative" }}
         onMouseEnter={() => setOpen(true)}

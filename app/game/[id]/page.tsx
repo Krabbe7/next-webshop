@@ -1,7 +1,7 @@
 import styles from "./gamepage.module.css";
 import Image from "next/image";
 
-async function getGame(id: string) {
+export async function getGame(id: string) {
   const response = await fetch(`http://localhost:5000/api/games/${id}`, {
     next: {
       revalidate: 3600, // 1 time cache
