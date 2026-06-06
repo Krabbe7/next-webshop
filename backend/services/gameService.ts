@@ -37,6 +37,38 @@ async function createGame(game: any) {
   return result.rows[0];
 }
 
+async function updateGame(id: number, game: any) {
+  const result = await pool.query(
+    `
+    UPDATE games
+    SET
+      title = $1,
+      description = $2,
+      price = $3,
+      genre = $4,
+      platform = $5,
+      image_url = $6,
+      release_year = $7,
+      stock = $8
+    WHERE id = $9
+    RETURNING *
+    `,
+    [
+      game.title,
+      game.description,
+      game.price,
+      game.genre,
+      game.platform,
+      game.image_url,
+      game.release_year,
+      game.stock,
+      id,
+    ],
+  );
+
+  return result.rows[0];
+}
+
 async function getGameById(id: number) {
   const result = await pool.query("SELECT * FROM games WHERE id = $1", [id]);
 
@@ -44,7 +76,10 @@ async function getGameById(id: number) {
 }
 
 async function deleteGame(id: number) {
-  const result = await pool.query("SELECT * FROM games WHERE id = $1", [id]);
+  const result = await pool.query(
+    "DELETE FROM games WHERE id = $1 RETURNING *",
+    [id],
+  );
 
   return result.rows[0];
 }
@@ -54,4 +89,5 @@ export default {
   getGameById,
   createGame,
   deleteGame,
+  updateGame,
 };

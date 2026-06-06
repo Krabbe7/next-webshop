@@ -18,16 +18,9 @@ export const getGamesController = async (req: Request, res: Response) => {
 
 export const createGameController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const game = await gameService.createGame(Number(id));
+    const game = await gameService.createGame(req.body);
 
-    if (!game) {
-      return res.status(404).json({
-        error: "Game not found",
-      });
-    }
-
-    res.json(game);
+    res.status(201).json(game);
   } catch (err) {
     console.error(err);
 
@@ -56,7 +49,27 @@ export const getGameByIdController = async (req: Request, res: Response) => {
     });
   }
 };
+export const updateGame = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
 
+    const game = await gameService.updateGame(Number(id), req.body);
+
+    if (!game) {
+      return res.status(404).json({
+        error: "Game not found",
+      });
+    }
+
+    res.json(game);
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: "Failed to update game",
+    });
+  }
+};
 export const deleteGameController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

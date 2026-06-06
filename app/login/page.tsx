@@ -1,4 +1,5 @@
 "use client";
+
 import styles from "./login.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -27,22 +28,25 @@ export default function LoginPage() {
 
       const data = await response.json();
 
+      console.log("LOGIN RESPONSE:", data);
+
       if (!response.ok) {
-        alert(data.error);
+        alert(data.error || "Login failed");
         return;
       }
 
-      // save token
+      // 💥 save auth
       localStorage.setItem("token", data.token);
-
       localStorage.setItem("user", JSON.stringify(data.user));
+
+      // 💥 trigger navbar update
+      window.dispatchEvent(new Event("authChanged"));
 
       alert("Logged in!");
 
       router.push("/");
     } catch (err) {
       console.error("LOGIN ERROR:", err);
-
       alert("Login failed");
     }
   };
