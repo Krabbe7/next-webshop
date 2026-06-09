@@ -30,3 +30,9 @@ export const login = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getUser = (req: Request, res: Response) => {
+  res.json({
+    user: (req as any).user,
+  });
+};

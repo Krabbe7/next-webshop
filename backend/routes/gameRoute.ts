@@ -6,6 +6,7 @@ import {
   updateGame,
   deleteGameController,
 } from "../controllers/gameController";
+import { authMiddleware, requireAdmin } from "../middleware/authMiddleware";
 
 const gameRoute = express.Router();
 
@@ -13,10 +14,10 @@ gameRoute.get("/", getGamesController);
 
 gameRoute.get("/:id", getGameByIdController);
 
-gameRoute.post("/", createGameController);
+gameRoute.post("/", authMiddleware, requireAdmin, createGameController);
 
-gameRoute.put("/:id", updateGame);
+gameRoute.put("/:id", authMiddleware, requireAdmin, updateGame);
 
-gameRoute.delete("/:id", deleteGameController);
+gameRoute.delete("/:id", authMiddleware, requireAdmin, deleteGameController);
 
 export default gameRoute;

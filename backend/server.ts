@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import gameRoute from "./routes/gameRoute";
 import userRoute from "./routes/userRoute";
+import { authMiddleware } from "./middleware/authMiddleware";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(cors());
 // Routes
 app.use("/api/games", gameRoute);
 app.use("/api/users", userRoute);
+app.use("/admin", authMiddleware);
 
 // Health check
 app.get("/api", (req, res) => {

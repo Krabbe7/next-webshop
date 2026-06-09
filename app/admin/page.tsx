@@ -1,16 +1,50 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./editGamesPage.module.css";
 
-async function getGames() {
-  const res = await fetch("http://localhost:5000/api/games", {
-    cache: "no-store",
-  });
+export default function AdminPage() {
+  const router = useRouter();
 
-  return res.json();
-}
+  const [games, setGames] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function AdminPage() {
-  const games = await getGames();
+  useEffect(() => {
+    const checkUserAndLoad = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        router.replace("/");
+        return;
+      }
+
+      const res = await fetch("http://localhost:5000/api/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || data.user.role !== "admin") {
+        router.replace("/");
+        return;
+      }
+
+      // 👇 Hent games EFTER auth er godkendt
+      const gamesRes = await fetch("http://localhost:5000/api/games");
+      const gamesData = await gamesRes.json();
+
+      setGames(gamesData);
+      setLoading(false);
+    };
+
+    checkUserAndLoad();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <main className={styles.editGamesPageContainer}>
@@ -21,7 +55,7 @@ export default async function AdminPage() {
       <br />
       <br />
 
-      {games.map((game: any) => (
+      {games.map((game) => (
         <div key={game.id} className={styles.editGameContainer}>
           <h3>{game.title}</h3>
 
