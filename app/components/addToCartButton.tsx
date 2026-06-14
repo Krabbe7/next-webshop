@@ -26,8 +26,6 @@ export default function AddToCartButton({ game }: Props) {
           image_url: game.image_url,
           quantity: 1,
         });
-
-        window.dispatchEvent(new Event("cartUpdated"));
       }}
     >
       Tilføj til kurv
