@@ -72,7 +72,7 @@ export default function UserPage() {
     }
 
     const fetchUser = async () => {
-      const res = await fetch("http://localhost:5000/api/users/me", {
+      const res = await fetch("http://localhost:5000/api/users/user", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

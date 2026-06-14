@@ -20,7 +20,11 @@ export default function NavBar() {
     };
 
     const updateCartCount = () => {
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const user = JSON.parse(localStorage.getItem("user") || "null");
+
+      const cartKey = user ? `cart_${user.id}` : "cart_guest";
+
+      const cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
 
       const totalItems = cart.reduce(
         (sum: number, item: any) => sum + item.quantity,
@@ -42,15 +46,16 @@ export default function NavBar() {
     };
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+const handleLogout = () => {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
 
-    setUser(null);
-    setOpen(false);
+  setUser(null);
+  setOpen(false);
+  setCartCount(0);
 
-    window.dispatchEvent(new Event("authChanged"));
-  };
+  window.dispatchEvent(new Event("authChanged"));
+};
 
   return (
     <nav className={styles.navbar}>

@@ -7,7 +7,7 @@ const userRoute = express.Router();
 // auth routes
 userRoute.post("/register", register);
 userRoute.post("/login", login);
-userRoute.get("/me", authMiddleware, getUser);
+userRoute.get("/user", authMiddleware, getUser);
 userRoute.get("/", authMiddleware, (req, res) => {
   res.json({
     user: (req as any).user,
