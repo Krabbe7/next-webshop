@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import styles from "./checkout.module.css";
 import Image from "next/image";
 
-type ShippingMethod = {
+type deliveryMethod = {
   id: string;
   name: string;
   price: number;
 };
 
-const shippingMethods: ShippingMethod[] = [
+const deliveryMethods: deliveryMethod[] = [
   {
     id: "standard",
     name: "Standard levering",
@@ -31,8 +31,8 @@ const shippingMethods: ShippingMethod[] = [
 export default function CheckoutPage() {
   const [cart, setCart] = useState<any[]>([]);
 
-  const [shippingMethod, setShippingMethod] = useState<ShippingMethod>(
-    shippingMethods[0],
+  const [deliveryMethod, setdeliveryMethod] = useState<deliveryMethod>(
+    deliveryMethods[0],
   );
 
   const getCart = () => {
@@ -52,7 +52,7 @@ export default function CheckoutPage() {
     0,
   );
 
-  const total = subtotal + shippingMethod.price;
+  const total = subtotal + deliveryMethod.price;
 
   return (
     <main className={styles.checkoutContainer}>
@@ -79,9 +79,9 @@ export default function CheckoutPage() {
           <section className={styles.card}>
             <h2>Leveringsmetode</h2>
 
-            {shippingMethods.map((method) => (
+            {deliveryMethods.map((deliveryMethod) => (
               <label
-                key={method.id}
+                key={deliveryMethod.id}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -93,13 +93,15 @@ export default function CheckoutPage() {
                 <input
                   type="radio"
                   name="shipping"
-                  checked={shippingMethod.id === method.id}
-                  onChange={() => setShippingMethod(method)}
+                  checked={deliveryMethod.id === deliveryMethod.id}
+                  onChange={() => setdeliveryMethod(deliveryMethod)}
                 />
 
                 <span>
-                  {method.name}
-                  {method.price > 0 ? ` (${method.price} kr.)` : " (Gratis)"}
+                  {deliveryMethod.name}
+                  {deliveryMethod.price > 0
+                    ? ` (${deliveryMethod.price} kr.)`
+                    : " (Gratis)"}
                 </span>
               </label>
             ))}
@@ -158,15 +160,15 @@ export default function CheckoutPage() {
             <div className={styles.summaryRow}>
               <span>Levering</span>
               <span>
-                {shippingMethod.price === 0
+                {deliveryMethod.price === 0
                   ? "Gratis"
-                  : `${shippingMethod.price.toFixed(2)} kr.`}
+                  : `${deliveryMethod.price.toFixed(2)} kr.`}
               </span>
             </div>
 
             <div className={styles.summaryRow}>
               <span>Metode</span>
-              <span>{shippingMethod.name}</span>
+              <span>{deliveryMethod.name}</span>
             </div>
 
             <hr />
