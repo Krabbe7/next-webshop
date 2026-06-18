@@ -3,6 +3,11 @@ import express from "express";
 import cors from "cors";
 import gameRoute from "./routes/gameRoute";
 import userRoute from "./routes/userRoute";
+<<<<<<< Updated upstream
+=======
+import { authMiddleware } from "./middleware/authMiddleware";
+import deliveryMethodRoute from "./routes/deliveryMethodsRoute";
+>>>>>>> Stashed changes
 
 dotenv.config();
 
@@ -15,6 +20,11 @@ app.use(cors());
 // Routes
 app.use("/api/games", gameRoute);
 app.use("/api/users", userRoute);
+<<<<<<< Updated upstream
+=======
+app.use("/api/deliveryMethods", deliveryMethodRoute);
+app.use("/api/admin", authMiddleware);
+>>>>>>> Stashed changes
 
 // Health check
 app.get("/api", (req, res) => {
