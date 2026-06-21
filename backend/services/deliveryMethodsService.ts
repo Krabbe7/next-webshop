@@ -24,10 +24,10 @@ async function createDeliveryMethod(deliveryMethod: any) {
 async function updateDeliveryMethod(id: number, deliveryMethod: any) {
   const result = await pool.query(
     `
-    UPDATE games
+    UPDATE delivery
     SET
       name = $1,
-      price = $2,
+      price = $2
     WHERE id = $3
     RETURNING *
     `,
@@ -36,6 +36,7 @@ async function updateDeliveryMethod(id: number, deliveryMethod: any) {
 
   return result.rows[0];
 }
+
 async function getDeliveryMethodId(id: number) {
   const result = await pool.query("SELECT * FROM delivery WHERE id = $1", [id]);
 

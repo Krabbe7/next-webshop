@@ -11,7 +11,6 @@ export default function EditGamePage({
 }) {
   const router = useRouter();
 
-  // ✅ korrekt unwrap i React 19 / Next nyere version
   const { id } = use(params);
 
   const [game, setGame] = useState<any>(null);
@@ -53,19 +52,6 @@ export default function EditGamePage({
     router.push("/admin");
   };
 
-  const handleDelete = async () => {
-    const token = localStorage.getItem("token");
-
-    await fetch(`http://localhost:5000/api/games/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    router.push("/admin");
-  };
-
   if (!game) return <p>Loading...</p>;
 
   return (
@@ -90,9 +76,6 @@ export default function EditGamePage({
         <input name="stock" value={game.stock} onChange={handleChange} />
 
         <button type="submit">Gem ændringer</button>
-        <button type="button" onClick={handleDelete}>
-          Slet spil
-        </button>
       </form>
     </main>
   );
