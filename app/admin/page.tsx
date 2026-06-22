@@ -9,11 +9,11 @@ export default function AdminPage() {
       <h1>Admin Panel</h1>
 
       <div className={styles.cards}>
-        <Link href="/admin/edit-games" className={styles.card}>
+        <Link href="/admin/games" className={styles.card}>
           🎮 Administrer spil
         </Link>
 
-        <Link href="/admin/edit-delivery-methods" className={styles.card}>
+        <Link href="/admin/deliveryMethods" className={styles.card}>
           🚚 Administrer leveringsmetoder
         </Link>
       </div>

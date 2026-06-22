@@ -1,4 +1,4 @@
-.editGamesPageContainer {
+.adminContainer {
     padding: 2rem;
     max-width: 1400px;
     margin: 0 auto;
@@ -29,16 +29,17 @@
     background: #15803d;
 }
 
-.gamesGrid {
+.itemsGrid {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
 }
 
 .card {
     background: white;
     border-radius: 16px;
+
     overflow: hidden;
 
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
@@ -71,43 +72,48 @@
 
 .noImage {
     width: 100%;
-    height: 100%;
+    height: 250px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    color: #777;
     background: #f3f4f6;
+    color: #777;
 }
 
 .content {
-    padding: 0.75rem;
+    padding: 1rem;
 
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.5rem;
 }
 
-.gameTitle {
-    font-size: 1.1rem;
+.itemTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
     margin: 0;
-
-    line-height: 1.3;
-    min-height: calc(1.3em * 2);
 }
 
 .meta {
     color: #666;
     margin: 0;
-    font-size: 0.9rem;
 }
 
 .price {
     font-size: 1.1rem;
     font-weight: bold;
-    margin: 0.5rem 0;
     color: #0a7d32;
+    margin: 0.5rem 0;
+}
+
+.actions {
+    margin-top: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .editButton {
@@ -119,13 +125,17 @@
     text-align: center;
     text-decoration: none;
 
-    padding: 0.5rem;
+    padding: 0.6rem;
     border-radius: 10px;
 
+    border: none;
     font-weight: 600;
 
     transition: background 0.2s ease;
-    border: none;
+}
+
+.editButton:hover {
+    background: #1d4ed8;
 }
 
 .deleteButton {
@@ -134,20 +144,15 @@
     background: #e52441;
     color: white;
 
-    text-align: center;
-    text-decoration: none;
-
-    padding: 0.5rem;
+    padding: 0.6rem;
     border-radius: 10px;
+
+    border: none;
+    cursor: pointer;
 
     font-weight: 600;
 
     transition: background 0.2s ease;
-    border: none;
-}
-
-.editButton:hover {
-    background: #1d4ed8;
 }
 
 .deleteButton:hover {
