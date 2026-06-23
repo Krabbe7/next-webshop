@@ -4,7 +4,7 @@ import cors from "cors";
 import gameRoute from "./routes/gameRoute";
 import userRoute from "./routes/userRoute";
 import { authMiddleware } from "./middleware/authMiddleware";
-import deliveryMethodRoute from "./routes/deliveryMethodsRoute";
+import shippingRoute from "./routes/shippingRoute";
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ app.use(cors());
 // Routes
 app.use("/api/games", gameRoute);
 app.use("/api/users", userRoute);
-app.use("/api/deliveryMethods", deliveryMethodRoute);
+app.use("/api/pickup-points", shippingRoute);
 app.use("/api/admin", authMiddleware);
 
 // Health check
