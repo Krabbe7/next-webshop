@@ -15,13 +15,29 @@ type PickupPoint = {
   provider: string;
   name: string;
   address: string;
-  distance?: number;
 };
 
 const deliveryMethods: DeliveryMethod[] = [
-  { id: "standard", name: "Standard levering", price: 39 },
-  { id: "express", name: "Ekspres levering", price: 79 },
-  { id: "pickup", name: "Afhentning i pakkeshop", price: 0 },
+  {
+    id: "gls",
+    name: "GLS Pakkeshop",
+    price: 39,
+  },
+  {
+    id: "postnord",
+    name: "PostNord Pakkeshop",
+    price: 39,
+  },
+  {
+    id: "bring",
+    name: "Bring Pakkeshop",
+    price: 39,
+  },
+  {
+    id: "home",
+    name: "Hjemmelevering",
+    price: 59,
+  },
 ];
 
 export default function CheckoutPage() {
@@ -34,16 +50,18 @@ export default function CheckoutPage() {
   const [address, setAddress] = useState("");
 
   const [pickupPoints, setPickupPoints] = useState<PickupPoint[]>([]);
+
   const [selectedPickup, setSelectedPickup] = useState<PickupPoint | null>(
     null,
   );
 
   const [loadingPoints, setLoadingPoints] = useState(false);
 
-  // 🛒 CART
   const getCart = () => {
     const user = JSON.parse(localStorage.getItem("user") || "null");
+
     const cartKey = user ? `cart_${user.id}` : "cart_guest";
+
     return JSON.parse(localStorage.getItem(cartKey) || "[]");
   };
 
@@ -58,17 +76,27 @@ export default function CheckoutPage() {
 
   const total = subtotal + deliveryMethod.price;
 
-  // 📦 FETCH PICKUP POINTS (ONLY BACKEND MVC)
   useEffect(() => {
     const fetchPickupPoints = async () => {
-      if (deliveryMethod.id !== "pickup") return;
-      if (!address || address.length < 5) return;
+      const isPickupMethod = ["gls", "postnord", "bring"].includes(
+        deliveryMethod.id,
+      );
+
+      if (!isPickupMethod) {
+        setPickupPoints([]);
+        setSelectedPickup(null);
+        return;
+      }
+
+      if (!address || address.length < 5) {
+        return;
+      }
 
       setLoadingPoints(true);
 
       try {
         const res = await fetch(
-          "http://localhost:3001/shipping/pickup-points",
+          "http://localhost:5000/api/shipping/pickup-points",
           {
             method: "POST",
             headers: {
@@ -76,6 +104,7 @@ export default function CheckoutPage() {
             },
             body: JSON.stringify({
               address,
+              provider: deliveryMethod.id,
             }),
           },
         );
@@ -83,6 +112,7 @@ export default function CheckoutPage() {
         const data = await res.json();
 
         setPickupPoints(data.points || []);
+
         setSelectedPickup(null);
       } catch (err) {
         console.error("Fejl ved hentning af pakkeshops", err);
@@ -92,6 +122,7 @@ export default function CheckoutPage() {
     };
 
     const timeout = setTimeout(fetchPickupPoints, 500);
+
     return () => clearTimeout(timeout);
   }, [address, deliveryMethod]);
 
@@ -99,15 +130,18 @@ export default function CheckoutPage() {
     <main className={styles.checkoutContainer}>
       <div className={styles.checkoutGrid}>
         {/* LEFT SIDE */}
+
         <div className={styles.formSection}>
           <section className={styles.card}>
             <h2>Kundeoplysninger</h2>
+
             <input type="text" placeholder="Fulde navn" />
+
             <input type="email" placeholder="Email" />
+
             <input type="tel" placeholder="Telefon" />
           </section>
 
-          {/* ADDRESS */}
           <section className={styles.card}>
             <h2>Leveringsadresse</h2>
 
@@ -119,31 +153,41 @@ export default function CheckoutPage() {
             />
 
             <input type="text" placeholder="Postnummer" />
+
             <input type="text" placeholder="By" />
+
             <input type="text" placeholder="Land" />
           </section>
 
-          {/* DELIVERY METHODS */}
           <section className={styles.card}>
             <h2>Leveringsmetode</h2>
 
             {deliveryMethods.map((dm) => (
-              <label key={dm.id} style={{ display: "flex", gap: 8 }}>
+              <label
+                key={dm.id}
+                style={{
+                  display: "flex",
+                  gap: 8,
+                  marginBottom: 8,
+                }}
+              >
                 <input
                   type="radio"
                   name="shipping"
                   checked={dm.id === deliveryMethod.id}
                   onChange={() => setDeliveryMethod(dm)}
                 />
+
                 <span>
-                  {dm.name} {dm.price > 0 ? `(${dm.price} kr.)` : "(Gratis)"}
+                  {dm.name}
+                  {" - "}
+                  {dm.price} kr.
                 </span>
               </label>
             ))}
           </section>
 
-          {/* PICKUP POINTS */}
-          {deliveryMethod.id === "pickup" && (
+          {["gls", "postnord", "bring"].includes(deliveryMethod.id) && (
             <section className={styles.card}>
               <h2>Vælg pakkeshop</h2>
 
@@ -151,55 +195,74 @@ export default function CheckoutPage() {
 
               {loadingPoints && <p>Finder pakkeshops...</p>}
 
-              {!loadingPoints && pickupPoints.length === 0 && address && (
+              {!loadingPoints && address && pickupPoints.length === 0 && (
                 <p>Ingen pakkeshops fundet</p>
               )}
 
-              {!loadingPoints &&
-                pickupPoints.map((point) => (
-                  <label
-                    key={point.id}
-                    style={{
-                      display: "flex",
-                      gap: 8,
-                      marginBottom: 10,
-                      cursor: "pointer",
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name="pickup"
-                      checked={selectedPickup?.id === point.id}
-                      onChange={() => setSelectedPickup(point)}
-                    />
+              {pickupPoints.map((point) => (
+                <label
+                  key={point.id}
+                  style={{
+                    display: "flex",
+                    gap: 8,
+                    marginBottom: 10,
+                    cursor: "pointer",
+                  }}
+                >
+                  <input
+                    type="radio"
+                    name="pickup"
+                    checked={selectedPickup?.id === point.id}
+                    onChange={() => setSelectedPickup(point)}
+                  />
 
-                    <span>
-                      {point.provider.toUpperCase()} – {point.name}
-                      <br />
-                      {point.address}
-                    </span>
-                  </label>
-                ))}
+                  <span>
+                    {point.name}
+                    <br />
+                    {point.address}
+                  </span>
+                </label>
+              ))}
             </section>
           )}
 
-          {/* PAYMENT */}
           <section className={styles.card}>
             <h2>Betaling</h2>
+
             <input type="text" placeholder="Kortnummer" />
+
             <input type="text" placeholder="MM/ÅÅ" />
+
             <input type="text" placeholder="CVV" />
           </section>
         </div>
 
         {/* RIGHT SIDE */}
+
         <aside className={styles.summarySection}>
           <div className={styles.orderCard}>
             <h2>Din ordre</h2>
 
             {cart.map((item) => (
-              <div key={item.id}>
-                {item.quantity} × {item.title} – {item.price} kr.
+              <div key={item.id} className={styles.orderItem}>
+                <div className={styles.orderImage}>
+                  {item.image_url && (
+                    <Image
+                      src={item.image_url}
+                      alt={item.title}
+                      width={60}
+                      height={80}
+                    />
+                  )}
+                </div>
+
+                <div className={styles.orderInfo}>
+                  {item.quantity}× {item.title}
+                </div>
+
+                <div className={styles.orderPrice}>
+                  {(item.price * item.quantity).toFixed(2)} kr.
+                </div>
               </div>
             ))}
 
@@ -207,14 +270,9 @@ export default function CheckoutPage() {
 
             <p>Subtotal: {subtotal.toFixed(2)} kr.</p>
 
-            <p>
-              Levering:{" "}
-              {deliveryMethod.price === 0
-                ? "Gratis"
-                : `${deliveryMethod.price} kr.`}
-            </p>
+            <p>Levering: {deliveryMethod.price} kr.</p>
 
-            {selectedPickup && <p>Pickup: {selectedPickup.name}</p>}
+            {selectedPickup && <p>Pakkeshop: {selectedPickup.name}</p>}
 
             <hr />
 

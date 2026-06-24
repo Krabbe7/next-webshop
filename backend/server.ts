@@ -17,7 +17,7 @@ app.use(cors());
 // Routes
 app.use("/api/games", gameRoute);
 app.use("/api/users", userRoute);
-app.use("/api/pickup-points", shippingRoute);
+app.use("/api/shipping", shippingRoute);
 app.use("/api/admin", authMiddleware);
 
 // Health check

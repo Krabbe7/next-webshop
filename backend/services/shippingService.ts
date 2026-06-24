@@ -1,30 +1,28 @@
-import bringService from "./providers/bringService";
-import glsService from "./providers/glsService";
-import postnordService from "./providers/postnordService";
-
 export type PickupPoint = {
   id: string;
-  provider: "bring" | "gls" | "postnord";
+  provider: string;
   name: string;
   address: string;
-  distance?: number;
 };
 
 async function geocodeAddress(address: string) {
+  const key = process.env.GOOGLE_MAPS_API_KEY;
+
+  if (!key) {
+    throw new Error("Missing GOOGLE_MAPS_API_KEY");
+  }
+
   const res = await fetch(
     `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
       address,
-    )}&key=${process.env.GOOGLE_MAPS_API_KEY}`,
+    )}&key=${key}`,
   );
-
-  if (!res.ok) {
-    throw new Error("Google Geocoding failed");
-  }
 
   const data = await res.json();
 
-  if (!data.results?.length) {
-    throw new Error("Address not found");
+  if (data.status !== "OK" || !data.results?.length) {
+    console.error("Google geocode error:", data);
+    throw new Error("Address not found or API error");
   }
 
   return {
@@ -33,24 +31,42 @@ async function geocodeAddress(address: string) {
   };
 }
 
-async function getPickupPoints(address: string) {
+async function getPickupPoints(address: string, provider: string) {
   const { lat, lng } = await geocodeAddress(address);
 
-  const results = await Promise.allSettled([
-    bringService.getPoints(lat, lng),
-    glsService.getPoints(lat, lng),
-    postnordService.getPoints(address),
-  ]);
+  let keyword = "";
 
-  const bring = results[0].status === "fulfilled" ? results[0].value : [];
+  switch (provider) {
+    case "gls":
+      keyword = "GLS PakkeShop";
+      break;
 
-  const gls = results[1].status === "fulfilled" ? results[1].value : [];
+    case "postnord":
+      keyword = "PostNord";
+      break;
 
-  const postnord = results[2].status === "fulfilled" ? results[2].value : [];
+    case "bring":
+      keyword = "Bring Pickup Point";
+      break;
 
-  return [...bring, ...gls, ...postnord].sort(
-    (a, b) => (a.distance ?? 999999) - (b.distance ?? 999999),
+    default:
+      keyword = "parcel shop";
+  }
+
+  const res = await fetch(
+    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=5000&keyword=${encodeURIComponent(
+      keyword,
+    )}&key=${process.env.GOOGLE_MAPS_API_KEY}`,
   );
+
+  const data = await res.json();
+
+  return (data.results || []).map((place: any) => ({
+    id: place.place_id,
+    provider,
+    name: place.name,
+    address: place.vicinity,
+  }));
 }
 
 export default {

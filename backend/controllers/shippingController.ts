@@ -6,7 +6,7 @@ export const getPickupPointsController = async (
   res: Response,
 ) => {
   try {
-    const { address } = req.body;
+    const { address, provider } = req.body;
 
     if (!address) {
       return res.status(400).json({
@@ -14,7 +14,7 @@ export const getPickupPointsController = async (
       });
     }
 
-    const points = await shippingService.getPickupPoints(address);
+    const points = await shippingService.getPickupPoints(address, provider);
 
     res.json({
       points,
