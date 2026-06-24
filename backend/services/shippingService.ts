@@ -54,14 +54,14 @@ async function getPickupPoints(address: string, provider: string) {
   }
 
   const res = await fetch(
-    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=5000&keyword=${encodeURIComponent(
+    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&rankby=distance&keyword=${encodeURIComponent(
       keyword,
     )}&key=${process.env.GOOGLE_MAPS_API_KEY}`,
   );
 
   const data = await res.json();
 
-  return (data.results || []).map((place: any) => ({
+  return (data.results || []).slice(0, 5).map((place: any) => ({
     id: place.place_id,
     provider,
     name: place.name,
