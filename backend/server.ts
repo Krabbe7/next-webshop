@@ -5,6 +5,7 @@ import gameRoute from "./routes/gameRoute";
 import userRoute from "./routes/userRoute";
 import { authMiddleware } from "./middleware/authMiddleware";
 import shippingRoute from "./routes/shippingRoute";
+import orderRoute from "./routes/orderRoute";
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ app.use("/api/games", gameRoute);
 app.use("/api/users", userRoute);
 app.use("/api/shipping", shippingRoute);
 app.use("/api/admin", authMiddleware);
-
+app.use("/api/orders", orderRoute);
 // Health check
 app.get("/api", (req, res) => {
   res.json({
