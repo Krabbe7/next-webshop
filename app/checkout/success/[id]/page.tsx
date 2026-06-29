@@ -1,14 +1,16 @@
-export default function SuccessPage({
-  params,
-}: {
-  params: {
+type Props = {
+  params: Promise<{
     id: string;
-  };
-}) {
+  }>;
+};
+
+export default async function SuccessPage({ params }: Props) {
+  const { id } = await params;
+
   return (
     <main>
       <h1>Tak for din ordre 🎉</h1>
-      <p>Ordrenummer: #{params.id}</p>
+      <p>Ordrenummer: #{id}</p>
     </main>
   );
 }
