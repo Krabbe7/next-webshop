@@ -3,6 +3,14 @@
 import { useEffect, useState } from "react";
 import styles from "./checkout.module.css";
 import { useRouter } from "next/navigation";
+import {
+  isValidEmail,
+  formatPostalCode,
+  formatCardNumber,
+  formatCardExpiry,
+  isValidCardExpiry,
+  formatCvv,
+} from "../components/inputValidation";
 
 type DeliveryMethod = {
   id: string;
@@ -26,6 +34,18 @@ const deliveryMethods: DeliveryMethod[] = [
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const [errors, setErrors] = useState({
+    customerName: "",
+    email: "",
+    address: "",
+    postalCode: "",
+    city: "",
+    country: "",
+    pickup: "",
+    cardNumber: "",
+    cardCvv: "",
+    cardExpiry: "",
+  });
 
   // CART
   const [cart, setCart] = useState<any[]>([]);
@@ -54,6 +74,7 @@ export default function CheckoutPage() {
   // PAYMENT
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
+  const [cardExpiryError, setCardExpiryError] = useState("");
   const [cardCvv, setCardCvv] = useState("");
 
   // CART LOAD
@@ -112,6 +133,64 @@ export default function CheckoutPage() {
     const timeout = setTimeout(fetchPickupPoints, 400);
     return () => clearTimeout(timeout);
   }, [address, deliveryMethod]);
+
+  const validate = () => {
+    const newErrors: any = {};
+
+    if (!customerName.trim()) {
+      newErrors.customerName = "Indtast dit navn";
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Indtast email";
+    } else if (!isValidEmail(email)) {
+      newErrors.email = "Ugyldig email";
+    }
+
+    if (!address.trim()) {
+      newErrors.address = "Indtast adresse";
+    }
+
+    if (!postalCode || postalCode.length !== 4) {
+      newErrors.postalCode = "Postnummer skal være 4 cifre";
+    }
+
+    if (!city.trim()) {
+      newErrors.city = "Indtast by";
+    }
+
+    if (!country.trim()) {
+      newErrors.country = "Indtast land";
+    }
+
+    if (
+      ["gls", "postnord", "bring"].includes(deliveryMethod.id) &&
+      !selectedPickup
+    ) {
+      newErrors.pickup = "Vælg pakkeshop";
+    }
+
+    if (cart.length === 0) {
+      newErrors.cart = "Din kurv er tom";
+    }
+
+    const cleanCard = cardNumber.replace(/\D/g, "");
+    if (cleanCard.length !== 16) {
+      newErrors.cardNumber = "Kortnummer skal være 16 cifre";
+    }
+
+    if (cardCvv.length !== 3) {
+      newErrors.cardCvv = "CVV skal være 3 cifre";
+    }
+
+    if (!cardExpiry.includes("/")) {
+      newErrors.cardExpiry = "Udløbsdato skal være MM/ÅÅ";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
 
   // CHECKOUT
   const handleCheckout = async () => {
@@ -192,6 +271,7 @@ export default function CheckoutPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && <p className={styles.error}>{errors.email}</p>}
             <input
               placeholder="Telefon"
               value={phone}
@@ -211,8 +291,12 @@ export default function CheckoutPage() {
             <input
               placeholder="Postnummer"
               value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
+              maxLength={4}
+              onChange={(e) => setPostalCode(formatPostalCode(e.target.value))}
             />
+            {errors.postalCode && (
+              <p className={styles.error}>{errors.postalCode}</p>
+            )}
             <input
               placeholder="By"
               value={city}
@@ -270,18 +354,35 @@ export default function CheckoutPage() {
             <input
               placeholder="Kortnummer"
               value={cardNumber}
-              onChange={(e) => setCardNumber(e.target.value)}
+              maxLength={19}
+              onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
             />
+            {errors.cardNumber && (
+              <p className={styles.error}>{errors.cardNumber}</p>
+            )}
             <input
               placeholder="MM/ÅÅ"
               value={cardExpiry}
-              onChange={(e) => setCardExpiry(e.target.value)}
+              maxLength={5}
+              onChange={(e) => {
+                const formatted = formatCardExpiry(e.target.value);
+                setCardExpiry(formatted);
+
+                // live validation
+                if (formatted.length === 5 && !isValidCardExpiry(formatted)) {
+                  setCardExpiryError("Ugyldig eller udløbet dato");
+                } else {
+                  setCardExpiryError("");
+                }
+              }}
             />
             <input
               placeholder="CVV"
               value={cardCvv}
-              onChange={(e) => setCardCvv(e.target.value)}
+              maxLength={3}
+              onChange={(e) => setCardCvv(formatCvv(e.target.value))}
             />
+            {errors.cardCvv && <p className={styles.error}>{errors.cardCvv}</p>}
           </section>
 
           <button className={styles.checkoutButton} onClick={handleCheckout}>
