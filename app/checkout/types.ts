@@ -1,3 +1,20 @@
+export type CheckoutErrors = {
+  name?: string;
+  email?: string;
+  phone?: string;
+
+  street?: string;
+  postalCode?: string;
+  city?: string;
+  country?: string;
+
+  cardNumber?: string;
+  expiry?: string;
+  cvv?: string;
+
+  pickup?: string;
+};
+
 export type DeliveryMethod = {
   id: string;
   name: string;
