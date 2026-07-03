@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./cartPage.module.css";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function CartPage() {
   const [cart, setCart] = useState<any[]>([]);
@@ -75,6 +76,9 @@ export default function CartPage() {
           </div>
         </div>
       ))}
+      <button>
+        <Link href="/checkout">Gå til kassen</Link>
+      </button>
     </main>
   );
 }

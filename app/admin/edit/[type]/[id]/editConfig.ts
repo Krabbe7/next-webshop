@@ -1,5 +1,6 @@
 const editConfig = {
   games: {
+    title: "Spil",
     api: "games",
     fields: [
       "title",
@@ -14,6 +15,7 @@ const editConfig = {
   },
 
   deliveryMethods: {
+    title: "Leveringsmetoder",
     api: "deliveryMethods",
     fields: ["name", "price"],
   },

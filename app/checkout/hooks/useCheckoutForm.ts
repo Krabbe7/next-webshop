@@ -27,7 +27,7 @@ export function useCheckoutForm() {
     street: "",
     postalCode: "",
     city: "",
-    country: "DK",
+    country: "",
   });
 
   const [payment, setPayment] = useState<PaymentFormState>({

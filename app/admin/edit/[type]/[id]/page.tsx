@@ -1,81 +1,43 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { use } from "react";
+
 import editConfig from "./editConfig";
-export default function EditPage({
-  params,
-}: {
-  params: Promise<{
-    type: string;
-    id: string;
-  }>;
-}) {
+
+import { useEditItem } from "./hooks/useEditItem";
+import { useEditSubmit } from "./hooks/useEditSubmit";
+
+import { EditForm } from "./components/EditForm";
+
+import type { EditParams } from "./types";
+
+export default function EditPage({ params }: { params: Promise<EditParams> }) {
   const { type, id } = use(params);
-
-  const router = useRouter();
-
-  const [item, setItem] = useState<any>(null);
 
   const config = editConfig[type as keyof typeof editConfig];
 
-  useEffect(() => {
-    async function loadItem() {
-      const res = await fetch(`http://localhost:5000/api/${config.api}/${id}`);
+  const { item, setItem, loading } = useEditItem(config, id);
 
-      const data = await res.json();
+  const { submit } = useEditSubmit({
+    config,
+    item: item!,
+    id,
+    type,
+  });
 
-      setItem(data);
-    }
-
-    loadItem();
-  }, [id, type]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setItem({
-      ...item,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSave = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const token = localStorage.getItem("token");
-
-    await fetch(`http://localhost:5000/api/${config.api}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(item),
-    });
-
-    router.push(`/admin/${type}`);
-  };
-
-  if (!item) {
-    return <p>Loading...</p>;
-  }
+  if (!config) return <h1>Ukendt type</h1>;
+  if (loading || !item) return <p>Loading...</p>;
 
   return (
-    <main>
-      <h1>Rediger</h1>
+    <main style={{ padding: "2rem" }}>
+      <h1>Rediger {config.title}</h1>
 
-      <form onSubmit={handleSave}>
-        {config.fields.map((field) => (
-          <input
-            key={field}
-            name={field}
-            value={item[field] ?? ""}
-            onChange={handleChange}
-            placeholder={field}
-          />
-        ))}
-
-        <button type="submit">Gem ændringer</button>
-      </form>
+      <EditForm
+        config={config}
+        item={item}
+        onChange={setItem}
+        onSubmit={submit}
+      />
     </main>
   );
 }

@@ -24,7 +24,7 @@ export function OrderSummary({
         </div>
 
         {cart.map((item) => (
-          <div className={styles.orderItem}>
+          <div className={styles.orderItem} key={item.id}>
             <div className={styles.orderInfo}>
               <p>{item.title}</p>
             </div>

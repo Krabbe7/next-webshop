@@ -29,6 +29,7 @@ export function AddressForm({
         className={styles.input}
         placeholder="Postnummer"
         value={value.postalCode}
+        maxLength={4}
         onChange={(e) => onChange({ ...value, postalCode: e.target.value })}
       />
       {errors?.postalCode && <p>{errors.postalCode}</p>}
