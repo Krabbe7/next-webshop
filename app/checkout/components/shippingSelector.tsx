@@ -1,12 +1,12 @@
-import type { DeliveryMethod } from "../types";
+import type { Shipping } from "../types";
 import styles from "../checkout.module.css";
 type Props = {
-  methods: DeliveryMethod[];
-  selected: DeliveryMethod;
-  onChange: (m: DeliveryMethod) => void;
+  methods: Shipping[];
+  selected: Shipping;
+  onChange: (m: Shipping) => void;
 };
 
-export function DeliveryMethodSelector({ methods, selected, onChange }: Props) {
+export function ShippingSelector({ methods, selected, onChange }: Props) {
   return (
     <section className={styles.card}>
       <h2>Levering</h2>

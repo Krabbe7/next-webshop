@@ -13,7 +13,7 @@ export default function AdminPage() {
           🎮 Administrer spil
         </Link>
 
-        <Link href="/admin/deliveryMethods" className={styles.card}>
+        <Link href="/admin/shipping" className={styles.card}>
           🚚 Administrer leveringsmetoder
         </Link>
       </div>

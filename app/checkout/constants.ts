@@ -1,6 +1,6 @@
-import type { DeliveryMethod } from "./types";
+import type { Shipping } from "./types";
 
-export const deliveryMethods: DeliveryMethod[] = [
+export const shippingMethods: Shipping[] = [
   {
     id: "gls",
     name: "GLS Pakkeshop",

@@ -15,9 +15,9 @@ const createConfig = {
     ],
   },
 
-  deliveryMethods: {
+  shipping: {
     title: "Leveringsmetoder",
-    api: "deliveryMethods",
+    api: "shipping",
     createTitle: "Opret leveringsmetode",
     fields: ["name", "price"],
   },

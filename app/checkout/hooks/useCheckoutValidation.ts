@@ -11,7 +11,7 @@ import type {
   AddressFormState,
   CheckoutErrors,
   CustomerFormState,
-  DeliveryMethod,
+  Shipping,
   PaymentFormState,
   PickupPoint,
 } from "../types";
@@ -21,7 +21,7 @@ type Props = {
   address: AddressFormState;
   payment: PaymentFormState;
 
-  deliveryMethod: DeliveryMethod;
+  shipping: Shipping;
 
   selectedPickup: PickupPoint | null;
 
@@ -32,7 +32,7 @@ export function useCheckoutValidation({
   customer,
   address,
   payment,
-  deliveryMethod,
+  shipping,
   selectedPickup,
   setErrors,
 }: Props) {
@@ -79,10 +79,7 @@ export function useCheckoutValidation({
 
     // PICKUP
 
-    if (
-      ["gls", "postnord", "bring"].includes(deliveryMethod.id) &&
-      !selectedPickup
-    ) {
+    if (["gls", "postnord", "bring"].includes(shipping.id) && !selectedPickup) {
       errors.pickup = "Vælg en pakkeshop";
     }
 

@@ -3,7 +3,7 @@ import type {
   CustomerFormState,
   AddressFormState,
   PaymentFormState,
-  DeliveryMethod,
+  shipping,
   PickupPoint,
 } from "../types";
 
@@ -12,7 +12,7 @@ type Args = {
   customer: CustomerFormState;
   address: AddressFormState;
   payment: PaymentFormState;
-  deliveryMethod: DeliveryMethod;
+  shipping: shipping;
   selectedPickup: PickupPoint | null;
   subtotal: number;
   shipping: number;
@@ -32,7 +32,7 @@ export function useCheckout(args: Args) {
       city: args.address.city,
       country: args.address.country,
 
-      deliveryMethod: args.deliveryMethod.id,
+      shipping: args.shipping.id,
 
       pickupPoint: args.selectedPickup
         ? {

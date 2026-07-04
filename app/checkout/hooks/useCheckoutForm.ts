@@ -1,21 +1,19 @@
 import { useState } from "react";
 
-import { deliveryMethods } from "../constants";
+import { shippingMethods } from "../constants";
 
 import type {
   AddressFormState,
   CheckoutErrors,
   CustomerFormState,
-  DeliveryMethod,
+  Shipping,
   PaymentFormState,
 } from "../types";
 
 export function useCheckoutForm() {
   const [errors, setErrors] = useState<CheckoutErrors>({});
 
-  const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod>(
-    deliveryMethods[0],
-  );
+  const [shipping, setShipping] = useState<Shipping>(shippingMethods[0]);
 
   const [customer, setCustomer] = useState<CustomerFormState>({
     name: "",
@@ -46,8 +44,8 @@ export function useCheckoutForm() {
     payment,
     setPayment,
 
-    deliveryMethod,
-    setDeliveryMethod,
+    shipping,
+    setShipping, // ✅ FIXED
 
     errors,
     setErrors,

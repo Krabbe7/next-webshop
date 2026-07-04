@@ -14,9 +14,9 @@ const editConfig = {
     ],
   },
 
-  deliveryMethods: {
+  shipping: {
     title: "Leveringsmetoder",
-    api: "deliveryMethods",
+    api: "shipping",
     fields: ["name", "price"],
   },
 };

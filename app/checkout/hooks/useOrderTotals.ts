@@ -1,21 +1,18 @@
-import type { CartItem, DeliveryMethod } from "../types";
+import type { CartItem, Shipping } from "../types";
 
-export function useOrderTotals(
-  cart: CartItem[],
-  deliveryMethod: DeliveryMethod,
-) {
+export function useOrderTotals(cart: CartItem[], shipping: Shipping) {
   const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
 
-  const shipping = deliveryMethod.price;
+  const shippingPrice = shipping.price;
 
-  const total = subtotal + shipping;
+  const total = subtotal + shippingPrice;
 
   return {
     subtotal,
-    shipping,
+    shipping: shippingPrice,
     total,
   };
 }

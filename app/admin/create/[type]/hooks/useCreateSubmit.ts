@@ -16,6 +16,12 @@ export function useCreateSubmit({ config, formData, type }: Props) {
     const token =
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
+    const data = { ...formData };
+
+    if (config.api === "games" && data.image_url) {
+      data.image_url = `/images/games/${data.image_url}.jpg`;
+    }
+
     try {
       await fetch(`http://localhost:5000/api/${config.api}`, {
         method: "POST",
@@ -25,7 +31,7 @@ export function useCreateSubmit({ config, formData, type }: Props) {
             Authorization: `Bearer ${token}`,
           }),
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       router.push(`/admin/${type}`);

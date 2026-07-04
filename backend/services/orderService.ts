@@ -31,7 +31,7 @@ async function createOrder(orderData: any) {
       orderData.postalCode,
       orderData.city,
       orderData.country,
-      orderData.deliveryMethod,
+      orderData.shipping,
       orderData.pickupPoint?.id || null,
       orderData.pickupPoint?.name || null,
       orderData.subtotal,

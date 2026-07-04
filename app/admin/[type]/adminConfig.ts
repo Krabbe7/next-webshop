@@ -5,9 +5,9 @@ const adminConfig = {
     displayField: "title",
   },
 
-  deliveryMethods: {
+  shipping: {
     title: "Leveringsmetoder",
-    api: "deliveryMethods",
+    api: "shipping",
     displayField: "name",
   },
 };

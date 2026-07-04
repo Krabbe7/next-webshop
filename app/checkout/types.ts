@@ -15,7 +15,7 @@ export type CheckoutErrors = {
   pickup?: string;
 };
 
-export type DeliveryMethod = {
+export type Shipping = {
   id: string;
   name: string;
   price: number;

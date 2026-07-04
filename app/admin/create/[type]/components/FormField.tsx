@@ -9,14 +9,24 @@ type Props = {
 };
 
 export function FormField({ name, value, onChange }: Props) {
-  const isTextArea = name === "description";
+  const placeholders: Record<string, string> = {
+    title: "Spiltitel",
+    description: "Beskrivelse",
+    price: "Pris",
+    genre: "Genre",
+    platform: "Platform",
+    image_url: "Filnavn (fx GTA6)",
+    release_year: "Udgivelsesår",
+    stock: "Antal på lager",
+  };
 
+  const placeholder = placeholders[name] ?? name;
   return (
     <div>
-      {isTextArea ? (
+      {name == "description" ? (
         <textarea
           name={name}
-          placeholder={name}
+          placeholder={placeholder}
           value={value || ""}
           onChange={onChange}
           rows={5}
@@ -24,7 +34,7 @@ export function FormField({ name, value, onChange }: Props) {
       ) : (
         <input
           name={name}
-          placeholder={name}
+          placeholder={placeholder}
           value={value || ""}
           onChange={onChange}
         />
