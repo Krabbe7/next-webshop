@@ -77,7 +77,7 @@
 }
 
 .meta {
-  color: #666;
+  color: #665;
   margin: 0;
   font-size: 0.9rem;
 }
@@ -88,21 +88,4 @@
   font-weight: bold;
   margin: 0.5rem 0;
   color: #0a7d32;
-}
-
-/* BUTTON */
-.button {
-  width: 100%;
-  background: #111;
-  color: white;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.2s ease;
-  margin-top: 0.3rem;
-}
-
-.button:hover {
-  background: #333;
 }

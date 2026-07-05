@@ -1,7 +1,7 @@
 "use client";
 
-import styles from "../page.module.css";
-import { addToCart } from "../lib/cart";
+import { addToCart } from "../../lib/cart";
+import styles from "./addToCartButton.module.css";
 
 type Props = {
   game: {

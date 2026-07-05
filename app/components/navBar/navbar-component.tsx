@@ -46,16 +46,16 @@ export default function NavBar() {
     };
   }, []);
 
-const handleLogout = () => {
-  localStorage.removeItem("user");
-  localStorage.removeItem("token");
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
 
-  setUser(null);
-  setOpen(false);
-  setCartCount(0);
+    setUser(null);
+    setOpen(false);
+    setCartCount(0);
 
-  window.dispatchEvent(new Event("authChanged"));
-};
+    window.dispatchEvent(new Event("authChanged"));
+  };
 
   return (
     <nav className={styles.navbar}>
@@ -69,7 +69,7 @@ const handleLogout = () => {
         </li>
 
         <li>
-          <Link href="/">Produkter</Link>
+          <Link href="/products">Produkter</Link>
         </li>
 
         <li>
