@@ -1,9 +1,0 @@
-.heroContainer {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 65px);
-}
-
-.hero_img {
-    object-fit: cover;
-}
