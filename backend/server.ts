@@ -1,11 +1,14 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
+
 import gameRoute from "./routes/gameRoute";
 import userRoute from "./routes/userRoute";
-import { authMiddleware } from "./middleware/authMiddleware";
 import shippingRoute from "./routes/shippingRoute";
 import orderRoute from "./routes/orderRoute";
+import ratingRoute from "./routes/ratingRoute";
+
+import { authMiddleware } from "./middleware/authMiddleware";
 
 dotenv.config();
 
@@ -19,8 +22,12 @@ app.use(cors());
 app.use("/api/games", gameRoute);
 app.use("/api/users", userRoute);
 app.use("/api/shipping", shippingRoute);
-app.use("/api/admin", authMiddleware);
 app.use("/api/orders", orderRoute);
+app.use("/api/rating", ratingRoute);
+
+// Beskyt admin-ruter
+app.use("/api/admin", authMiddleware);
+
 // Health check
 app.get("/api", (req, res) => {
   res.json({

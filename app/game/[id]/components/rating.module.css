@@ -1,0 +1,21 @@
+.ratingButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+.ratingTextContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ratingLoginText {
+    margin-top: 1rem;
+}
+
+.ratingLogin {
+    color: blue;
+    text-decoration: underline;
+}

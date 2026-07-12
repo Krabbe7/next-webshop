@@ -1,6 +1,6 @@
 import styles from "./gamepage.module.css";
 import Image from "next/image";
-
+import RatingSection from "./components/ratingComponent";
 export async function getGame(id: string) {
   const response = await fetch(`http://localhost:5000/api/games/${id}`, {
     next: {
@@ -57,6 +57,7 @@ export default async function GamePage({
             </p>
 
             <p className={styles.price}>{game.price} kr.</p>
+            <RatingSection gameId={game.id} />
           </div>
 
           <button className={styles.button}>Tilføj til kurv</button>
