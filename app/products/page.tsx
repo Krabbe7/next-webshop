@@ -1,5 +1,5 @@
 import ProductSearch from "./components/ProductSearch";
-import styles from"./products.module.css";
+import styles from "./products.module.css";
 
 export async function getGames() {
   const res = await fetch("http://localhost:5000/api/games", {
@@ -18,6 +18,7 @@ export default async function ProductsPage() {
 
   return (
     <main className={styles.productPage_Container}>
+      <h1 className={styles.title}>Game Store</h1>
       <ProductSearch games={games} />
     </main>
   );

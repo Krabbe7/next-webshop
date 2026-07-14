@@ -33,22 +33,23 @@ export default function ProductSearch({ games }: Props) {
 
   return (
     <>
-      <h1 className={styles.title}>Game Store</h1>
-      <div className={styles.filters}>
-        <SearchBar value={search} onChange={setSearch} />
+      <div className={styles.productsContent}>
+        <div className={styles.filters}>
+          <SearchBar value={search} onChange={setSearch} />
 
-        <PlatformFilter
-          value={platform}
-          onChange={setPlatform}
-          options={platforms}
-        />
+          <PlatformFilter
+            value={platform}
+            onChange={setPlatform}
+            options={platforms}
+          />
 
-        <GenreFilter value={genre} onChange={setGenre} options={genres} />
+          <GenreFilter value={genre} onChange={setGenre} options={genres} />
 
-        <SortSelector value={sort} onChange={setSort} />
+          <SortSelector value={sort} onChange={setSort} />
+        </div>
+
+        <ProductGrid games={filteredGames} />
       </div>
-
-      <ProductGrid games={filteredGames} />
     </>
   );
 }
