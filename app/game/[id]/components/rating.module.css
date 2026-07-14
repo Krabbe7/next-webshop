@@ -1,3 +1,10 @@
+.ratingSection {
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+
+}
+
 .ratingButton {
     background: none;
     border: none;
@@ -7,8 +14,12 @@
 
 .ratingTextContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 0.5rem;
+}
+
+.ratingHeading {
+    color: #ffffff
 }
 
 .ratingLoginText {

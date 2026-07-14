@@ -34,10 +34,10 @@ export default function RatingSection({ gameId }: Props) {
   }
 
   return (
-    <section>
+    <section className={styles.ratingSection}>
       {" "}
+      <h3 className={styles.ratingHeading}>Bedømmelse</h3>
       <div className={styles.ratingTextContainer}>
-        <h3>Bedømmelse</h3>
         <p>
           <FaStar color="#DF0909" />{" "}
           {rating?.average !== null
