@@ -124,5 +124,7 @@ export default {
   getAllShipping,
   getShippingById,
   updateShipping,
+  createShipping,
+  deleteShipping,
   getPickupPoints,
 };

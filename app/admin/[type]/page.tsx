@@ -4,7 +4,9 @@ import Link from "next/link";
 import { use } from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+
 import adminConfig from "./adminConfig";
+
 import styles from "./adminOverviewPage.module.css";
 
 export default function AdminPage({
@@ -21,7 +23,6 @@ export default function AdminPage({
 
   const config = adminConfig[type as keyof typeof adminConfig];
 
-  // Flyttet op før useEffect bruger config
   if (!config) {
     return <h1>Ukendt admin-side</h1>;
   }
@@ -72,38 +73,50 @@ export default function AdminPage({
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className={styles.loading}>Loading...</p>;
   }
 
   return (
     <main className={styles.adminContainer}>
-      <h1 className={styles.title}>{config.title}</h1>
+      <div className={styles.header}>
+        <h1 className={styles.title}>{config.title}</h1>
 
-      <Link href={`/admin/create/${type}`} className={styles.createButton}>
-        ➕ Opret ny
-      </Link>
+        <Link
+          href={`/admin/create/${type}`}
+          className={styles.createButton}
+        >
+          ➕ Opret ny
+        </Link>
+      </div>
 
       <div className={styles.itemsGrid}>
         {items.map((item) => (
           <div key={item.id} className={styles.card}>
+            {type === "games" && (
+              <div className={styles.imageWrapper}>
+                {item.image_url ? (
+                  <img
+                    src={item.image_url}
+                    alt={item.title}
+                    className={styles.image}
+                  />
+                ) : (
+                  <div className={styles.noImage}>
+                    Intet billede
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className={styles.content}>
-              {type === "games" && (
-                <div className={styles.imageWrapper}>
-                  {item.image_url ? (
-                    <img
-                      src={item.image_url}
-                      alt={item.title}
-                      className={styles.image}
-                    />
-                  ) : (
-                    <div className={styles.noImage}>Intet billede</div>
-                  )}
-                </div>
-              )}
-              <h3 className={styles.itemTitle}>{item[config.displayField]}</h3>
+              <h3 className={styles.itemTitle}>
+                {item[config.displayField]}
+              </h3>
 
               {"price" in item && (
-                <p className={styles.price}>{item.price} kr.</p>
+                <p className={styles.price}>
+                  {item.price} kr.
+                </p>
               )}
 
               <div className={styles.actions}>

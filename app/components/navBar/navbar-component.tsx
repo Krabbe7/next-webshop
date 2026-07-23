@@ -1,11 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import Link from "next/link";
+
+import { FaBars, FaTimes, FaShoppingCart, FaUserCircle } from "react-icons/fa";
+
 import styles from "./navBar.module.css";
+
 export default function NavBar() {
   const [user, setUser] = useState<any>(null);
+
   const [open, setOpen] = useState(false);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
@@ -35,6 +44,7 @@ export default function NavBar() {
     };
 
     loadUser();
+
     updateCartCount();
 
     window.addEventListener("authChanged", loadUser);
@@ -52,6 +62,7 @@ export default function NavBar() {
 
     setUser(null);
     setOpen(false);
+    setMenuOpen(false);
     setCartCount(0);
 
     window.dispatchEvent(new Event("authChanged"));
@@ -63,73 +74,95 @@ export default function NavBar() {
         Game Store
       </Link>
 
-      <ul className={styles.navLinks}>
+      <ul
+        className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ""}`}
+      >
         <li>
-          <Link href="/">Home</Link>
+          <Link href="/" onClick={() => setMenuOpen(false)}>
+            Home
+          </Link>
         </li>
 
         <li>
-          <Link href="/products">Produkter</Link>
+          <Link href="/products" onClick={() => setMenuOpen(false)}>
+            Produkter
+          </Link>
         </li>
 
         <li>
-          <Link href="/">Kategorier</Link>
+          <Link href="/" onClick={() => setMenuOpen(false)}>
+            Kategorier
+          </Link>
         </li>
 
         <li>
-          <Link href="/">Om os</Link>
+          <Link href="/" onClick={() => setMenuOpen(false)}>
+            Om os
+          </Link>
         </li>
 
         <li>
-          <Link href="/">Kontakt</Link>
+          <Link href="/" onClick={() => setMenuOpen(false)}>
+            Kontakt
+          </Link>
         </li>
 
         {user?.role === "admin" && (
           <li>
-            <Link href="/admin">Admin</Link>
+            <Link href="/admin" onClick={() => setMenuOpen(false)}>
+              Admin
+            </Link>
           </li>
         )}
       </ul>
 
       <div className={styles.navActions}>
         <Link href="/cart" className={styles.cartLink}>
-          🛒 {cartCount}
+          <FaShoppingCart className={styles.cartIcon} />
+
+          {cartCount > 0 && (
+            <span className={styles.cartBadge}>{cartCount}</span>
+          )}
         </Link>
 
-        <div
-          className={styles.profileWrapper}
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
+        {!user ? (
+          <Link href="/login" className={styles.loginButton}>
+            Login
+          </Link>
+        ) : (
+          <div
+            className={styles.profileWrapper}
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+          >
+            <FaUserCircle className={styles.profileIcon} />
+
+            {open && (
+              <div className={styles.dropdown}>
+                <p className={styles.username}>Hej {user.username}</p>
+
+                <p className={styles.role}>{user.role}</p>
+
+                {user.role === "admin" && (
+                  <Link href="/admin" className={styles.adminLink}>
+                    Admin Panel
+                  </Link>
+                )}
+
+                <button onClick={handleLogout} className={styles.logoutButton}>
+                  Log ud
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        <button
+          className={styles.menuButton}
+          onClick={() => setMenuOpen(!menuOpen)}
         >
-          {!user ? (
-            <Link href="/login">Login</Link>
-          ) : (
-            <>
-              <span className={styles.profileIcon}>👤</span>
-
-              {open && (
-                <div className={styles.dropdown}>
-                  <p className={styles.username}>Hej {user.username}</p>
-
-                  <p className={styles.role}>{user.role}</p>
-
-                  {user.role === "admin" && (
-                    <Link href="/admin" className={styles.adminLink}>
-                      Admin Panel
-                    </Link>
-                  )}
-
-                  <button
-                    onClick={handleLogout}
-                    className={styles.logoutButton}
-                  >
-                    Log ud
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-        </div>
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
       </div>
     </nav>
   );

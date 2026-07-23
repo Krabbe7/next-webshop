@@ -1,86 +1,332 @@
 .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #ccc;
-    height: 65px;
+
+    height: 75px;
+
+    padding: 0 2rem;
+
+    background: white;
+
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .logo {
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.25rem;
-    color: inherit;
+
+    color: #111;
+
+    font-size: 1.8rem;
+    font-weight: 800;
+
+    transition: color .2s;
 }
 
+.logo:hover {
+    color: #cd0909;
+}
+
+/* ---------- LINKS ---------- */
 .navLinks {
+    position: fixed;
+
+    top: 75px;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+
     display: flex;
-    gap: 1rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    flex-direction: column;
+
+    padding: 2rem;
+
+    background: white;
+
+    border-top: 1px solid #e5e5e5;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+
+    transition: .25s;
 }
 
-.navLinks li a {
+.navLinksOpen {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.navLinks a {
+    position: relative;
+
+    color: #111;
+
     text-decoration: none;
-    color: inherit;
+
+    font-weight: 500;
+
+    transition: color .2s;
+
+
 }
 
-.navLinks li a:hover {
-    text-decoration: underline;
+.navLinks a:hover {
+    color: #cd0909;
 }
+
+.navLinks a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -6px;
+
+    width: 0;
+    height: 2px;
+
+    background: #cd0909;
+
+    transition: width .25s;
+}
+
+.navLinks a:hover::after {
+    width: 100%;
+}
+
+/* ---------- ACTIONS ---------- */
 
 .navActions {
     display: flex;
     align-items: center;
-    gap: 1rem;
+
+    gap: 1.2rem;
 }
 
+/* ---------- CART ---------- */
+
 .cartLink {
+    position: relative;
+
+    color: #111;
+
     text-decoration: none;
-    color: inherit;
+
+    font-size: 1.4rem;
 }
+
+.cartIcon {
+    font-size: 1.5rem;
+}
+
+.cartBadge {
+    position: absolute;
+
+    top: -8px;
+    right: -12px;
+
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    background: #cd0909;
+
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: .7rem;
+    font-weight: bold;
+}
+
+/* ---------- LOGIN ---------- */
+
+.loginButton {
+    color: #111;
+
+    text-decoration: none;
+
+    padding: .6rem 1rem;
+
+    border: 1px solid #cd0909;
+    border-radius: 8px;
+
+    transition: .2s;
+}
+
+.loginButton:hover {
+    background: #cd0909;
+    color: white;
+}
+
+/* ---------- PROFILE ---------- */
 
 .profileWrapper {
     position: relative;
 }
 
 .profileIcon {
+    color: #111;
+
+    font-size: 1.7rem;
+
     cursor: pointer;
-    font-size: 1.5rem;
+
+    transition: color .2s;
 }
+
+.profileIcon:hover {
+    color: #cd0909;
+}
+
+/* ---------- DROPDOWN ---------- */
 
 .dropdown {
     position: absolute;
-    top: 100%;
+
+    top: 45px;
     right: 0;
-    background: white;
-    border: 1px solid #ccc;
+
+    width: 220px;
+
+    background: #181818;
+
+    border: 1px solid #333;
+    border-radius: 12px;
+
     padding: 1rem;
-    min-width: 180px;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+
+    color: white;
 }
 
 .username {
-    margin: 0 0 0.5rem 0;
-    font-weight: 600;
+    margin: 0;
+
+    color: white;
+
+    font-weight: 700;
 }
 
 .role {
-    margin: 0 0 1rem 0;
-    font-size: 0.9rem;
-    color: #666;
+    margin: .25rem 0 1rem;
+
+    color: #999;
+
+    font-size: .9rem;
 }
 
 .adminLink {
     display: block;
-    margin-bottom: 0.5rem;
+
+    margin-bottom: .75rem;
+
+    color: white;
+
     text-decoration: none;
 }
 
+.adminLink:hover {
+    color: #cd0909;
+}
+
 .logoutButton {
+    width: 100%;
+
+    padding: .7rem;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #cd0909;
+
+    color: white;
+
     cursor: pointer;
-    padding: 0.5rem 1rem;
+
+    font-weight: 600;
+
+    transition: background .2s;
+}
+
+.logoutButton:hover {
+    background: #e31313;
+}
+
+/* ---------- BURGER ---------- */
+
+.menuButton {
+    display: none;
+
+    background: transparent;
+
+    border: none;
+
+    color: #111;
+
+    font-size: 1.7rem;
+
+    cursor: pointer;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        padding: 0 1rem;
+    }
+
+    .menuButton {
+        display: block;
+    }
+
+    .navLinks {
+        position: fixed;
+
+        top: 75px;
+        right: -100%;
+
+        width: 280px;
+        height: calc(100vh - 75px);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        gap: 1.5rem;
+
+        padding: 2rem;
+
+        background: white;
+
+        border-left: 1px solid #e5e5e5;
+
+        transition: right .3s ease;
+    }
+
+    .navLinksOpen {
+        width: 100%;
+        height: auto;
+        list-style: none;
+    }
+
+    .navActions {
+        gap: .8rem;
+    }
+
+    .dropdown {
+        right: 45px;
+    }
 }

@@ -1,10 +1,13 @@
+import styles from "../edit.module.css";
+
+import { FormField } from "../components/FormField";
+
 import type { EditConfig, FormData } from "../types";
-import { FormField } from "./FormField";
 
 type Props = {
   config: EditConfig;
   item: FormData;
-  onChange: (item: FormData) => void;
+  onChange: React.Dispatch<React.SetStateAction<FormData | null>>;
   onSubmit: (e: React.FormEvent) => void;
 };
 
@@ -12,12 +15,10 @@ export function EditForm({ config, item, onChange, onSubmit }: Props) {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = e.target;
-
-    onChange({
-      ...item,
-      [name]: value,
-    });
+    onChange((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   return (
@@ -31,7 +32,9 @@ export function EditForm({ config, item, onChange, onSubmit }: Props) {
         />
       ))}
 
-      <button type="submit">Gem ændringer</button>
+      <button className={styles.submitButton} type="submit">
+        Gem ændringer
+      </button>
     </form>
   );
 }

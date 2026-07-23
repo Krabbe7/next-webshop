@@ -61,6 +61,47 @@ export const updateShippingController = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const createShippingController = async (req: Request, res: Response) => {
+  try {
+    const shipping = await shippingService.createShipping(req.body);
+
+    if (!shipping) {
+      return res.status(404).json({
+        error: "Shipping method not found",
+      });
+    }
+
+    res.json(shipping);
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: "Failed to create shipping method",
+    });
+  }
+};
+
+export const deleteShippingController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const shippingMethod = await shippingService.deleteShipping(Number(id));
+    if (!shippingMethod) {
+      return res.status(404).json({
+        error: "Shipping Method not found",
+      });
+    }
+
+    res.json(shippingMethod);
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: "DB error",
+    });
+  }
+};
+
 export const getPickupPointsController = async (
   req: Request,
   res: Response,

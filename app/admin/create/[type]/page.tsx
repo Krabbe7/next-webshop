@@ -13,6 +13,8 @@ import { CreateForm } from "./components/CreateForm";
 
 import type { CreateParams } from "./types";
 
+import styles from "./create.module.css";
+
 export default function CreatePage({
   params,
 }: {
@@ -37,8 +39,8 @@ export default function CreatePage({
   }
 
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1>{config.createTitle}</h1>
+    <main className={styles.container}>
+      <h1 className={styles.title}>{config.createTitle}</h1>
 
       <CreateForm
         config={config}

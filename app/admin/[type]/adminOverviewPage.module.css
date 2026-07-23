@@ -1,160 +1,261 @@
 .adminContainer {
+    min-height: 100vh;
+
     padding: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
+
+    background: #000;
+}
+
+/* ---------- HEADER ---------- */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 2rem;
+
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .title {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-}
+    margin: 0;
 
-.createButton {
-    display: inline-block;
-    margin-bottom: 2rem;
-
-    background: #16a34a;
     color: white;
 
-    padding: 0.9rem 1.3rem;
-    border-radius: 10px;
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.loading {
+    color: white;
+    text-align: center;
+    padding: 4rem;
+}
+
+/* ---------- CREATE BUTTON ---------- */
+
+.createButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: .9rem 1.4rem;
+
+    border-radius: 12px;
+
+    background: #cd0909;
+    color: white;
 
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
 
-    transition: background 0.2s ease;
+    transition:
+        transform .2s ease,
+        background .2s ease;
 }
 
 .createButton:hover {
-    background: #15803d;
+    background: #e31313;
+
+    transform: translateY(-2px);
 }
+
+/* ---------- GRID ---------- */
 
 .itemsGrid {
     display: grid;
-    width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+    gap: 1.75rem;
 }
 
+/* ---------- CARD ---------- */
+
 .card {
-    background: white;
-    border-radius: 16px;
+    background: #181818;
+
+    border: 1px solid #2b2b2b;
+    border-radius: 18px;
 
     overflow: hidden;
-
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
 
     display: flex;
     flex-direction: column;
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.card::before {
+    content: "";
+
+    display: block;
+
+    height: 4px;
+
+    background: #cd0909;
 }
 
 .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
 
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    border-color: #cd0909;
+
+    box-shadow:
+        0 18px 35px rgba(0, 0, 0, .35),
+        0 0 18px rgba(205, 9, 9, .18);
 }
+
+/* ---------- IMAGE ---------- */
 
 .imageWrapper {
     aspect-ratio: 4 / 5;
-    width: 100%;
+
     overflow: hidden;
+
+    background: #222;
 }
 
 .image {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
+    transition: transform .35s ease;
+}
+
+.card:hover .image {
+    transform: scale(1.05);
 }
 
 .noImage {
-    width: 100%;
-    height: 250px;
+    aspect-ratio: 4 / 5;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: #f3f4f6;
-    color: #777;
+    background: #222;
+
+    color: #999;
 }
+
+/* ---------- CONTENT ---------- */
 
 .content {
     padding: 1rem;
 
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+
+    gap: .75rem;
+
+    flex: 1;
 }
+
+/* ---------- TEXT ---------- */
 
 .itemTitle {
-    font-size: 1.2rem;
-    font-weight: 700;
     margin: 0;
-}
 
-.meta {
-    color: #666;
-    margin: 0;
+    color: white;
+
+    font-size: 1.25rem;
+    font-weight: 700;
 }
 
 .price {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #0a7d32;
-    margin: 0.5rem 0;
-}
-
-.actions {
     margin-top: auto;
 
+    color: white;
+
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* ---------- BUTTONS ---------- */
+
+.actions {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+
+    gap: .75rem;
+
+    margin-top: 1rem;
+}
+
+.editButton,
+.deleteButton {
+    flex: 1;
+
+    padding: .75rem;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: .2s ease;
 }
 
 .editButton {
-    width: 100%;
+    background: #252525;
 
-    background: #2563eb;
     color: white;
 
-    text-align: center;
     text-decoration: none;
 
-    padding: 0.6rem;
-    border-radius: 10px;
-
-    border: none;
-    font-weight: 600;
-
-    transition: background 0.2s ease;
+    border: 1px solid #3a3a3a;
 }
 
 .editButton:hover {
-    background: #1d4ed8;
+    background: #cd0909;
+
+    border-color: #cd0909;
 }
 
 .deleteButton {
-    width: 100%;
+    background: #7d1111;
 
-    background: #e52441;
     color: white;
 
-    padding: 0.6rem;
-    border-radius: 10px;
-
     border: none;
-    cursor: pointer;
-
-    font-weight: 600;
-
-    transition: background 0.2s ease;
 }
 
 .deleteButton:hover {
-    background: #d82323;
+    background: #b31212;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 768px) {
+
+    .adminContainer {
+        padding: 1rem;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .title {
+        font-size: 2.2rem;
+    }
+
+    .createButton {
+        width: 100%;
+    }
+
+    .itemsGrid {
+        grid-template-columns: 1fr;
+    }
 }

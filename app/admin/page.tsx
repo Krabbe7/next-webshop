@@ -1,3 +1,25 @@
+// "use client";
+
+// import Link from "next/link";
+// import styles from "./adminPage.module.css";
+
+// export default function AdminPage() {
+//   return (
+//     <main className={styles.container}>
+//       <h1>Admin Panel</h1>
+
+//       <div className={styles.cards}>
+//         <Link href="/admin/games" className={styles.card}>
+//           🎮 Administrer spil
+//         </Link>
+
+//         <Link href="/admin/shipping" className={styles.card}>
+//           🚚 Administrer leveringsmetoder
+//         </Link>
+//       </div>
+//     </main>
+//   );
+// }
 "use client";
 
 import Link from "next/link";
@@ -6,17 +28,31 @@ import styles from "./adminPage.module.css";
 export default function AdminPage() {
   return (
     <main className={styles.container}>
-      <h1>Admin Panel</h1>
+      <div className={styles.header}>
+        <h1>Admin Dashboard</h1>
+      </div>
 
-      <div className={styles.cards}>
+      <section className={styles.cards}>
         <Link href="/admin/games" className={styles.card}>
-          🎮 Administrer spil
+          <div className={styles.icon}>🎮</div>
+
+          <h2>Spil</h2>
+
+          <p>Opret, rediger og slet spil i webshoppen.</p>
+
+          <span className={styles.button}>Administrer →</span>
         </Link>
 
         <Link href="/admin/shipping" className={styles.card}>
-          🚚 Administrer leveringsmetoder
+          <div className={styles.icon}>🚚</div>
+
+          <h2>Leveringsmetoder</h2>
+
+          <p>Opret, rediger og slet leveringsmetoder.</p>
+
+          <span className={styles.button}>Administrer →</span>
         </Link>
-      </div>
+      </section>
     </main>
   );
 }

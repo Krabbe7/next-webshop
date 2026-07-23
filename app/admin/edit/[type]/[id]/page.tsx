@@ -11,6 +11,8 @@ import { EditForm } from "./components/EditForm";
 
 import type { EditParams } from "./types";
 
+import styles from "./edit.module.css";
+
 export default function EditPage({ params }: { params: Promise<EditParams> }) {
   const { type, id } = use(params);
 
@@ -29,8 +31,8 @@ export default function EditPage({ params }: { params: Promise<EditParams> }) {
   if (loading || !item) return <p>Loading...</p>;
 
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1>Rediger {config.title}</h1>
+    <main className={styles.container}>
+      <h1 className={styles.title}>Rediger {config.title}</h1>
 
       <EditForm
         config={config}

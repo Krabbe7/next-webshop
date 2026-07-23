@@ -1,8 +1,9 @@
 import React from "react";
 
-import type { CreateConfig, FormData } from "../types";
+import { FormField } from "@/app/admin/components/formField";
 
-import { FormField } from "./FormField";
+import type { CreateConfig, FormData } from "../types";
+import styles from "../create.module.css";
 
 type Props = {
   config: CreateConfig;
@@ -15,15 +16,7 @@ type Props = {
 
 export function CreateForm({ config, formData, onChange, onSubmit }: Props) {
   return (
-    <form
-      onSubmit={onSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
-        maxWidth: "600px",
-      }}
-    >
+    <form className={styles.form} onSubmit={onSubmit}>
       {config.fields.map((field) => (
         <FormField
           key={field}
@@ -32,8 +25,9 @@ export function CreateForm({ config, formData, onChange, onSubmit }: Props) {
           onChange={onChange}
         />
       ))}
-
-      <button type="submit">Opret</button>
+      <button className={styles.submitButton} type="submit">
+        Opret
+      </button>
     </form>
   );
 }

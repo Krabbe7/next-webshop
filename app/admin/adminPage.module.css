@@ -1,4 +1,4 @@
-.container {
+/* .container {
     min-height: 100vh;
     padding: 3rem;
     background: #f4f6f9;
@@ -49,4 +49,174 @@
 
 .card:active {
     transform: translateY(-1px);
+} */
+
+.container {
+    min-height: 100vh;
+
+    padding: 3rem;
+
+    background: #000;
+}
+
+/* ---------- HEADER ---------- */
+
+.header {
+    margin-bottom: 3rem;
+}
+
+.header h1 {
+    margin: 0;
+
+    color: white;
+
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.header p {
+    margin-top: .5rem;
+
+    color: #b8b8b8;
+
+    font-size: 1.05rem;
+}
+
+/* ---------- STATS ---------- */
+
+.stats {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 1.5rem;
+
+    margin-bottom: 3rem;
+}
+
+.statCard {
+    background: #181818;
+
+    border: 1px solid #2b2b2b;
+
+    border-radius: 18px;
+
+    padding: 1.5rem;
+
+    text-align: center;
+}
+
+.statIcon {
+    font-size: 2.5rem;
+}
+
+.statCard h3 {
+    margin: 1rem 0 .5rem;
+
+    color: white;
+}
+
+.statCard p {
+    color: #999;
+}
+
+/* ---------- LINKS ---------- */
+
+.cards {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+    gap: 2rem;
+}
+
+.card {
+    background: #181818;
+
+    border: 1px solid #2b2b2b;
+
+    border-radius: 20px;
+
+    padding: 2rem;
+
+    text-decoration: none;
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+
+    border-color: #cd0909;
+
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, .35),
+        0 0 18px rgba(205, 9, 9, .18);
+}
+
+.icon {
+    font-size: 3rem;
+
+    margin-bottom: 1rem;
+}
+
+.card h2 {
+    margin: 0 0 .75rem;
+
+    font-size: 1.6rem;
+}
+
+.card p {
+    color: #b8b8b8;
+
+    line-height: 1.6;
+
+    flex: 1;
+}
+
+.button {
+    margin-top: 2rem;
+
+    width: fit-content;
+
+    padding: .8rem 1.4rem;
+
+    border-radius: 10px;
+
+    background: #cd0909;
+
+    color: white;
+
+    font-weight: 600;
+
+    transition: background .2s ease;
+}
+
+.card:hover .button {
+    background: #e20a0a;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 1.5rem;
+    }
+
+    .header h1 {
+        font-size: 2.3rem;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
 }
