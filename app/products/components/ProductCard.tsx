@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import AddToCartButton from "../../components/addToCartButton/addToCartButton";
+import FavoriteButton from "./favorite/favoriteButtonComponent";
 
 import styles from "../products.module.css";
 
@@ -16,6 +17,7 @@ export default function ProductCard({ game }: Props) {
     <Link href={`/game/${game.id}`} className={styles.cardLink}>
       <div className={styles.card}>
         <div className={styles.imageWrapper}>
+          <FavoriteButton gameId={game.id} />
           {game.image_url ? (
             <Image
               src={game.image_url}

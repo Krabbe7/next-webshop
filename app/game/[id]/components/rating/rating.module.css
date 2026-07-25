@@ -18,7 +18,8 @@
     gap: 0.5rem;
 }
 
-.ratingHeading {
+.ratingHeading,
+.yourRatingHeading {
     color: #ffffff
 }
 

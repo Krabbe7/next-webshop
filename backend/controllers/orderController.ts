@@ -46,3 +46,23 @@ export async function createOrderController(req: Request, res: Response) {
     });
   }
 }
+
+export async function getMyOrdersController(req: Request, res: Response) {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        message: "Unauthorized",
+      });
+    }
+
+    const orders = await orderService.getOrdersByUser(req.user.id);
+
+    res.json(orders);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Kunne ikke hente ordrer",
+    });
+  }
+}

@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { useGetRating } from "../hooks/getRating";
-import { useGetUserRating } from "../hooks/useGetUserRating";
-import { useSaveRating } from "../hooks/useSaveRating";
+import { useGetRating } from "../../hooks/ratingHooks/getRating";
+import { useGetUserRating } from "../../hooks/ratingHooks/useGetUserRating";
+import { useSaveRating } from "../../hooks/ratingHooks/useSaveRating";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import styles from "./rating.module.css";
 
@@ -55,7 +55,7 @@ export default function RatingSection({ gameId }: Props) {
         </p>
       ) : (
         <>
-          <h4>Din vurdering</h4>
+          <h4 className={styles.yourRatingHeading}>Din vurdering</h4>
 
           <div>
             {[1, 2, 3, 4, 5].map((star) => (

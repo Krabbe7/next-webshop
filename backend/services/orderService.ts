@@ -14,12 +14,13 @@ async function createOrder(orderData: any) {
       delivery_method,
       pickup_point_id,
       pickup_point_name,
+      pickup_point_address,
       subtotal,
       shipping_price,
       total_price
     )
     VALUES (
-      $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13
+      $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14
     )
     RETURNING id
     `,
@@ -32,8 +33,9 @@ async function createOrder(orderData: any) {
       orderData.city,
       orderData.country,
       orderData.shipping,
-      orderData.pickupPoint?.id || null,
-      orderData.pickupPoint?.name || null,
+      orderData.pickupPoint?.id ?? null,
+      orderData.pickupPoint?.name ?? null,
+      orderData.pickupPoint?.address ?? null,
       orderData.subtotal,
       orderData.shippingPrice,
       orderData.totalPrice,
@@ -60,4 +62,67 @@ async function createOrder(orderData: any) {
   return orderId;
 }
 
-export default { createOrder };
+async function getOrdersByUser(userId: number) {
+  const result = await pool.query(
+    `
+    SELECT
+      o.id,
+      o.customer_name,
+      o.total_price,
+      o.delivery_method,
+      o.pickup_point_name,
+      o.pickup_point_address,
+      o.created_at,
+
+      oi.quantity,
+      oi.price,
+
+      g.id AS game_id,
+      g.title,
+      g.image_url
+
+    FROM orders o
+
+    JOIN order_items oi
+      ON oi.order_id = o.id
+
+    JOIN games g
+      ON g.id = oi.game_id
+
+    WHERE o.user_id = $1
+
+    ORDER BY o.created_at DESC;
+    `,
+    [userId],
+  );
+
+  const ordersMap = new Map();
+
+  for (const row of result.rows) {
+    if (!ordersMap.has(row.id)) {
+      ordersMap.set(row.id, {
+        id: row.id,
+        created_at: row.created_at,
+        total_price: row.total_price,
+        delivery_method: row.delivery_method,
+
+        pickup_point_name: row.pickup_point_name,
+        pickup_point_address: row.pickup_point_address,
+
+        items: [],
+      });
+    }
+
+    ordersMap.get(row.id).items.push({
+      gameId: row.game_id,
+      title: row.title,
+      image_url: row.image_url,
+      quantity: row.quantity,
+      price: row.price,
+    });
+  }
+
+  return [...ordersMap.values()];
+}
+
+export default { createOrder, getOrdersByUser };

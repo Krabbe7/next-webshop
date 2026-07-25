@@ -3,20 +3,24 @@ import type {
   CustomerFormState,
   AddressFormState,
   PaymentFormState,
-  shipping,
+  Shipping,
   PickupPoint,
 } from "../types";
 
 type Args = {
   cart: CartItem[];
+
   customer: CustomerFormState;
   address: AddressFormState;
   payment: PaymentFormState;
-  shipping: shipping;
+
+  shipping: Shipping;
   selectedPickup: PickupPoint | null;
+
   subtotal: number;
-  shipping: number;
+  shippingPrice: number;
   total: number;
+
   onSuccess: (orderId: string) => void;
 };
 
@@ -32,12 +36,14 @@ export function useCheckout(args: Args) {
       city: args.address.city,
       country: args.address.country,
 
+      // Gem kun ID'et i databasen
       shipping: args.shipping.id,
 
       pickupPoint: args.selectedPickup
         ? {
             id: args.selectedPickup.id,
             name: args.selectedPickup.name,
+            address: args.selectedPickup.address,
           }
         : null,
 
@@ -48,9 +54,15 @@ export function useCheckout(args: Args) {
       })),
 
       subtotal: args.subtotal,
-      shippingPrice: args.shipping,
+
+      // Her var fejlen:
+      // args.shipping var hele objektet
+      shippingPrice: args.shipping.price,
+
       totalPrice: args.total,
     };
+
+    console.log("Order payload:", payload);
 
     const token =
       typeof window !== "undefined" ? localStorage.getItem("token") : null;

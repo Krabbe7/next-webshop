@@ -76,6 +76,7 @@ export default function CheckoutPage() {
     shipping,
     selectedPickup: selected,
     subtotal,
+    shippingPrice,
     total,
     onSuccess: (orderId: string) => {
       router.push(`/checkout/success/${orderId}`);

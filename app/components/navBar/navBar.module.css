@@ -18,12 +18,9 @@
 
 .logo {
     text-decoration: none;
-
     color: #111;
-
     font-size: 1.8rem;
     font-weight: 800;
-
     transition: color .2s;
 }
 
@@ -32,49 +29,27 @@
 }
 
 /* ---------- LINKS ---------- */
+
 .navLinks {
-    position: fixed;
-
-    top: 75px;
-    left: 0;
-    right: 0;
-
-    width: 100%;
-
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
 
-    padding: 2rem;
+    list-style: none;
 
-    background: white;
-
-    border-top: 1px solid #e5e5e5;
-
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-
-    transition: .25s;
-}
-
-.navLinksOpen {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+    margin: 0;
+    padding: 0;
 }
 
 .navLinks a {
     position: relative;
 
     color: #111;
-
     text-decoration: none;
 
     font-weight: 500;
 
     transition: color .2s;
-
-
 }
 
 .navLinks a:hover {
@@ -106,7 +81,6 @@
 .navActions {
     display: flex;
     align-items: center;
-
     gap: 1.2rem;
 }
 
@@ -116,7 +90,6 @@
     position: relative;
 
     color: #111;
-
     text-decoration: none;
 
     font-size: 1.4rem;
@@ -153,7 +126,6 @@
 
 .loginButton {
     color: #111;
-
     text-decoration: none;
 
     padding: .6rem 1rem;
@@ -194,7 +166,7 @@
 .dropdown {
     position: absolute;
 
-    top: 45px;
+    top: calc(100% + 10px);
     right: 0;
 
     width: 220px;
@@ -317,16 +289,6 @@
     }
 
     .navLinksOpen {
-        width: 100%;
-        height: auto;
-        list-style: none;
-    }
-
-    .navActions {
-        gap: .8rem;
-    }
-
-    .dropdown {
-        right: 45px;
+        right: 0;
     }
 }

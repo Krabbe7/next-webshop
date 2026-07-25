@@ -148,6 +148,8 @@
 /* ---------- IMAGE ---------- */
 
 .imageWrapper {
+  position: relative;
+
   aspect-ratio: 4 / 5;
 
   overflow: hidden;
@@ -162,6 +164,7 @@
   object-fit: cover;
 
   transition: transform .35s ease;
+  z-index: 1;
 }
 
 .card:hover .image {

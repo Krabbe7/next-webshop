@@ -1,61 +1,9 @@
-// "use client";
-
-// import Link from "next/link";
-// import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
-// import styles from "./editGamesPage.module.css";
-
-// export default function AdminPage() {
-//   const router = useRouter();
-
-//   const [games, setGames] = useState([]);
-
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const user = JSON.parse(localStorage.getItem("user") || "null");
-
-//     if (!user || user.role !== "admin") {
-//       router.replace("/");
-//       return;
-//     }
-
-//     setLoading(false);
-//   }, []);
-
-//   async function fetchGames() {
-//     const res = await fetch("http://localhost:5000/api/games");
-
-//     const data = await res.json();
-
-//     setGames(data);
-//   }
-
-//   return (
-//     <main className={styles.editGamesPageContainer}>
-//       <h1>Admin Panel</h1>
-
-//       <Link href="/admin/create">➕ Opret nyt spil</Link>
-
-//       <br />
-//       <br />
-
-//       {games.map((game: any) => (
-//         <div key={game.id} className={styles.editGameContainer}>
-//           <h3>{game.title}</h3>
-
-//           <Link href={`/admin/edit/${game.id}`}>✏️ Edit</Link>
-//         </div>
-//       ))}
-//     </main>
-//   );
-// }
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-
+import OrderHistory from "./components/orderHistory";
 export default function UserPage() {
   const router = useRouter();
   const params = useParams();
@@ -101,7 +49,7 @@ export default function UserPage() {
       <p>Velkommen {user.email}</p>
 
       {/* ADMIN VIEW */}
-      {user.role === "admin" ? (
+      {/* {user.role === "admin" ? (
         <div>
           <h2>Admin panel</h2>
 
@@ -109,12 +57,12 @@ export default function UserPage() {
           <br />
           <Link href="/admin">🎮 Gå til admin games</Link>
         </div>
-      ) : (
-        <div>
-          <h2>Bruger side</h2>
-          <p>Du er normal bruger</p>
-        </div>
-      )}
+      ) : ( */}
+      <div>
+        <h2>Bruger side</h2>
+        <OrderHistory />
+      </div>
+      {/* )} */}
     </main>
   );
 }

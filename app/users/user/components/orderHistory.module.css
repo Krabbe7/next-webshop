@@ -1,0 +1,220 @@
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.loading,
+.empty {
+    text-align: center;
+    color: #bbb;
+    padding: 2rem;
+}
+
+
+/* ---------- ORDER LIST ---------- */
+
+.orderCard {
+    background: #141414;
+    border-bottom: 1px solid #2a2a2a;
+    padding: 1.5rem;
+
+    border-bottom: 2px solid #cd0909;
+}
+
+.orderCard:first-of-type {
+    border-radius: 15px 15px 0 0;
+}
+
+.orderCard:last-of-type {
+    border-radius: 0 0 15px 15px;
+    border-bottom: none;
+}
+
+.orderCard:nth-child(odd) {
+    background: #1b1b1b;
+
+}
+
+/* rød webshop accent */
+
+.orderCard::before {
+    display: none;
+}
+
+
+/* ---------- HEADER ---------- */
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 0 1rem 0;
+}
+
+
+.left {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+}
+
+
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: .5rem;
+}
+
+
+.orderNumber {
+    color: white;
+
+    font-size: 1.1rem;
+    font-weight: 700;
+
+    margin: 0;
+}
+
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+
+    color: #999;
+
+    font-size: .9rem;
+}
+
+
+.status {
+    background: rgba(9, 205, 28, .12);
+
+    color: #09cd1c;
+
+    padding: .3rem .75rem;
+
+    border-radius: 20px;
+
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+
+.total {
+    color: white;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    margin: 0;
+}
+
+
+/* ---------- PRODUCTS ---------- */
+
+.items {
+    margin-top: .5rem;
+
+    border-top: 1px solid #252525;
+}
+
+
+.item {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem 0;
+
+    border-bottom: 1px solid #222;
+}
+
+
+.product {
+    display: flex;
+    align-items: center;
+
+    gap: 1rem;
+}
+
+
+.image {
+    width: 55px;
+    height: 55px;
+
+    border-radius: 8px;
+
+    object-fit: cover;
+}
+
+
+.productTitle {
+    color: white;
+
+    font-weight: 600;
+
+    margin: 0;
+}
+
+
+.quantity {
+    color: #999;
+
+    font-size: .85rem;
+
+    margin-top: .25rem;
+}
+
+
+.price {
+    color: white;
+
+    font-weight: 700;
+}
+
+
+/* ---------- HOVER ---------- */
+
+.orderCard:hover {
+    background: #181818;
+}
+
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width:700px) {
+
+    .orderHeader {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 1rem;
+    }
+
+
+    .right {
+        align-items: flex-start;
+    }
+
+
+    .item {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: .8rem;
+    }
+}

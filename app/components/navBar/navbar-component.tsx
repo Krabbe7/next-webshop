@@ -148,6 +148,11 @@ export default function NavBar() {
                     Admin Panel
                   </Link>
                 )}
+                {user.role === "user" && (
+                  <Link href="/users/user" className={styles.adminLink}>
+                    Min side
+                  </Link>
+                )}
 
                 <button onClick={handleLogout} className={styles.logoutButton}>
                   Log ud

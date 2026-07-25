@@ -1,6 +1,7 @@
 import styles from "./gamepage.module.css";
 import Image from "next/image";
-import RatingSection from "./components/ratingComponent";
+import RatingSection from "./components/rating/ratingComponent";
+import FavoriteButton from "@/app/products/components/favorite/favoriteButtonComponent";
 export async function getGame(id: string) {
   const response = await fetch(`http://localhost:5000/api/games/${id}`, {
     next: {
@@ -29,6 +30,7 @@ export default async function GamePage({
     <main className={styles.page}>
       <div className={styles.gameContainer}>
         <div className={styles.imageWrapper}>
+          <FavoriteButton gameId={game.id} />
           {game.image_url ? (
             <Image
               src={game.image_url}

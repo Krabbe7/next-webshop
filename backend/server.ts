@@ -7,6 +7,7 @@ import userRoute from "./routes/userRoute";
 import shippingRoute from "./routes/shippingRoute";
 import orderRoute from "./routes/orderRoute";
 import ratingRoute from "./routes/ratingRoute";
+import favoriteRoute from "./routes/favoriteRoute";
 
 import { authMiddleware } from "./middleware/authMiddleware";
 
@@ -24,6 +25,7 @@ app.use("/api/users", userRoute);
 app.use("/api/shipping", shippingRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/rating", ratingRoute);
+app.use("/api/favorites", favoriteRoute);
 
 // Beskyt admin-ruter
 app.use("/api/admin", authMiddleware);
