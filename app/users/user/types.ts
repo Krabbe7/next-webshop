@@ -1,3 +1,5 @@
+import type { Game } from "@/app/products/types";
+
 export type OrderItem = {
   gameId: number;
   title: string;
@@ -16,3 +18,5 @@ export type Order = {
   pickup_point_address: string | null;
   items: OrderItem[];
 };
+
+export type FavoriteGame = Game;

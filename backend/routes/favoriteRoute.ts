@@ -11,7 +11,7 @@ import { authMiddleware } from "../middleware/authMiddleware";
 
 const favoriteRoute = express.Router();
 
-favoriteRoute.get("/", authMiddleware, getFavoritesByUserController);
+favoriteRoute.get("/user", authMiddleware, getFavoritesByUserController);
 
 favoriteRoute.get("/:gameId", authMiddleware, getFavoriteController);
 

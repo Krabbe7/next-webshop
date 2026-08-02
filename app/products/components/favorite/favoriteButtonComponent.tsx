@@ -8,12 +8,19 @@ import { useFavorite } from "../../hooks/favoriteHook/useFavorite";
 
 type Props = {
   gameId: number;
+  onToggle?: (favorite: boolean) => void;
 };
 
-export default function FavoriteButton({ gameId }: Props) {
+export default function FavoriteButton({ gameId, onToggle }: Props) {
   const { favorite, loading, toggleFavorite } = useFavorite(gameId);
 
   if (loading) return null;
+
+  async function handleToggle() {
+    await toggleFavorite();
+
+    onToggle?.(!favorite);
+  }
 
   return (
     <button
@@ -21,7 +28,7 @@ export default function FavoriteButton({ gameId }: Props) {
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        toggleFavorite();
+        handleToggle();
       }}
     >
       {favorite ? <FaHeart className={styles.active} /> : <FaRegHeart />}

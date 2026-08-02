@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import { FiPackage, FiCalendar, FiTruck, FiCheckCircle } from "react-icons/fi";
-
-import { useOrders } from "../hooks/useOrders";
+import { useState } from "react";
+import { useOrderHistory } from "../../hooks/orderHistoryHook/useOrderHistory";
 import styles from "./orderHistory.module.css";
 
 export default function OrderHistory() {
-  const { orders, loading } = useOrders();
+  const { orders, loading } = useOrderHistory();
+  const [visibleOrders, setVisibleOrders] = useState(3);
 
   if (loading) {
     return <div className={styles.loading}>Indlæser...</div>;
@@ -25,9 +26,9 @@ export default function OrderHistory() {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.title}>Ordrehistorik</h2>
+      <h2 className={styles.orderHistoryTitle}>Ordrehistorik</h2>
 
-      {orders.map((order) => (
+      {orders.slice(0, visibleOrders).map((order) => (
         <article key={order.id} className={styles.orderCard}>
           <div className={styles.orderHeader}>
             <div className={styles.left}>
@@ -87,6 +88,14 @@ export default function OrderHistory() {
           </div>
         </article>
       ))}
+      {orders.length > visibleOrders && (
+        <button
+          className={styles.showMoreButton}
+          onClick={() => setVisibleOrders((prev) => prev + 3)}
+        >
+          Vis ældre ordrer
+        </button>
+      )}
     </section>
   );
 }

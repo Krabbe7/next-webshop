@@ -1,0 +1,20 @@
+.userPageContent {
+    display: flex;
+    gap: 2rem;
+    margin-top: 3rem;
+
+}
+
+.userPageTitle,
+.userWelcome {
+    color: #ffffff;
+    text-align: center;
+}
+
+
+@media (max-width:780px) {
+    .userPageContent {
+        display: flex;
+        flex-direction: column;
+    }
+}

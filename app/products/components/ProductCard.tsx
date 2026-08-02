@@ -10,14 +10,23 @@ import type { Game } from "../types";
 
 type Props = {
   game: Game;
+  onFavoriteRemove?: (id: number) => void;
 };
 
-export default function ProductCard({ game }: Props) {
+export default function ProductCard({ game, onFavoriteRemove }: Props) {
   return (
     <Link href={`/game/${game.id}`} className={styles.cardLink}>
       <div className={styles.card}>
         <div className={styles.imageWrapper}>
-          <FavoriteButton gameId={game.id} />
+          <FavoriteButton
+            gameId={game.id}
+            onToggle={(isFavorite) => {
+              if (!isFavorite) {
+                onFavoriteRemove?.(game.id);
+              }
+            }}
+          />
+
           {game.image_url ? (
             <Image
               src={game.image_url}

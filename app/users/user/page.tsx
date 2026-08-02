@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import OrderHistory from "./components/orderHistory";
+import OrderHistory from "./components/orderHistory/orderHistory";
+import FavoriteList from "./components/userFavorites/userFavorites";
+import styles from "./userPage.module.css";
 export default function UserPage() {
   const router = useRouter();
   const params = useParams();
@@ -44,9 +46,9 @@ export default function UserPage() {
 
   return (
     <main style={{ padding: "2rem" }}>
-      <h1>Min side</h1>
+      <h1 className={styles.userPageTitle}>Min side</h1>
 
-      <p>Velkommen {user.email}</p>
+      <p className={styles.userWelcome}>Velkommen {user.email}</p>
 
       {/* ADMIN VIEW */}
       {/* {user.role === "admin" ? (
@@ -58,10 +60,12 @@ export default function UserPage() {
           <Link href="/admin">🎮 Gå til admin games</Link>
         </div>
       ) : ( */}
-      <div>
-        <h2>Bruger side</h2>
+
+      <div className={styles.userPageContent}>
+        <FavoriteList />
         <OrderHistory />
       </div>
+
       {/* )} */}
     </main>
   );

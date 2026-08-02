@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import type { Order, OrderItem } from "../types";
+import type { Order, OrderItem } from "../../types";
 
-export function useOrders() {
+export function useOrderHistory() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 

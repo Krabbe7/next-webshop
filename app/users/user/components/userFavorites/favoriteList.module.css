@@ -1,0 +1,30 @@
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.favoriteTitle {
+    margin: 1.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+}
+
+.loading,
+.empty {
+    padding: 3rem;
+    text-align: center;
+    color: #bbb;
+}
+
+.gamesGrid {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+    gap: 1rem;
+
+    justify-content: center;
+}
