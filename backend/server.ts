@@ -11,14 +11,19 @@ import favoriteRoute from "./routes/favoriteRoute";
 
 import { authMiddleware } from "./middleware/authMiddleware";
 
+import cookieParser from "cookie-parser";
+
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
-app.use(cors());
-
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
+app.use(cookieParser());
 // Routes
 app.use("/api/games", gameRoute);
 app.use("/api/users", userRoute);

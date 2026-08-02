@@ -167,6 +167,7 @@
     position: absolute;
 
     top: calc(100% + 10px);
+    top: 30;
     right: 0;
 
     width: 220px;

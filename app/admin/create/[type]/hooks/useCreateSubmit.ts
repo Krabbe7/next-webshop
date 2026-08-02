@@ -25,11 +25,9 @@ export function useCreateSubmit({ config, formData, type }: Props) {
     try {
       await fetch(`http://localhost:5000/api/${config.api}`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          ...(token && {
-            Authorization: `Bearer ${token}`,
-          }),
         },
         body: JSON.stringify(data),
       });

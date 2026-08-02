@@ -19,7 +19,10 @@ export function usePickupPoints(address: string, provider: string) {
           "http://localhost:5000/api/shipping/pickup-points",
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
             body: JSON.stringify({ address, provider }),
           },
         );

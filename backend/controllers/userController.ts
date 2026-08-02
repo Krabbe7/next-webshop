@@ -23,7 +23,17 @@ export const login = async (req: Request, res: Response) => {
 
     const data = await loginUserService(email, password);
 
-    res.json(data);
+    res.cookie("token", data.token, {
+      httpOnly: true,
+      //Sender over HTTPS hvis sat til production, men i development (saat til nu) må den godt sende over HTTP
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.json({
+      user: data.user,
+    });
   } catch (err: any) {
     res.status(401).json({
       error: err.message || "Login failed",
@@ -34,5 +44,13 @@ export const login = async (req: Request, res: Response) => {
 export const getUser = (req: Request, res: Response) => {
   res.json({
     user: (req as any).user,
+  });
+};
+
+export const logout = (req: Request, res: Response) => {
+  res.clearCookie("token");
+
+  res.json({
+    success: true,
   });
 };

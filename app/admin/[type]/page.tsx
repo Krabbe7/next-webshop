@@ -37,9 +37,9 @@ export default function AdminPage({
       }
 
       const userRes = await fetch("http://localhost:5000/api/users/user", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+       
+          credentials: "include",
+      
       });
 
       const userData = await userRes.json();
@@ -64,9 +64,9 @@ export default function AdminPage({
 
     await fetch(`http://localhost:5000/api/${config.api}/${id}`, {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+   
+        credentials: "include",
+      
     });
 
     setItems((prev) => prev.filter((item) => item.id !== id));
@@ -81,10 +81,7 @@ export default function AdminPage({
       <div className={styles.header}>
         <h1 className={styles.title}>{config.title}</h1>
 
-        <Link
-          href={`/admin/create/${type}`}
-          className={styles.createButton}
-        >
+        <Link href={`/admin/create/${type}`} className={styles.createButton}>
           ➕ Opret ny
         </Link>
       </div>
@@ -101,22 +98,16 @@ export default function AdminPage({
                     className={styles.image}
                   />
                 ) : (
-                  <div className={styles.noImage}>
-                    Intet billede
-                  </div>
+                  <div className={styles.noImage}>Intet billede</div>
                 )}
               </div>
             )}
 
             <div className={styles.content}>
-              <h3 className={styles.itemTitle}>
-                {item[config.displayField]}
-              </h3>
+              <h3 className={styles.itemTitle}>{item[config.displayField]}</h3>
 
               {"price" in item && (
-                <p className={styles.price}>
-                  {item.price} kr.
-                </p>
+                <p className={styles.price}>{item.price} kr.</p>
               )}
 
               <div className={styles.actions}>

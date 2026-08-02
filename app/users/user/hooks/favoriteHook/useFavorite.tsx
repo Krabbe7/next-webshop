@@ -14,9 +14,9 @@ export function useFavorites() {
       const token = localStorage.getItem("token");
 
       const res = await fetch("http://localhost:5000/api/favorites/user", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+
+          credentials: "include",
+
       });
 
       if (!res.ok) {

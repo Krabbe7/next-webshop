@@ -69,9 +69,9 @@ export function useCheckout(args: Args) {
 
     const res = await fetch("http://localhost:5000/api/orders", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       body: JSON.stringify(payload),
     });

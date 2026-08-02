@@ -11,14 +11,9 @@ export function useGetUserRating(gameId: number) {
 
       if (!token) return;
 
-      const res = await fetch(
-        `http://localhost:5000/api/rating/${gameId}/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const res = await fetch(`http://localhost:5000/api/rating/${gameId}/me`, {
+        credentials: "include",
+      });
 
       if (!res.ok) return;
 

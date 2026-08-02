@@ -18,19 +18,26 @@ export default function NavBar() {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    const loadUser = () => {
-      const storedUser = localStorage.getItem("user");
+    const loadUser = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/users/user", {
+          credentials: "include",
+        });
 
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      } else {
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+
+        const data = await res.json();
+        setUser(data.user);
+      } catch (err) {
+        console.error(err);
         setUser(null);
       }
     };
 
     const updateCartCount = () => {
-      const user = JSON.parse(localStorage.getItem("user") || "null");
-
       const cartKey = user ? `cart_${user.id}` : "cart_guest";
 
       const cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
@@ -44,7 +51,6 @@ export default function NavBar() {
     };
 
     loadUser();
-
     updateCartCount();
 
     window.addEventListener("authChanged", loadUser);
@@ -54,11 +60,13 @@ export default function NavBar() {
       window.removeEventListener("authChanged", loadUser);
       window.removeEventListener("cartUpdated", updateCartCount);
     };
-  }, []);
+  }, [user]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+  const handleLogout = async () => {
+    await fetch("http://localhost:5000/api/users/logout", {
+      method: "POST",
+      credentials: "include",
+    });
 
     setUser(null);
     setOpen(false);

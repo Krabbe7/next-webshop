@@ -19,9 +19,7 @@ export function useFavorite(gameId: number) {
     }
 
     const res = await fetch(`http://localhost:5000/api/favorites/${gameId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      credentials: "include",
     });
 
     if (!res.ok) {
@@ -46,18 +44,16 @@ export function useFavorite(gameId: number) {
     if (favorite) {
       await fetch(`http://localhost:5000/api/favorites/${gameId}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+
+        credentials: "include",
       });
 
       setFavorite(false);
     } else {
       await fetch(`http://localhost:5000/api/favorites/${gameId}`, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+
+        credentials: "include",
       });
 
       setFavorite(true);

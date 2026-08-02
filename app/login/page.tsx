@@ -17,6 +17,7 @@ export default function LoginPage() {
     try {
       const response = await fetch("http://localhost:5000/api/users/login", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -34,10 +35,6 @@ export default function LoginPage() {
         alert(data.error || "Login failed");
         return;
       }
-
-      // 💥 save auth
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
 
       // 💥 trigger navbar update
       window.dispatchEvent(new Event("authChanged"));

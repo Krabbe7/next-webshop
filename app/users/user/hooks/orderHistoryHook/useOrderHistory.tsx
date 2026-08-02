@@ -15,9 +15,7 @@ export function useOrderHistory() {
       const token = localStorage.getItem("token");
 
       const res = await fetch("http://localhost:5000/api/orders/user", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials: "include",
       });
 
       if (!res.ok) {
