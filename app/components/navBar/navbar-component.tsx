@@ -1,20 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import Link from "next/link";
-
 import { FaBars, FaTimes, FaShoppingCart, FaUserCircle } from "react-icons/fa";
-
 import styles from "./navBar.module.css";
 
 export default function NavBar() {
   const [user, setUser] = useState<any>(null);
-
   const [open, setOpen] = useState(false);
-
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
@@ -31,33 +25,50 @@ export default function NavBar() {
 
         const data = await res.json();
         setUser(data.user);
-      } catch (err) {
-        console.error(err);
+      } catch {
         setUser(null);
       }
     };
 
+    loadUser();
+
+    window.addEventListener("authChanged", loadUser);
+
+    return () => {
+      window.removeEventListener("authChanged", loadUser);
+    };
+  }, []);
+
+  useEffect(() => {
     const updateCartCount = () => {
       const cartKey = user ? `cart_${user.id}` : "cart_guest";
 
-      const cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+      const raw = localStorage.getItem(cartKey);
 
-      const totalItems = cart.reduce(
+      console.log("========== NAVBAR ==========");
+      console.log("user:", user);
+      console.log("cartKey:", cartKey);
+      console.log("raw localStorage:", raw);
+
+      const cart = JSON.parse(raw || "[]");
+
+      console.log("cart:", cart);
+
+      const total = cart.reduce(
         (sum: number, item: any) => sum + item.quantity,
         0,
       );
 
-      setCartCount(totalItems);
+      console.log("total:", total);
+
+      setCartCount(total);
     };
 
-    loadUser();
     updateCartCount();
 
-    window.addEventListener("authChanged", loadUser);
     window.addEventListener("cartUpdated", updateCartCount);
 
     return () => {
-      window.removeEventListener("authChanged", loadUser);
       window.removeEventListener("cartUpdated", updateCartCount);
     };
   }, [user]);
@@ -156,6 +167,7 @@ export default function NavBar() {
                     Admin Panel
                   </Link>
                 )}
+
                 {user.role === "user" && (
                   <Link href="/users/user" className={styles.adminLink}>
                     Min side

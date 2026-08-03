@@ -4,6 +4,7 @@ import styles from "./login.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { mergeGuestCart } from "@/app/services/mergeCarts";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -36,7 +37,12 @@ export default function LoginPage() {
         return;
       }
 
-      // 💥 trigger navbar update
+      // Flyt guest cart til brugerens cart efter succesfuldt login
+      if (data.user?.id) {
+        mergeGuestCart(data.user.id);
+      }
+
+      // Opdater navbar og andre komponenter
       window.dispatchEvent(new Event("authChanged"));
 
       alert("Logged in!");

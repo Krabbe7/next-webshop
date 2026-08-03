@@ -16,10 +16,10 @@ export default function AddToCartButton({ game }: Props) {
   return (
     <button
       className={styles.button}
-      onClick={(e) => {
+      onClick={async (e) => {
         e.preventDefault();
 
-        addToCart({
+        await addToCart({
           id: game.id,
           title: game.title,
           price: game.price,

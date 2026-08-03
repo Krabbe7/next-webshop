@@ -1,21 +1,39 @@
-import { CartItem } from "./cartHelper";
+import type { CartItem } from "./cartHelper";
 
-function getCartKey() {
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+async function getCartKey() {
+  try {
+    const res = await fetch("http://localhost:5000/api/users/user", {
+      credentials: "include",
+    });
 
-  return user ? `cart_${user.id}` : "cart_guest";
+    if (res.ok) {
+      const data = await res.json();
+
+      return `cart_${data.user.id}`;
+    }
+  } catch (err) {
+    console.error("Could not get user", err);
+  }
+
+  return "cart_guest";
 }
 
-export function getCart(): CartItem[] {
-  const cart = localStorage.getItem(getCartKey());
+export async function getCart(): Promise<CartItem[]> {
+  const cartKey = await getCartKey();
+
+  const cart = localStorage.getItem(cartKey);
 
   return cart ? JSON.parse(cart) : [];
 }
 
-export function addToCart(item: CartItem) {
-  const cart = getCart();
+export async function addToCart(item: CartItem) {
+  const cartKey = await getCartKey();
 
-  const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+  const cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+
+  const existingItem = cart.find(
+    (cartItem: CartItem) => cartItem.id === item.id,
+  );
 
   if (existingItem) {
     existingItem.quantity += 1;
@@ -23,21 +41,27 @@ export function addToCart(item: CartItem) {
     cart.push(item);
   }
 
-  localStorage.setItem(getCartKey(), JSON.stringify(cart));
+  localStorage.setItem(cartKey, JSON.stringify(cart));
 
   window.dispatchEvent(new Event("cartUpdated"));
 }
 
-export function removeFromCart(id: number) {
-  const cart = getCart().filter((item) => item.id !== id);
+export async function removeFromCart(id: number) {
+  const cartKey = await getCartKey();
 
-  localStorage.setItem(getCartKey(), JSON.stringify(cart));
+  const cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+
+  const updatedCart = cart.filter((item: CartItem) => item.id !== id);
+
+  localStorage.setItem(cartKey, JSON.stringify(updatedCart));
 
   window.dispatchEvent(new Event("cartUpdated"));
 }
 
-export function clearCart() {
-  localStorage.removeItem(getCartKey());
+export async function clearCart() {
+  const cartKey = await getCartKey();
+
+  localStorage.removeItem(cartKey);
 
   window.dispatchEvent(new Event("cartUpdated"));
 }

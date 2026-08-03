@@ -8,22 +8,52 @@ import Link from "next/link";
 export default function CartPage() {
   const [cart, setCart] = useState<any[]>([]);
 
-  const getCart = () => {
-    const user = JSON.parse(localStorage.getItem("user") || "null");
+  const loadCart = async () => {
+    let cartKey = "cart_guest";
 
-    const cartKey = user ? `cart_${user.id}` : "cart_guest";
+    try {
+      const res = await fetch("http://localhost:5000/api/users/user", {
+        credentials: "include",
+      });
 
-    return JSON.parse(localStorage.getItem(cartKey) || "[]");
+      if (res.ok) {
+        const data = await res.json();
+
+        cartKey = `cart_${data.user.id}`;
+      }
+    } catch {
+      cartKey = "cart_guest";
+    }
+
+    const savedCart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+
+    setCart(savedCart);
   };
 
   useEffect(() => {
-    setCart(getCart());
+    loadCart();
+
+    window.addEventListener("cartUpdated", loadCart);
+
+    return () => {
+      window.removeEventListener("cartUpdated", loadCart);
+    };
   }, []);
 
-  const removeItem = (id: number) => {
-    const user = JSON.parse(localStorage.getItem("user") || "null");
+  const removeItem = async (id: number) => {
+    let cartKey = "cart_guest";
 
-    const cartKey = user ? `cart_${user.id}` : "cart_guest";
+    try {
+      const res = await fetch("http://localhost:5000/api/users/user", {
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+
+        cartKey = `cart_${data.user.id}`;
+      }
+    } catch {}
 
     const updatedCart = cart.filter((item) => item.id !== id);
 
@@ -76,6 +106,7 @@ export default function CartPage() {
           </div>
         </div>
       ))}
+
       <button>
         <Link href="/checkout">Gå til kassen</Link>
       </button>
