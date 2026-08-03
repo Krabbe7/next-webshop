@@ -36,7 +36,6 @@ export function useCheckout(args: Args) {
       city: args.address.city,
       country: args.address.country,
 
-      // Gem kun ID'et i databasen
       shipping: args.shipping.id,
 
       pickupPoint: args.selectedPickup
@@ -55,17 +54,10 @@ export function useCheckout(args: Args) {
 
       subtotal: args.subtotal,
 
-      // Her var fejlen:
-      // args.shipping var hele objektet
       shippingPrice: args.shipping.price,
 
       totalPrice: args.total,
     };
-
-    console.log("Order payload:", payload);
-
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
     const res = await fetch("http://localhost:5000/api/orders", {
       method: "POST",
@@ -79,6 +71,18 @@ export function useCheckout(args: Args) {
     const data = await res.json();
 
     if (data.orderId) {
+      // Find korrekt kurv
+      const user = JSON.parse(localStorage.getItem("user") || "null");
+
+      const cartKey = user ? `cart_${user.id}` : "cart_guest";
+
+      // Slet kurven
+      localStorage.removeItem(cartKey);
+
+      // Opdater alle komponenter der viser kurven
+      window.dispatchEvent(new Event("cartUpdated"));
+
+      // Gå til success-siden
       args.onSuccess(data.orderId);
     }
   };
