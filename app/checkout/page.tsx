@@ -127,6 +127,7 @@ export default function CheckoutPage() {
             selected={selected}
             onSelect={setSelected}
             error={errors.pickup}
+            address={address.street}
           />
 
           <PaymentForm

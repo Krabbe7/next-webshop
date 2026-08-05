@@ -12,14 +12,14 @@ export function ShippingSelector({ methods, selected, onChange }: Props) {
       <h2>Levering</h2>
 
       {methods.map((m) => (
-        <label key={m.id}>
+        <label key={m.id} className={styles.shippingName}>
+          {m.name} - {m.price} kr.
           <input
-            className={styles.input}
+            className={styles.radio}
             type="radio"
             checked={selected.id === m.id}
             onChange={() => onChange(m)}
           />
-          {m.name} - {m.price} kr.
         </label>
       ))}
     </section>

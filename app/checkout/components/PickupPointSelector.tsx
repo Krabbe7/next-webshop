@@ -8,6 +8,7 @@ type Props = {
   onSelect: (p: PickupPoint) => void;
   visible: boolean;
   error?: string;
+  address: string;
 };
 
 export function PickupPointSelector({
@@ -17,6 +18,7 @@ export function PickupPointSelector({
   onSelect,
   visible,
   error,
+  address,
 }: Props) {
   if (!visible) return null;
 
@@ -24,27 +26,38 @@ export function PickupPointSelector({
     <section className={styles.card}>
       <h2>Vælg pakkeshop</h2>
 
-      {loading && <p>Finder pakkeshops...</p>}
+      {address.trim() === "" ? (
+        <p className={styles.typeAdressText}>
+          Indtast adresse for at vælge afhentingssted
+        </p>
+      ) : (
+        <>
+          {loading && (
+            <p className={styles.typeAdressText}>Finder pakkeshops...</p>
+          )}
 
-      {points.map((p) => (
-        <label key={p.id}>
-          <input
-            className={styles.input}
-            type="radio"
-            checked={selected?.id === p.id}
-            onChange={() => onSelect(p)}
-          />
+          {points.map((p) => (
+            <label key={p.id} className={styles.pickUpPointName}>
+              <div className={styles.pickUpPointContainer}>
+                <div className={styles.pickUpPointAddress}>
+                  <strong>{p.name}</strong>
+                  <br />
+                  <small>{p.address}</small>
+                </div>
 
-          <div>
-            <strong>{p.name}</strong>
-            <br />
-            <small>{p.address}</small>
-          </div>
-        </label>
-      ))}
+                <input
+                  className={styles.radio}
+                  type="radio"
+                  checked={selected?.id === p.id}
+                  onChange={() => onSelect(p)}
+                />
+              </div>
+            </label>
+          ))}
 
-      {/* ERROR DISPLAY */}
-      {error && <p className="error">{error}</p>}
+          {error && <p className="error">{error}</p>}
+        </>
+      )}
     </section>
   );
 }

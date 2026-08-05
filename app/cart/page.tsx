@@ -14,10 +14,12 @@ export default function CartPage() {
   return (
     <main className={styles.cartContainer}>
       <h1>Kurv</h1>
-
-      <CartList cart={cart} onRemove={remove} />
-
-      <CartSummary cart={cart} />
+      <div className={styles.cartGrid}>
+        <div className={styles.cartListContainer}>
+          <CartList cart={cart} onRemove={remove} />
+        </div>
+        <CartSummary cart={cart} />
+      </div>
     </main>
   );
 }

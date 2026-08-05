@@ -18,24 +18,18 @@ export default function CartSummary({ cart }: Props) {
 
   return (
     <aside className={styles.summary}>
-      <h2>Ordresammendrag</h2>
+      <h2>Opsummering</h2>
 
       <div className={styles.summaryRow}>
         <span>Varer</span>
 
-        <span>{cart.length}</span>
+        <span>{cart.reduce((sum, item) => sum + item.quantity, 0)}</span>
       </div>
 
       <div className={styles.summaryRow}>
         <span>Subtotal</span>
 
         <span>{subtotal} kr.</span>
-      </div>
-
-      <div className={styles.summaryRow}>
-        <span>Fragt</span>
-
-        <span>Beregnes ved checkout</span>
       </div>
 
       <div className={styles.totalRow}>

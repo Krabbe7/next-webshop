@@ -5,13 +5,15 @@ import Image from "next/image";
 import styles from "../cartPage.module.css";
 
 import type { CartItem as CartItemType } from "../types";
-
+import { FiMinus, FiPlus, FiTrash2 } from "react-icons/fi";
+import { useCartQuantity } from "../hooks/useCartQuantity";
 type Props = {
   item: CartItemType;
   onRemove: (id: number) => void;
 };
 
 export default function CartItem({ item, onRemove }: Props) {
+  const { updateQuantity } = useCartQuantity();
   return (
     <article className={styles.cartItem}>
       <div className={styles.imageWrapper}>
@@ -29,19 +31,34 @@ export default function CartItem({ item, onRemove }: Props) {
 
         <p className={styles.price}>{item.price} kr.</p>
 
-        <p className={styles.quantity}>
-          Antal: <strong>{item.quantity}</strong>
-        </p>
+        <div className={styles.quantityBox}>
+          <button
+            className={styles.quantityButton}
+            onClick={() => updateQuantity(item.id, -1)}
+          >
+            <FiMinus />
+          </button>
+
+          <span>{item.quantity}</span>
+
+          <button
+            className={styles.quantityButton}
+            onClick={() => updateQuantity(item.id, 1)}
+          >
+            <FiPlus />
+          </button>
+        </div>
 
         <p className={styles.subtotal}>
-          Delsum: {item.price * item.quantity} kr.
+          I alt: {item.price * item.quantity} kr.
         </p>
 
         <button
           className={styles.removeButton}
           onClick={() => onRemove(item.id)}
         >
-          Fjern fra kurv
+          <FiTrash2 />
+          Fjern
         </button>
       </div>
     </article>
