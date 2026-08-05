@@ -27,7 +27,7 @@ export default function EditPage({ params }: { params: Promise<EditParams> }) {
     type,
   });
 
-  if (!config) return <h1>Ukendt type</h1>;
+  if (!config) return <h1 className="title">Ukendt type</h1>;
   if (loading || !item) return <p>Loading...</p>;
 
   return (

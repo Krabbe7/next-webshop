@@ -9,7 +9,7 @@ export default async function SuccessPage({ params }: Props) {
 
   return (
     <main>
-      <h1>Tak for din ordre 🎉</h1>
+      <h1 className="title">Tak for din ordre 🎉</h1>
       <p>Ordrenummer: #{id}</p>
     </main>
   );

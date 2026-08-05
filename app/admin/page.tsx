@@ -29,7 +29,7 @@ export default function AdminPage() {
   return (
     <main className={styles.container}>
       <div className={styles.header}>
-        <h1>Admin Dashboard</h1>
+        <h1 className="title">Admin Dashboard</h1>
       </div>
 
       <section className={styles.cards}>

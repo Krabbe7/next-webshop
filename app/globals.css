@@ -41,7 +41,7 @@ body {
   background-color: #141414;
 }
 
-a {
+/* a {
   color: inherit;
   text-decoration: none;
 }
@@ -95,10 +95,11 @@ a {
 
 .nav-icons a:hover {
   color: black;
-}
+} */
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 2rem;
 }

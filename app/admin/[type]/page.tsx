@@ -24,7 +24,7 @@ export default function AdminPage({
   const config = adminConfig[type as keyof typeof adminConfig];
 
   if (!config) {
-    return <h1>Ukendt admin-side</h1>;
+    return <h1 className="title">Ukendt admin-side</h1>;
   }
 
   useEffect(() => {
@@ -37,9 +37,7 @@ export default function AdminPage({
       }
 
       const userRes = await fetch("http://localhost:5000/api/users/user", {
-       
-          credentials: "include",
-      
+        credentials: "include",
       });
 
       const userData = await userRes.json();
@@ -64,9 +62,8 @@ export default function AdminPage({
 
     await fetch(`http://localhost:5000/api/${config.api}/${id}`, {
       method: "DELETE",
-   
-        credentials: "include",
-      
+
+      credentials: "include",
     });
 
     setItems((prev) => prev.filter((item) => item.id !== id));

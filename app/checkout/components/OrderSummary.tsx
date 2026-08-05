@@ -35,12 +35,12 @@ export function OrderSummary({
 
         <div className={styles.summaryRow}>
           <span>Subtotal</span>
-          <span>{subtotal}</span>
+          <span>{subtotal} kr</span>
         </div>
 
         <div className={styles.summaryRow}>
           <span>Levering</span>
-          <span>{shipping}</span>
+          <span>{shipping} kr</span>
         </div>
 
         {pickup && (
@@ -51,8 +51,8 @@ export function OrderSummary({
         )}
 
         <div className={styles.totalRow}>
-          <span>Total</span>
-          <span>{total}</span>
+          <span>I alt</span>
+          <span>{total} kr</span>
         </div>
       </div>
     </aside>

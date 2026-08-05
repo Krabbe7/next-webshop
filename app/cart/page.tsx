@@ -13,7 +13,7 @@ export default function CartPage() {
 
   return (
     <main className={styles.cartContainer}>
-      <h1>Kurv</h1>
+      <h1 className="title">Kurv</h1>
       <div className={styles.cartGrid}>
         <div className={styles.cartListContainer}>
           <CartList cart={cart} onRemove={remove} />

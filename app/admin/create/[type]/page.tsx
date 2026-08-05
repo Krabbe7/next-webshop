@@ -35,7 +35,7 @@ export default function CreatePage({
   });
 
   if (!config) {
-    return <h1>Ukendt type</h1>;
+    return <h1 className="title">Ukendt type</h1>;
   }
 
   return (

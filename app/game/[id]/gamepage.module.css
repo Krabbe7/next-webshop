@@ -9,7 +9,7 @@
     margin: 0 auto;
 
     display: grid;
-    grid-template-columns: 440px 1fr;
+    grid-template-columns: 350px 1fr;
     gap: 3rem;
 
     background: #181818;
@@ -22,18 +22,15 @@
 
 .imageWrapper {
     position: relative;
+    width: 100%;
+    max-width: 350px;
+    aspect-ratio: 4 / 5;
 }
 
 .image {
-    width: 100%;
-    height: auto;
-    display: block;
+    object-fit: cover;
     border-radius: 1rem;
-    transition: .35s ease;
-}
-
-.imageWrapper:hover .image {
-    transform: scale(1.03);
+    transition: transform .35s ease;
 }
 
 .content {
@@ -127,7 +124,7 @@
     border-radius: 14px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 770px) {
 
     .page {
         padding: 1rem;

@@ -35,8 +35,7 @@ export default async function GamePage({
             <Image
               src={game.image_url}
               alt={game.title}
-              width={400}
-              height={500}
+              fill
               className={styles.image}
             />
           ) : (
