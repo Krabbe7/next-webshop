@@ -52,8 +52,9 @@
 
 .meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: .8rem;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
@@ -71,6 +72,17 @@
     border-radius: 999px;
     color: #d6d6d6;
     width: fit-content;
+}
+
+.stockStatus {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.genrePlatformContainer {
+    display: flex;
+    gap: 0.5rem;
 }
 
 .price {
@@ -109,6 +121,27 @@
     transform: translateY(-2px);
 
     box-shadow: 0 0 16px rgba(205, 9, 9, .35);
+}
+
+.noStock {
+    margin-top: auto;
+    width: fit-content;
+
+    background: #4b5563;
+    color: #d1d5db;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 1rem 2.2rem;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: not-allowed;
+
+    opacity: 0.7;
+    user-select: none;
 }
 
 .noImage {

@@ -49,7 +49,11 @@ export default function ProductCard({ game, onFavoriteRemove }: Props) {
 
           <p className={styles.price}>{game.price} kr.</p>
 
-          <AddToCartButton game={game} />
+          {game.stock === 0 ? (
+            <div className={styles.noStock}> Ikke på lager</div>
+          ) : (
+            <AddToCartButton game={game} />
+          )}
         </div>
       </div>
     </Link>

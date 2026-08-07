@@ -1,5 +1,6 @@
 import styles from "./gamepage.module.css";
 import Image from "next/image";
+import { FaCircle } from "react-icons/fa";
 import RatingSection from "./components/rating/ratingComponent";
 import FavoriteButton from "@/app/products/components/favorite/favoriteButtonComponent";
 export async function getGame(id: string) {
@@ -49,19 +50,40 @@ export default async function GamePage({
           <p className={styles.description}>{game.description}</p>
 
           <div className={styles.meta}>
-            <p>
-              <b>Genre:</b> {game.genre}
-            </p>
+            <div className={styles.genrePlatformContainer}>
+              <p>
+                <b>Genre:</b> {game.genre}
+              </p>
 
-            <p>
-              <b>Platform:</b> {game.platform}
-            </p>
-
+              <p>
+                <b>Platform:</b> {game.platform}
+              </p>
+            </div>
             <p className={styles.price}>{game.price} kr.</p>
+
+            <p className={styles.stock}>
+              {game.stock === 0 ? (
+                <div className={styles.stockStatus}>
+                  <b>Udsolgt</b> <FaCircle color="red" size={16} />
+                </div>
+              ) : game.stock < 5 ? (
+                <div className={styles.stockStatus}>
+                  <b>Kun {game.stock} tilbage</b>{" "}
+                  <FaCircle color="gold" size={16} />
+                </div>
+              ) : (
+                <div className={styles.stockStatus}>
+                  <b>På lager</b> <FaCircle color="green" size={16} />
+                </div>
+              )}
+            </p>
             <RatingSection gameId={game.id} />
           </div>
-
-          <button className={styles.button}>Tilføj til kurv</button>
+          {game.stock === 0 ? (
+            <div className={styles.noStock}> Ikke på lager</div>
+          ) : (
+            <button className={styles.button}>Tilføj til kurv</button>
+          )}
         </div>
       </div>
     </main>
