@@ -2,7 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { FaBars, FaTimes, FaShoppingCart, FaUserCircle } from "react-icons/fa";
+import Image from "next/image";
+import {
+  FaBars,
+  FaTimes,
+  FaShoppingCart,
+  FaUserCircle,
+  FaChevronDown,
+} from "react-icons/fa";
 import styles from "./navBar.module.css";
 
 export default function NavBar() {
@@ -10,6 +17,7 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [productsOpen, setProductsOpen] = useState(false);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -89,8 +97,12 @@ export default function NavBar() {
 
   return (
     <nav className={styles.navbar}>
-      <Link href="/" className={styles.logo}>
-        Game Store
+      <Link href="/">
+        <img
+          className={styles.logo}
+          src="/images/logo/Pixelvault-logo.svg"
+          alt="PIXELVAULT logo"
+        />
       </Link>
 
       <ul
@@ -102,10 +114,58 @@ export default function NavBar() {
           </Link>
         </li>
 
-        <li>
-          <Link href="/products" onClick={() => setMenuOpen(false)}>
+        <li
+          className={styles.productsDropdown}
+          onMouseEnter={() => {
+            if (window.innerWidth > 850) {
+              setProductsOpen(true);
+            }
+          }}
+          onMouseLeave={() => {
+            if (window.innerWidth > 650) {
+              setProductsOpen(false);
+            }
+          }}
+        >
+          <button
+            className={styles.productsButton}
+            onClick={() => setProductsOpen((prev) => !prev)}
+          >
             Produkter
-          </Link>
+            <FaChevronDown
+              className={`${styles.chevron} ${
+                productsOpen ? styles.chevronOpen : ""
+              }`}
+            />
+          </button>
+
+          {productsOpen && (
+            <ul className={styles.productsMenu}>
+              <li>
+                <Link
+                  href="/products"
+                  onClick={() => {
+                    setProductsOpen(false);
+                    setMenuOpen(false);
+                  }}
+                >
+                  Spil
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/"
+                  onClick={() => {
+                    setProductsOpen(false);
+                    setMenuOpen(false);
+                  }}
+                >
+                  Kategori 2
+                </Link>
+              </li>
+            </ul>
+          )}
         </li>
 
         <li>

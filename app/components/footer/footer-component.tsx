@@ -16,7 +16,11 @@ export default function Footer() {
       <div className={styles.container}>
         {/* Brand */}
         <div className={styles.column}>
-          <h2 className={styles.logo}>Game Store</h2>
+          <img
+            className={styles.logo}
+            src="/images/logo/Pixelvault-logo-text-white.svg"
+            alt="PIXELVAULT logo text white"
+          />
 
           <p className={styles.description}>
             Din webshop til de nyeste spil til PlayStation, Xbox, Nintendo og
@@ -66,7 +70,7 @@ export default function Footer() {
           </p>
 
           <p>
-            <FaEnvelope /> kontakt@gamestore.dk
+            <FaEnvelope /> kontakt@pixelvault.dk
           </p>
 
           <p>
