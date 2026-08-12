@@ -2,7 +2,7 @@ import styles from "./gamepage.module.css";
 import Image from "next/image";
 import { FaCircle } from "react-icons/fa";
 import RatingSection from "./components/rating/ratingComponent";
-import FavoriteButton from "@/app/products/components/favorite/favoriteButtonComponent";
+import FavoriteButton from "@/app/produkter/components/favorite/favoriteButtonComponent";
 export async function getGame(id: string) {
   const response = await fetch(`http://localhost:5000/api/games/${id}`, {
     next: {

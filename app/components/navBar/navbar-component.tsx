@@ -143,7 +143,7 @@ export default function NavBar() {
             <ul className={styles.productsMenu}>
               <li>
                 <Link
-                  href="/products"
+                  href="/produkter/spil"
                   onClick={() => {
                     setProductsOpen(false);
                     setMenuOpen(false);
@@ -155,7 +155,7 @@ export default function NavBar() {
 
               <li>
                 <Link
-                  href="/"
+                  href="/produkter/kategori2"
                   onClick={() => {
                     setProductsOpen(false);
                     setMenuOpen(false);
@@ -166,12 +166,6 @@ export default function NavBar() {
               </li>
             </ul>
           )}
-        </li>
-
-        <li>
-          <Link href="/" onClick={() => setMenuOpen(false)}>
-            Kategorier
-          </Link>
         </li>
 
         <li>

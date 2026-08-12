@@ -1,5 +1,5 @@
-import ProductSearch from "./components/ProductSearch";
-import styles from "./products.module.css";
+import ProductSearch from "../components/ProductSearch";
+import styles from "../products.module.css";
 
 export async function getGames() {
   const res = await fetch("http://localhost:5000/api/games", {

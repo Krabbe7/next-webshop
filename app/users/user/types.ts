@@ -1,4 +1,4 @@
-import type { Game } from "@/app/products/types";
+import type { Game } from "@/app/produkter/types";
 
 export type OrderItem = {
   gameId: number;

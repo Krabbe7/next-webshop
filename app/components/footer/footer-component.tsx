@@ -23,7 +23,7 @@ export default function Footer() {
           />
 
           <p className={styles.description}>
-            Din webshop til de nyeste spil til PlayStation, Xbox, Nintendo og
+            Din webshop til nye og gamle spil til PlayStation, Xbox, Nintendo og
             PC.
           </p>
 
@@ -34,10 +34,6 @@ export default function Footer() {
 
             <a href="#">
               <FaInstagram />
-            </a>
-
-            <a href="#">
-              <FaGithub />
             </a>
           </div>
         </div>
