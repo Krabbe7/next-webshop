@@ -290,6 +290,14 @@
     transition: .2s;
 }
 
+.checkoutButton.disabled {
+    background: #999;
+    color: #ddd;
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
 .checkoutButton:hover {
     background: #e20b0b;
 

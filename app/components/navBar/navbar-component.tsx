@@ -110,7 +110,7 @@ export default function NavBar() {
       >
         <li>
           <Link href="/" onClick={() => setMenuOpen(false)}>
-            Home
+            Hjem
           </Link>
         </li>
 
@@ -171,13 +171,13 @@ export default function NavBar() {
         </li>
 
         <li>
-          <Link href="/" onClick={() => setMenuOpen(false)}>
+          <Link href="/om-os" onClick={() => setMenuOpen(false)}>
             Om os
           </Link>
         </li>
 
         <li>
-          <Link href="/" onClick={() => setMenuOpen(false)}>
+          <Link href="/kontakt" onClick={() => setMenuOpen(false)}>
             Kontakt
           </Link>
         </li>
@@ -192,7 +192,7 @@ export default function NavBar() {
       </ul>
 
       <div className={styles.navActions}>
-        <Link href="/cart" className={styles.cartLink}>
+        <Link href="/kurv" className={styles.cartLink}>
           <FaShoppingCart className={styles.cartIcon} />
 
           {cartCount > 0 && (

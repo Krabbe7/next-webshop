@@ -140,7 +140,7 @@ export default function CheckoutPage() {
             }}
           />
 
-          <button className={styles.checkoutButton} onClick={handleCheckout}>
+          <button className={`${styles.checkoutButton} ${styles.disabled}`}>
             Gennemfør køb
           </button>
         </div>

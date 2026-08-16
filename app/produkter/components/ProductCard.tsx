@@ -15,7 +15,7 @@ type Props = {
 
 export default function ProductCard({ game, onFavoriteRemove }: Props) {
   return (
-    <Link href={`/game/${game.id}`} className={styles.cardLink}>
+    <Link href={`/produkter/spil/${game.id}`} className={styles.cardLink}>
       <div className={styles.card}>
         <div className={styles.imageWrapper}>
           <FavoriteButton

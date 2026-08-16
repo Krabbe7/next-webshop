@@ -38,7 +38,10 @@ export default function CartSummary({ cart }: Props) {
         <span>{subtotal} kr.</span>
       </div>
 
-      <Link href="/checkout" className={styles.checkoutButton}>
+      <Link
+        href="/betaling"
+        className={`${styles.checkoutButton} ${styles.disabled}`}
+      >
         Gå til checkout
       </Link>
     </aside>
