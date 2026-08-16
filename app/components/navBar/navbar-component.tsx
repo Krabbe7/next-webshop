@@ -17,7 +17,7 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
-  const [productsOpen, setProductsOpen] = useState(false);
+  const [navLinkDropDownOpen, setNavLinkDropDownOpen] = useState(false);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -115,37 +115,39 @@ export default function NavBar() {
         </li>
 
         <li
-          className={styles.productsDropdown}
+          className={styles.navLinkDropDown}
           onMouseEnter={() => {
             if (window.innerWidth > 850) {
-              setProductsOpen(true);
+              setNavLinkDropDownOpen(true);
             }
           }}
           onMouseLeave={() => {
-            if (window.innerWidth > 650) {
-              setProductsOpen(false);
+            if (window.innerWidth > 850) {
+              setNavLinkDropDownOpen(false);
             }
           }}
         >
           <button
-            className={styles.productsButton}
-            onClick={() => setProductsOpen((prev) => !prev)}
+            className={`${styles.navLinkButton} ${
+              navLinkDropDownOpen ? styles.navLinkButtonOpen : ""
+            }`}
+            onClick={() => setNavLinkDropDownOpen((prev) => !prev)}
           >
             Produkter
             <FaChevronDown
               className={`${styles.chevron} ${
-                productsOpen ? styles.chevronOpen : ""
+                navLinkDropDownOpen ? styles.chevronOpen : ""
               }`}
             />
           </button>
 
-          {productsOpen && (
-            <ul className={styles.productsMenu}>
+          {navLinkDropDownOpen && (
+            <ul className={styles.navLinkDropDownMenu}>
               <li>
                 <Link
                   href="/produkter/spil"
                   onClick={() => {
-                    setProductsOpen(false);
+                    setNavLinkDropDownOpen(false);
                     setMenuOpen(false);
                   }}
                 >
@@ -157,7 +159,7 @@ export default function NavBar() {
                 <Link
                   href="/produkter/kategori2"
                   onClick={() => {
-                    setProductsOpen(false);
+                    setNavLinkDropDownOpen(false);
                     setMenuOpen(false);
                   }}
                 >
@@ -211,7 +213,7 @@ export default function NavBar() {
             <FaUserCircle className={styles.profileIcon} />
 
             {open && (
-              <div className={styles.dropdown}>
+              <div className={styles.dropDown}>
                 <p className={styles.username}>Hej {user.username}</p>
 
                 <p className={styles.role}>{user.role}</p>

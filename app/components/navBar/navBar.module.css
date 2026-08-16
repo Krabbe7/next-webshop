@@ -7,7 +7,7 @@
     justify-content: space-between;
     align-items: center;
 
-    height: 75px;
+    height: 65px;
 
     padding: 0 2rem;
 
@@ -18,7 +18,7 @@
 
 .logo {
     width: auto;
-    height: 50px;
+    height: 40px;
 }
 
 
@@ -45,45 +45,60 @@
     color: #111;
 
     text-decoration: none;
-    font-size: 1.2rem;
 
     font-weight: 500;
 
     transition: color .2s ease;
+    padding: 0.4rem 0;
 }
 
 .navLinks a:hover {
     color: #cd0909;
 }
 
-.navLinks a::after {
+.navLinks a::after
+
+/* .navLinkDropDownMenu a::after, 
+.navLinkButton::after*/
+    {
     content: "";
 
     position: absolute;
 
     left: 0;
-    bottom: -6px;
+    bottom: -5px;
 
     width: 0;
-    height: 2px;
+    height: 3px;
 
     background: #cd0909;
 
     transition: width .25s ease;
 }
 
-.navLinks a:hover::after {
+.navLinks a:hover::after
+
+/* .navLinkDropDownMenu a:hover::after, 
+.navLinkButton:hover::after*/
+    {
     width: 100%;
 }
 
-.productsDropdown {
+.navLinkDropDown {
     position: relative;
 
     display: flex;
     align-items: center;
 }
 
-.productsButton {
+.navLinks a,
+.navLinkButton {
+    font-size: 1rem;
+}
+
+.navLinkButton {
+    position: relative;
+
     display: flex;
     align-items: center;
 
@@ -97,16 +112,37 @@
     color: #111;
 
     font: inherit;
-    font-size: 1.2rem;
-
     font-weight: 500;
 
     cursor: pointer;
 
     transition: color .2s ease;
+    padding: 0.4rem 0;
 }
 
-.productsButton:hover {
+.navLinkButton::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -5px;
+
+    width: 0;
+    height: 3px;
+
+    background: #cd0909;
+
+    transition: width .25s ease;
+}
+
+.navLinkButton:hover::after,
+.navLinkButtonOpen::after {
+    width: 100%;
+}
+
+.navLinkButton:hover,
+.navLinkButtonOpen {
     color: #cd0909;
 }
 
@@ -120,81 +156,100 @@
     transform: rotate(180deg);
 }
 
-.productsMenu {
-    z-index: 1001;
-    background: #fff;
-    border: 1px solid #cd0909;
-    border-radius: 12px;
-    min-width: 190px;
-    margin: 0;
-    padding: .5rem;
-    list-style: none;
+.navLinkDropDown {
+    position: relative;
 
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    left: 50%;
-    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
 
-    box-shadow: 0 15px 35px #0006;
+    height: 65px;
 }
 
-.productsMenu::before {
-    content: "";
+
+/* ---------- PRODUCTS MENU ---------- */
+
+.navLinkDropDownMenu {
+    z-index: 1001;
+
     position: absolute;
 
-    top: -0.5rem;
+    top: 100%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    min-width: 200px;
+
+    margin: -3px 0 0 0;
+    padding: .5rem;
+
+    list-style: none;
+
+    background: #fff;
+
+    /* border-top: 4px solid #cd0909; */
+    border-radius: 0 0 5px 5px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .15);
+}
+
+
+/* Usynlig hover-bro mellem navbar og dropdown */
+.navLinkDropDownMenu::before {
+    content: "";
+
+    position: absolute;
+
+    top: -20px;
     left: 0;
 
     width: 100%;
-    height: 0.5rem;
+    height: 20px;
 }
 
-.productsMenu li {
+
+
+.navLinkDropDownMenu li {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0;
 }
 
-.productsMenu a {
+
+.navLinkDropDownMenu a {
+    position: relative;
+
     display: block;
 
+    padding: .7rem .9rem;
 
-
-    color: #000000;
-
+    color: #111;
     text-decoration: none;
 
-    border-radius: 8px;
+    border-radius: 6px;
 
     transition:
         background .2s ease,
         color .2s ease;
 }
 
-
-.productsMenu :hover {
-    color: #cd0909;
-}
-
-
-.productsMenu a::after {
+.navLinkDropDownMenu a::after {
     content: "";
 
     position: absolute;
 
-    left: 0;
-    bottom: -6px;
+    left: .9rem;
+    bottom: 4px;
 
     width: 0;
-    height: 2px;
+    height: 3px;
 
     background: #cd0909;
 
     transition: width .25s ease;
 }
 
-
-.productsMenu a:hover::after {
-    width: 100%;
+.navLinkDropDownMenu a:hover::after {
+    width: calc(100% - 1.8rem);
 }
 
 .navActions {
@@ -292,7 +347,7 @@
     color: #cd0909;
 }
 
-.dropdown {
+.dropDown {
     position: absolute;
 
     top: calc(100% + 10px);
@@ -396,11 +451,11 @@
     .navLinks {
         position: fixed;
 
-        top: 75px;
+        top: 65px;
         right: -100%;
 
         width: 280px;
-        height: calc(100vh - 75px);
+        height: calc(100vh - 65px);
 
         display: flex;
         flex-direction: column;
@@ -434,62 +489,82 @@
         padding: .8rem 0;
     }
 
+    .navLinks a::after {
+        bottom: 2px;
+    }
 
-    /* Products */
 
-    .productsDropdown {
+    .navLinkDropDown {
+        position: relative;
+
         display: block;
 
         width: 100%;
+
+        height: auto;
     }
 
-    .productsButton {
-        width: 100%;
 
+    .navLinkButton {
+        position: relative;
+
+        display: flex;
+        align-items: center;
         justify-content: space-between;
 
-        padding: .8rem 0;
+        width: 100%;
+
+        padding: .3rem 0;
+
+        box-sizing: border-box;
     }
 
 
-
-    .productsMenu {
+    .navLinkDropDownMenu {
         position: static;
+
+        /* Nulstil desktop-positionering */
+        top: auto;
+        left: auto;
+        ;
 
         transform: none;
 
         width: 100%;
-
         min-width: 0;
 
-        margin-top: .3rem;
+        margin: .3rem 0 0;
 
         padding: .4rem;
 
+        list-style: none;
+
+        box-sizing: border-box;
 
         border: none;
 
         box-shadow: none;
     }
 
-    .productsMenu::before {
+
+    .navLinkDropDownMenu::before {
         display: none;
     }
 
-    .productsMenu a {
-        padding: .7rem 1rem;
+
+    .navLinkDropDownMenu a {
+        padding: .8rem 1rem;
+    }
+
+
+    .navLinkDropDownMenu li {
+        position: static;
+
+        width: 100%;
     }
 
 
 
-    .dropdown {
-        position: fixed;
-
-        top: 75px;
-        right: 1rem;
-
-        width: 220px;
-    }
 
 
     .navActions {

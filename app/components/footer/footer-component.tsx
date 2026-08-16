@@ -76,7 +76,7 @@ export default function Footer() {
       </div>
 
       <div className={styles.bottom}>
-        © {new Date().getFullYear()} Game Store. Alle rettigheder forbeholdes.
+        © {new Date().getFullYear()} PIXELVAULT. Alle rettigheder forbeholdes.
       </div>
     </footer>
   );
