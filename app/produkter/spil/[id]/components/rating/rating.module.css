@@ -28,6 +28,10 @@
 }
 
 .ratingLogin {
-    color: blue;
+    color: #cd0909;
     text-decoration: underline;
+}
+
+.ratingLogin:hover {
+    color: #e11111;
 }

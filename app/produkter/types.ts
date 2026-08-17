@@ -8,6 +8,7 @@ export type Game = {
   image_url: string;
   release_year: number;
   stock: number;
+  
 };
 
 export type SortOption = "" | "title" | "price-low" | "price-high";

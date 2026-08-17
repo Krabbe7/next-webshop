@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   FaBars,
   FaTimes,
@@ -10,89 +9,37 @@ import {
   FaUserCircle,
   FaChevronDown,
 } from "react-icons/fa";
+
 import styles from "./navBar.module.css";
 
+import { useLoadUser } from "./hooks/useLoadUser";
+import { useUpdateCartCount } from "./hooks/useUpdateCartCount";
+
 export default function NavBar() {
-  const [user, setUser] = useState<any>(null);
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
   const [navLinkDropDownOpen, setNavLinkDropDownOpen] = useState(false);
 
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/users/user", {
-          credentials: "include",
-        });
+  const { user, setUser } = useLoadUser();
 
-        if (!res.ok) {
-          setUser(null);
-          return;
-        }
-
-        const data = await res.json();
-        setUser(data.user);
-      } catch {
-        setUser(null);
-      }
-    };
-
-    loadUser();
-
-    window.addEventListener("authChanged", loadUser);
-
-    return () => {
-      window.removeEventListener("authChanged", loadUser);
-    };
-  }, []);
-
-  useEffect(() => {
-    const updateCartCount = () => {
-      const cartKey = user ? `cart_${user.id}` : "cart_guest";
-
-      const raw = localStorage.getItem(cartKey);
-
-      console.log("========== NAVBAR ==========");
-      console.log("user:", user);
-      console.log("cartKey:", cartKey);
-      console.log("raw localStorage:", raw);
-
-      const cart = JSON.parse(raw || "[]");
-
-      console.log("cart:", cart);
-
-      const total = cart.reduce(
-        (sum: number, item: any) => sum + item.quantity,
-        0,
-      );
-
-      console.log("total:", total);
-
-      setCartCount(total);
-    };
-
-    updateCartCount();
-
-    window.addEventListener("cartUpdated", updateCartCount);
-
-    return () => {
-      window.removeEventListener("cartUpdated", updateCartCount);
-    };
-  }, [user]);
+  const { cartCount, setCartCount } = useUpdateCartCount(user);
 
   const handleLogout = async () => {
-    await fetch("http://localhost:5000/api/users/logout", {
-      method: "POST",
-      credentials: "include",
-    });
+    try {
+      await fetch("http://localhost:5000/api/users/logout", {
+        method: "POST",
+        credentials: "include",
+      });
 
-    setUser(null);
-    setOpen(false);
-    setMenuOpen(false);
-    setCartCount(0);
+      setUser(null);
+      setOpen(false);
+      setMenuOpen(false);
+      setCartCount(0);
 
-    window.dispatchEvent(new Event("authChanged"));
+      window.dispatchEvent(new Event("authChanged"));
+    } catch (error) {
+      console.error("Kunne ikke logge ud:", error);
+    }
   };
 
   return (
