@@ -1,0 +1,34 @@
+.searchInput {
+    flex: 1;
+    min-width: 260px;
+
+    padding: .9rem 1rem;
+
+    background: #1b1b1b;
+    color: white;
+
+    border: 1px solid #333;
+    border-radius: 10px;
+
+    font-size: 1rem;
+
+    transition: .2s ease;
+}
+
+.searchInput::placeholder {
+    color: #888;
+}
+
+.searchInput:focus {
+    outline: none;
+
+    border-color: #cd0909;
+
+    box-shadow: 0 0 12px rgba(205, 9, 9, .25);
+}
+
+@media (max-width: 768px) {
+    .searchInput {
+        width: 100%,
+    }
+}

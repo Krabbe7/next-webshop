@@ -2,19 +2,19 @@
 
 import { useRouter } from "next/navigation";
 
-import { CustomerForm } from "./components/CustomerForm";
-import { AddressForm } from "./components/AddressForm";
-import { ShippingSelector } from "./components/shippingSelector";
-import { PickupPointSelector } from "./components/PickupPointSelector";
-import { PaymentForm } from "./components/PaymentForm";
-import { OrderSummary } from "./components/OrderSummary";
+import { CustomerForm } from "./components/customerForm/CustomerForm";
+import { AddressForm } from "./components/addressForm/AddressForm";
+import { ShippingSelector } from "./components/shippingSelector/shippingSelector";
+import { PickupPointSelector } from "./components/pickUpPointSelector/PickupPointSelector";
+import { PaymentForm } from "./components/paymentForm/PaymentForm";
+import { OrderSummary } from "./components/orderSummary/OrderSummary";
 
-import { shippingMethods } from "./constants";
+import { shippingMethods } from "./shippingMethods";
 
 import { useCart } from "./hooks/useCart";
-import { useCheckout } from "./hooks/useCheckout";
+import { useCheckout } from "./hooks/useCheckout/useCheckout";
 import { useCheckoutForm } from "./hooks/useCheckoutForm";
-import { useCheckoutValidation } from "./hooks/useCheckoutValidation";
+import { useCheckoutValidation } from "./hooks/useCheckoutValidation/useCheckoutValidation";
 import { useOrderTotals } from "./hooks/useOrderTotals";
 import { usePickupPoints } from "./hooks/usePickupPoints";
 
@@ -79,7 +79,7 @@ export default function CheckoutPage() {
     shippingPrice,
     total,
     onSuccess: (orderId: string) => {
-      router.push(`/checkout/success/${orderId}`);
+      router.push(`/betaling/success/${orderId}`);
     },
   });
 
@@ -139,10 +139,6 @@ export default function CheckoutPage() {
               cvv: errors.cvv,
             }}
           />
-
-          <button className={`${styles.checkoutButton} ${styles.disabled}`}>
-            Gennemfør køb
-          </button>
         </div>
 
         <aside className={styles.summarySection}>
@@ -152,6 +148,7 @@ export default function CheckoutPage() {
             shipping={shippingPrice}
             total={total}
             pickup={selected}
+            onCheckout={handleCheckout}
           />
         </aside>
       </div>

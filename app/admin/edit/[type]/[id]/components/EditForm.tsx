@@ -1,17 +1,10 @@
 import styles from "../edit.module.css";
 
-import { FormField } from "../components/FormField";
+import { FormField } from "@/app/admin/components/formField/formField";
 
-import type { EditConfig, FormData } from "../types";
+import type { PropsEditForm } from "./types";
 
-type Props = {
-  config: EditConfig;
-  item: FormData;
-  onChange: React.Dispatch<React.SetStateAction<FormData | null>>;
-  onSubmit: (e: React.FormEvent) => void;
-};
-
-export function EditForm({ config, item, onChange, onSubmit }: Props) {
+export function EditForm({ config, item, onChange, onSubmit }: PropsEditForm) {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {

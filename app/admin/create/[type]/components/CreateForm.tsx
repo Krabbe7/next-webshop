@@ -1,20 +1,16 @@
 import React from "react";
 
-import { FormField } from "@/app/admin/components/formField";
+import { FormField } from "@/app/admin/components/formField/formField";
 
-import type { CreateConfig, FormData } from "../types";
 import styles from "../create.module.css";
+import { PropsCreateForm } from "./types";
 
-type Props = {
-  config: CreateConfig;
-  formData: FormData;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void;
-  onSubmit: (e: React.FormEvent) => void;
-};
-
-export function CreateForm({ config, formData, onChange, onSubmit }: Props) {
+export function CreateForm({
+  config,
+  formData,
+  onChange,
+  onSubmit,
+}: PropsCreateForm) {
   return (
     <form className={styles.form} onSubmit={onSubmit}>
       {config.fields.map((field) => (

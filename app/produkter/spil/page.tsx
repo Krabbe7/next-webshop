@@ -1,4 +1,4 @@
-import ProductSearch from "../components/ProductSearch";
+import ProductSearch from "../components/productSearch/ProductSearch";
 import styles from "../products.module.css";
 
 export async function getGames() {

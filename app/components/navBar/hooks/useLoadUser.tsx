@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
-
-type User = {
-  id: number;
-  username: string;
-  role: "user" | "admin";
-};
-
+import { User } from "../types";
 export function useLoadUser() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);

@@ -3,7 +3,7 @@
 import { useCart } from "./hooks/usecart";
 import { useRemoveFromCart } from "./hooks/useRemoveFromCart";
 import CartList from "./components/CartList";
-import CartSummary from "./components/CartSummary";
+import CartSummary from "./components/cartSummary/CartSummary";
 import styles from "./cartPage.module.css";
 export default function CartPage() {
   const { cart, loading } = useCart();

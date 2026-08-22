@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-
-type User = {
-  id: number;
-  username: string;
-  role: "user" | "admin";
-};
+import { User } from "../types";
 
 export function useUpdateCartCount(user: User | null) {
   const [cartCount, setCartCount] = useState(0);

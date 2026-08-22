@@ -1,10 +1,6 @@
-type Props = {
-  params: Promise<{
-    id: string;
-  }>;
-};
+import { PropsSucess } from "./types";
 
-export default async function SuccessPage({ params }: Props) {
+export default async function SuccessPage({ params }: PropsSucess) {
   const { id } = await params;
 
   return (

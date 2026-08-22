@@ -2,15 +2,10 @@
 
 import CartItem from "./CartItem";
 
-import type { CartItem as CartItemType } from "../types";
+import type { PropsCartList } from "../types";
 import styles from "../cartPage.module.css";
 
-type Props = {
-  cart: CartItemType[];
-  onRemove: (id: number) => void;
-};
-
-export default function CartList({ cart, onRemove }: Props) {
+export default function CartList({ cart, onRemove }: PropsCartList) {
   return (
     <div className={styles.cartListContainer}>
       {cart.map((item) => (

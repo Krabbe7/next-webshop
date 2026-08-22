@@ -6,8 +6,8 @@ export default function Page() {
   return (
     <div>
       <HeroSection />
-      <FeaturedProducts />
       <WhyPixelvault />
+      <FeaturedProducts />
     </div>
   );
 }

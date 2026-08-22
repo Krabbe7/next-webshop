@@ -1,0 +1,27 @@
+.select {
+    min-width: 180px;
+
+    padding: .9rem 1rem;
+
+    background: #1b1b1b;
+    color: white;
+
+    border: 1px solid #333;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.select:hover,
+.select:focus {
+    outline: none;
+    border-color: #cd0909;
+}
+
+@media (max-width: 768px) {
+    .select {
+        width: 100%,
+    }
+}

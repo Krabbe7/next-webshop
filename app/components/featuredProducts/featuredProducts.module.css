@@ -2,4 +2,37 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.featuredTitle {
+    color: #ffffff;
+    font-family: Archivo Black, Archivo Black Fallback;
+    font-style: normal;
+    font-size: 1.4rem;
+}
+
+/* 
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+} */
+
+.seeAllButton {
+    display: inline-block;
+    width: fit-content;
+    background: #cd0909;
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.seeAllButton:hover {
+    background: #b10808;
 }

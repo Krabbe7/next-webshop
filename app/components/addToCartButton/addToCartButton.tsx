@@ -2,20 +2,12 @@
 
 import { addToCart } from "../../lib/cart";
 import styles from "./addToCartButton.module.css";
+import { PropsAadToCart } from "./types";
 
-type Props = {
-  game: {
-    id: number;
-    title: string;
-    price: number;
-    image_url?: string;
-  };
-};
-
-export default function AddToCartButton({ game }: Props) {
+export default function AddToCartButton({ game }: PropsAadToCart) {
   return (
     <button
-      className={styles.button}
+      className="button"
       onClick={async (e) => {
         e.preventDefault();
 

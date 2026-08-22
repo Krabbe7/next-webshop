@@ -15,23 +15,17 @@ export type CheckoutErrors = {
   pickup?: string;
 };
 
-export type Shipping = {
+export type CartItem = {
   id: string;
-  name: string;
+  title: string;
   price: number;
+  quantity: number;
 };
 
-export type PickupPoint = {
-  id: string;
-  name: string;
-  address: string;
-  provider: string;
-};
-
-export type CustomerFormState = {
-  name: string;
-  email: string;
-  phone: string;
+export type FormProps<T> = {
+  value: T;
+  onChange: (value: T) => void;
+  errors?: Partial<Record<keyof T, string>>;
 };
 
 export type AddressFormState = {
@@ -41,20 +35,27 @@ export type AddressFormState = {
   country: string;
 };
 
+export type CustomerFormState = {
+  name: string;
+  email: string;
+  phone: string;
+};
+
 export type PaymentFormState = {
   cardNumber: string;
   expiry: string;
   cvv: string;
 };
 
-export type CartItem = {
+export type PickupPoint = {
   id: string;
-  title: string;
-  price: number;
-  quantity: number;
+  name: string;
+  address: string;
+  provider: string;
 };
-export type FormProps<T> = {
-  value: T;
-  onChange: (value: T) => void;
-  errors?: Partial<Record<keyof T, string>>;
+
+export type Shipping = {
+  id: string;
+  name: string;
+  price: number;
 };

@@ -30,7 +30,7 @@ export default function HeroSection() {
             Hurtig levering. <span>Klar til gaming!</span>
           </p>
         </div>
-        <button className={styles.CTAButton}>
+        <button className={`button ${styles.CTAButton}`}>
           <FaGamepad />
           <Link href="/products">Se spil</Link>
         </button>

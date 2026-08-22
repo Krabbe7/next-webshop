@@ -7,12 +7,9 @@ import styles from "../cartPage.module.css";
 import type { CartItem as CartItemType } from "../types";
 import { FiMinus, FiPlus, FiTrash2 } from "react-icons/fi";
 import { useCartQuantity } from "../hooks/useCartQuantity";
-type Props = {
-  item: CartItemType;
-  onRemove: (id: number) => void;
-};
+import { PropsCartItem } from "../types";
 
-export default function CartItem({ item, onRemove }: Props) {
+export default function CartItem({ item, onRemove }: PropsCartItem) {
   const { updateQuantity } = useCartQuantity();
   return (
     <article className={styles.cartItem}>

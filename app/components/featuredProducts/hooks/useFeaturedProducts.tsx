@@ -1,16 +1,6 @@
 import { useEffect, useState } from "react";
 import { Game } from "../../../produkter/types";
-
-type Rating = {
-  average: number | null;
-  total: number;
-};
-
-type FeaturedGame = Game & {
-  rating: number | null;
-  ratingTotal: number;
-};
-
+import { FeaturedGame, Rating } from "../types";
 export function useFeaturedProducts() {
   const [games, setGames] = useState<FeaturedGame[]>([]);
   const [loading, setLoading] = useState(true);

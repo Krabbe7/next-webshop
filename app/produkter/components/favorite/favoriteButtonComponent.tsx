@@ -4,14 +4,10 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 import styles from "./favoriteButton.module.css";
 
-import { useFavorite } from "../../hooks/favoriteHook/useFavorite";
+import { useFavorite } from "./hooks/useFavorite";
+import { PropsFavorite } from "./types";
 
-type Props = {
-  gameId: number;
-  onToggle?: (favorite: boolean) => void;
-};
-
-export default function FavoriteButton({ gameId, onToggle }: Props) {
+export default function FavoriteButton({ gameId, onToggle }: PropsFavorite) {
   const { favorite, loading, toggleFavorite } = useFavorite(gameId);
 
   if (loading) return null;

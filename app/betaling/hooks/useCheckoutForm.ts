@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { shippingMethods } from "../constants";
+import { shippingMethods } from "../shippingMethods";
 
 import type {
   AddressFormState,

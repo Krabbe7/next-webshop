@@ -5,7 +5,7 @@ import { use } from "react";
 import editConfig from "./editConfig";
 
 import { useEditItem } from "./hooks/useEditItem";
-import { useEditSubmit } from "./hooks/useEditSubmit";
+import { useEditSubmit } from "./hooks/useEditSubmit/useEditSubmit";
 
 import { EditForm } from "./components/EditForm";
 

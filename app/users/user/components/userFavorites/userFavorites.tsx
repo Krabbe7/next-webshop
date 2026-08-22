@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import ProductCard from "@/app/produkter/components/ProductCard";
+import ProductCard from "@/app/produkter/components/productCard/ProductCard";
 
 import { useFavorites } from "../../hooks/favoriteHook/useFavorite";
 

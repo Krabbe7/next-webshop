@@ -37,12 +37,10 @@ export default function LoginPage() {
         return;
       }
 
-      // Flyt guest cart til brugerens cart efter succesfuldt login
       if (data.user?.id) {
         mergeGuestCart(data.user.id);
       }
 
-      // Opdater navbar og andre komponenter
       window.dispatchEvent(new Event("authChanged"));
 
       alert("Logged in!");

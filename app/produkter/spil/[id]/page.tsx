@@ -61,7 +61,7 @@ export default async function GamePage({
             </div>
             <p className={styles.price}>{game.price} kr.</p>
 
-            <p className={styles.stock}>
+            <div className={styles.stock}>
               {game.stock === 0 ? (
                 <div className={styles.stockStatus}>
                   <b>Udsolgt</b> <FaCircle color="red" size={16} />
@@ -76,7 +76,7 @@ export default async function GamePage({
                   <b>På lager</b> <FaCircle color="green" size={16} />
                 </div>
               )}
-            </p>
+            </div>
             <RatingSection gameId={game.id} />
           </div>
           {game.stock === 0 ? (

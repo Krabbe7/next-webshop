@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import createConfig from "./createConfig";
 
 import { useCreateForm } from "./hooks/useCreateForm";
-import { useCreateSubmit } from "./hooks/useCreateSubmit";
+import { useCreateSubmit } from "./hooks/useCreateSubmit/useCreateSubmit";
 
 import { CreateForm } from "./components/CreateForm";
 
