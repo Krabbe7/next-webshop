@@ -1,10 +1,10 @@
-import styles from "../../products.module.css";
+import styles from "./searchBar.module.css";
 import { PropsSearchBar } from "./types";
 
 export default function SearchBar({ value, onChange }: PropsSearchBar) {
   return (
     <input
-      className={styles.searchInput}
+      className={`input ${styles.searchInput}`}
       type="search"
       placeholder="Søg efter spil..."
       value={value}
