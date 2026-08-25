@@ -328,9 +328,20 @@
 
 .profileWrapper {
     position: relative;
-
     display: flex;
     align-items: center;
+}
+
+.profileWrapper::after {
+    content: "";
+
+    position: absolute;
+
+    top: 100%;
+    right: 0;
+
+    width: 220px;
+    height: 10px;
 }
 
 .profileIcon {

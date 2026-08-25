@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useGetRating } from "../../hooks/ratingHooks/getRating";
 import { useGetUserRating } from "../../hooks/ratingHooks/useGetUserRating";
@@ -12,6 +12,12 @@ type Props = {
   gameId: number;
 };
 
+type User = {
+  id: number;
+  username: string;
+  role: string;
+};
+
 export default function RatingSection({ gameId }: Props) {
   const { rating, loading, refetch } = useGetRating(gameId);
 
@@ -19,7 +25,35 @@ export default function RatingSection({ gameId }: Props) {
     useGetUserRating(gameId);
 
   const { saveRating } = useSaveRating();
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+
+  const [user, setUser] = useState<User | null>(null);
+  const [userLoading, setUserLoading] = useState(true);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/users/user", {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+
+        const data = await res.json();
+
+        setUser(data.user);
+      } catch (error) {
+        console.error("Kunne ikke hente bruger:", error);
+        setUser(null);
+      } finally {
+        setUserLoading(false);
+      }
+    };
+
+    getUser();
+  }, []);
 
   async function handleRate(value: number) {
     await saveRating(gameId, value);
@@ -29,14 +63,14 @@ export default function RatingSection({ gameId }: Props) {
     refetch();
   }
 
-  if (loading) {
+  if (loading || userLoading) {
     return <p>Indlæser rating...</p>;
   }
 
   return (
     <section className={styles.ratingSection}>
-      {" "}
       <h3 className={styles.ratingHeading}>Bedømmelse</h3>
+
       <div className={styles.ratingTextContainer}>
         <p>
           <FaStar color="#DF0909" />{" "}
@@ -44,13 +78,15 @@ export default function RatingSection({ gameId }: Props) {
             ? rating?.average.toFixed(1)
             : "Ingen ratings endnu"}
         </p>
-        <p>{rating?.total} anmeldelser</p>{" "}
+
+        <p>{rating?.total} anmeldelser</p>
       </div>
+
       {!user ? (
         <p className={styles.ratingLoginText}>
           <Link className={styles.ratingLogin} href="/login">
-            Log ind{" "}
-          </Link>
+            Log ind
+          </Link>{" "}
           for at bedømme
         </p>
       ) : (

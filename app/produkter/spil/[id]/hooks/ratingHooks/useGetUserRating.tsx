@@ -7,10 +7,6 @@ export function useGetUserRating(gameId: number) {
 
   useEffect(() => {
     async function load() {
-      const token = localStorage.getItem("token");
-
-      if (!token) return;
-
       const res = await fetch(`http://localhost:5000/api/rating/${gameId}/me`, {
         credentials: "include",
       });

@@ -2,8 +2,6 @@
 
 export function useSaveRating() {
   const saveRating = async (gameId: number, rating: number) => {
-    const token = localStorage.getItem("token");
-
     const res = await fetch(`http://localhost:5000/api/rating/${gameId}`, {
       method: "POST",
       credentials: "include",
@@ -25,8 +23,6 @@ export function useSaveRating() {
     }
 
     return data;
-
-    return res.json();
   };
 
   return {

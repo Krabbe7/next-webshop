@@ -9,10 +9,14 @@ export function FormField({ name, value, onChange }: PropsFormField) {
     price: "Pris",
     genre: "Genre",
     platform: "Platform",
-    image_url: "Billede",
+    image_url: "Spil poster",
     release_year: "Udgivelsesår",
     stock: "Antal på lager",
     name: "Navn",
+    role: "Rolle",
+    email: "Email",
+    phone_number: "Telefonnummer",
+    employee_img: "Billede af ansat",
   };
 
   const placeholders: Record<string, string> = {
@@ -25,6 +29,10 @@ export function FormField({ name, value, onChange }: PropsFormField) {
     release_year: "Udgivelsesår",
     stock: "Antal på lager",
     name: "Navn",
+    role: "Rolle",
+    email: "Email",
+    phone_number: "Telefonnummer",
+    employee_img: "Filnavn på billede (brug ansats navn f.eks John)",
   };
 
   const inputTypes: Record<string, string> = {
