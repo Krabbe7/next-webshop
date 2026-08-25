@@ -19,6 +19,12 @@ const editConfig = {
     api: "shipping",
     fields: ["name", "price"],
   },
+
+  employees: {
+    title: "Ansatte",
+    api: "employees",
+    fields: ["name", "role", "email", "phone_number", "employee_img"],
+  },
 };
 
 export default editConfig;
