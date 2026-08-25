@@ -54,6 +54,16 @@ export default function AdminPage() {
             Administrer <FaArrowRight />
           </span>
         </Link>
+
+        <Link href="/admin/employees" className={styles.card}>
+          <div className={styles.icon}>🚚</div>
+
+          <h2>Ansatte</h2>
+
+          <p>Opret, rediger og slet ansatte.</p>
+
+          <span className={styles.button}>Administrer →</span>
+        </Link>
       </section>
     </main>
   );

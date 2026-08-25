@@ -10,6 +10,12 @@ const adminConfig = {
     api: "shipping",
     displayField: "name",
   },
+
+  employees: {
+    title: "Ansatte",
+    api: "employees",
+    displayField: "name",
+  },
 };
 
 export default adminConfig;

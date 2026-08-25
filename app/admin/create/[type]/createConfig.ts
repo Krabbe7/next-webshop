@@ -2,7 +2,7 @@ const createConfig = {
   games: {
     title: "Spil",
     api: "games",
-    createTitle: "Opret spil",
+    createTitle: "Opret nyt spil",
     fields: [
       "title",
       "description",
@@ -18,8 +18,15 @@ const createConfig = {
   shipping: {
     title: "Leveringsmetoder",
     api: "shipping",
-    createTitle: "Opret leveringsmetode",
+    createTitle: "Opret ny leveringsmetode",
     fields: ["name", "price"],
+  },
+
+  employees: {
+    title: "Ansatte",
+    api: "employees",
+    createTitle: "Opret ny ansat",
+    fields: ["name", "role", "email", "phone_number", "employee_img"],
   },
 };
 

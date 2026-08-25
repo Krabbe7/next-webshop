@@ -29,44 +29,61 @@ export default function AdminPage({
 
   useEffect(() => {
     const loadData = async () => {
-      const token = localStorage.getItem("token");
+      try {
+        // Tjekker om brugeren er logget ind og er admin
+        const userRes = await fetch("http://localhost:5000/api/users/user", {
+          credentials: "include",
+        });
 
-      if (!token) {
+        const userData = await userRes.json();
+
+        // Hvis brugeren ikke er logget ind eller ikke er admin
+        if (!userRes.ok || userData.user?.role !== "admin") {
+          router.replace("/");
+          return;
+        }
+
+        // Hent admin-data
+        const res = await fetch(`http://localhost:5000/api/${config.api}`, {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          console.error("Kunne ikke hente admin-data");
+          setLoading(false);
+          return;
+        }
+
+        const data = await res.json();
+
+        setItems(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Kunne ikke hente admin-data:", error);
+
         router.replace("/");
-        return;
       }
-
-      const userRes = await fetch("http://localhost:5000/api/users/user", {
-        credentials: "include",
-      });
-
-      const userData = await userRes.json();
-
-      if (!userRes.ok || userData.user.role !== "admin") {
-        router.replace("/");
-        return;
-      }
-
-      const res = await fetch(`http://localhost:5000/api/${config.api}`);
-      const data = await res.json();
-
-      setItems(data);
-      setLoading(false);
     };
 
     loadData();
   }, [config, router]);
 
   const handleDelete = async (id: number) => {
-    const token = localStorage.getItem("token");
+    try {
+      const res = await fetch(`http://localhost:5000/api/${config.api}/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
 
-    await fetch(`http://localhost:5000/api/${config.api}/${id}`, {
-      method: "DELETE",
+      if (!res.ok) {
+        console.error("Kunne ikke slette element");
+        return;
+      }
 
-      credentials: "include",
-    });
-
-    setItems((prev) => prev.filter((item) => item.id !== id));
+      setItems((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Fejl ved sletning:", error);
+    }
   };
 
   if (loading) {
