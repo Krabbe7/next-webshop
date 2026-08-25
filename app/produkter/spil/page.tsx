@@ -17,9 +17,9 @@ export default async function ProductsPage() {
   const games = await getGames();
 
   return (
-    <main className={styles.productPageContainer}>
-      <h1 className="title">Spil</h1>
+    <div className="pageContainer">
+      <h1 className="pageTitle">Spil</h1>
       <ProductSearch games={games} />
-    </main>
+    </div>
   );
 }

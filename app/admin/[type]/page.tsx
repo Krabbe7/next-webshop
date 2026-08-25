@@ -91,9 +91,9 @@ export default function AdminPage({
   }
 
   return (
-    <main className={styles.adminContainer}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>{config.title}</h1>
+    <div className="pageContainer">
+      <div className={styles.titleCreateBtnContainer}>
+        <h1 className="pageTitle">{config.title}</h1>
 
         <Link href={`/admin/create/${type}`} className={styles.createButton}>
           ➕ Opret ny
@@ -143,6 +143,6 @@ export default function AdminPage({
           </div>
         ))}
       </div>
-    </main>
+    </div>
   );
 }

@@ -35,12 +35,12 @@ export default function CreatePage({
   });
 
   if (!config) {
-    return <h1 className="title">Ukendt type</h1>;
+    return <h1 className="pageTitle">Ukendt type</h1>;
   }
 
   return (
-    <main className={styles.container}>
-      <h1 className={styles.title}>{config.createTitle}</h1>
+    <div className="pageContainer">
+      <h1 className="pageTitle">{config.createTitle}</h1>
 
       <CreateForm
         config={config}
@@ -48,6 +48,6 @@ export default function CreatePage({
         onChange={handleChange}
         onSubmit={submit}
       />
-    </main>
+    </div>
   );
 }

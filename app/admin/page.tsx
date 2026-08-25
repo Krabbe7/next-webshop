@@ -7,9 +7,9 @@ import styles from "./adminPage.module.css";
 
 export default function AdminPage() {
   return (
-    <main className={styles.container}>
+    <div className="pageContainer">
       <div className={styles.header}>
-        <h1 className="title">Admin Dashboard</h1>
+        <h1 className="pageTitle">Admin Dashboard</h1>
       </div>
 
       <section className={styles.cards}>
@@ -54,17 +54,7 @@ export default function AdminPage() {
             Administrer <FaArrowRight />
           </span>
         </Link>
-
-        <Link href="/admin/employees" className={styles.card}>
-          <div className={styles.icon}>🚚</div>
-
-          <h2>Ansatte</h2>
-
-          <p>Opret, rediger og slet ansatte.</p>
-
-          <span className={styles.button}>Administrer →</span>
-        </Link>
       </section>
-    </main>
+    </div>
   );
 }

@@ -61,18 +61,6 @@
 
 /* ---------- HEADER ---------- */
 
-.header {
-    margin-bottom: 3rem;
-}
-
-.header h1 {
-    margin: 0;
-
-    color: white;
-
-    font-size: 3rem;
-    font-weight: 800;
-}
 
 .header p {
     margin-top: .5rem;
@@ -152,15 +140,6 @@
         box-shadow .25s ease;
 }
 
-.card:hover {
-    transform: translateY(-6px);
-
-    border-color: #cd0909;
-
-    box-shadow:
-        0 20px 40px rgba(0, 0, 0, .35),
-        0 0 18px rgba(205, 9, 9, .18);
-}
 
 .icon {
     font-size: 3rem;

@@ -44,8 +44,8 @@ export default function CartSummary({ cart }: PropsCartSummary) {
             }
           }}
         >
-          Gå til checkout
-        </Link>{" "}
+          Gå til betaling
+        </Link>
       </div>
     </aside>
   );

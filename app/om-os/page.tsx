@@ -17,8 +17,8 @@ export async function getEmployees() {
 export default async function omOsPage() {
   const employees = await getEmployees();
   return (
-    <div>
-      <h1 className="title">Om os</h1>
+    <div className="pageContainer">
+      <h1 className="pageTitle">Om os</h1>
       <EmployeesComponent key={employees.id} employees={employees} />
     </div>
   );

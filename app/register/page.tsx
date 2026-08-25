@@ -46,9 +46,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className={styles.page}>
+    <div className="pageContainer">
       <div className={styles.card}>
-        <h1 className={styles.title}>Register</h1>
+        <h1 className="pageTitle">Register</h1>
 
         <form onSubmit={handleRegister} className={styles.formContainer}>
           <input
@@ -80,6 +80,6 @@ export default function RegisterPage() {
           </button>
         </form>
       </div>
-    </main>
+    </div>
   );
 }

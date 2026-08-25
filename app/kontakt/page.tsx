@@ -1,3 +1,7 @@
 export default function kontaktPage() {
-  return <h1>Kontakt</h1>;
+  return (
+    <div className="pageContainer">
+      <h1 className="pageTitle">Kontakt</h1>
+    </div>
+  );
 }

@@ -90,7 +90,8 @@ export default function CheckoutPage() {
   };
 
   return (
-    <main className={styles.checkoutContainer}>
+    <div className="pageContainer">
+      <h1 className="pageTitle">Betaling</h1>
       <div className={styles.checkoutGrid}>
         <div className={styles.formSection}>
           <CustomerForm
@@ -152,6 +153,6 @@ export default function CheckoutPage() {
           />
         </aside>
       </div>
-    </main>
+    </div>
   );
 }

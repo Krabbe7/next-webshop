@@ -31,8 +31,8 @@ export default function EditPage({ params }: { params: Promise<EditParams> }) {
   if (loading || !item) return <p>Loading...</p>;
 
   return (
-    <main className={styles.container}>
-      <h1 className={styles.title}>Rediger {config.title}</h1>
+    <div className="pageContainer">
+      <h1 className="pageTitle">Rediger {config.title}</h1>
 
       <EditForm
         config={config}
@@ -40,6 +40,6 @@ export default function EditPage({ params }: { params: Promise<EditParams> }) {
         onChange={setItem}
         onSubmit={submit}
       />
-    </main>
+    </div>
   );
 }

@@ -53,9 +53,9 @@ export default function LoginPage() {
   };
 
   return (
-    <main className={styles.page}>
+    <div className="pageContainer">
       <div className={styles.card}>
-        <h1 className={styles.title}>Login</h1>
+        <h1 className="pageTitle">Login</h1>
 
         <form onSubmit={handleLogin} className={styles.formContainer}>
           <input
@@ -87,6 +87,6 @@ export default function LoginPage() {
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
