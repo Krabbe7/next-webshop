@@ -11,7 +11,7 @@ export function CustomerForm({
       <h2>Kundeoplysninger</h2>
 
       <input
-        className={styles.input}
+        className="input"
         placeholder="Fulde navn"
         value={value.name}
         onChange={(e) => onChange({ ...value, name: e.target.value })}
@@ -19,7 +19,7 @@ export function CustomerForm({
       {errors?.name && <p>{errors.name}</p>}
 
       <input
-        className={styles.input}
+        className="input"
         placeholder="Email"
         value={value.email}
         onChange={(e) => onChange({ ...value, email: e.target.value })}
@@ -27,7 +27,7 @@ export function CustomerForm({
       {errors?.email && <p>{errors.email}</p>}
 
       <input
-        className={styles.input}
+        className="input"
         placeholder="Telefon"
         value={value.phone}
         onChange={(e) => onChange({ ...value, phone: e.target.value })}

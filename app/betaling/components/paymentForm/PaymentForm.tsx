@@ -16,7 +16,7 @@ export function PaymentForm({
       <h2>Betaling</h2>
 
       <input
-        className={styles.input}
+        className="input"
         placeholder="Kortnummer"
         value={value.cardNumber}
         onChange={(e) =>
@@ -31,7 +31,7 @@ export function PaymentForm({
       )}
 
       <input
-        className={styles.input}
+        className="input"
         placeholder="MM/ÅÅ"
         value={value.expiry}
         onChange={(e) =>
@@ -44,7 +44,7 @@ export function PaymentForm({
       {errors?.expiry && <p className={styles.error}>{errors.expiry}</p>}
 
       <input
-        className={styles.input}
+        className="input"
         placeholder="CVV"
         value={value.cvv}
         onChange={(e) =>

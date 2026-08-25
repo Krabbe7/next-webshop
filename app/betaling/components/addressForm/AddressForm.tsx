@@ -11,7 +11,7 @@ export function AddressForm({
       <h2>Adresse</h2>
 
       <input
-        className={styles.input}
+        className="input"
         placeholder="Adresse"
         value={value.street}
         onChange={(e) => onChange({ ...value, street: e.target.value })}
@@ -19,7 +19,7 @@ export function AddressForm({
       {errors?.street && <p>{errors.street}</p>}
 
       <input
-        className={styles.input}
+        className="input"
         placeholder="Postnummer"
         value={value.postalCode}
         maxLength={4}
@@ -28,7 +28,7 @@ export function AddressForm({
       {errors?.postalCode && <p>{errors.postalCode}</p>}
 
       <input
-        className={styles.input}
+        className="input"
         placeholder="By"
         value={value.city}
         onChange={(e) => onChange({ ...value, city: e.target.value })}
@@ -36,7 +36,7 @@ export function AddressForm({
       {errors?.city && <p>{errors.city}</p>}
 
       <input
-        className={styles.input}
+        className="input"
         placeholder="Land"
         value={value.country}
         onChange={(e) => onChange({ ...value, country: e.target.value })}
