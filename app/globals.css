@@ -145,3 +145,31 @@ a {
   justify-content: center;
   margin-top: 1rem;
 }
+
+.input {
+
+  padding: .95rem 1rem;
+
+  color: #1b1b1b;
+  background: white;
+
+  border: 1px solid #333;
+  border-radius: 10px;
+
+
+  font-size: 1rem;
+
+  transition: .2s;
+}
+
+.input::placeholder {
+  color: #777;
+}
+
+.input:focus {
+  outline: none;
+
+  border-color: #cd0909;
+
+  box-shadow: 0 0 12px rgba(205, 9, 9, .2);
+}

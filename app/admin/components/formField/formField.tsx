@@ -64,7 +64,7 @@ export function FormField({ name, value, onChange }: PropsFormField) {
       </label>
 
       <input
-        className={styles.input}
+        className="input"
         id={name}
         type={type}
         name={name}

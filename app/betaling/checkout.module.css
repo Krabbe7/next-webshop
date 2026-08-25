@@ -52,16 +52,16 @@
 }
 
 
-.input {
+/* .input {
 
     padding: .95rem 1rem;
 
-    background: #ffffff;
+    color: #1b1b1b;
+    background: white;
 
     border: 1px solid #333;
     border-radius: 10px;
 
-    color: #000000;
 
     font-size: 1rem;
 
@@ -78,7 +78,7 @@
     border-color: #cd0909;
 
     box-shadow: 0 0 12px rgba(205, 9, 9, .2);
-}
+} */
 
 
 .select {
