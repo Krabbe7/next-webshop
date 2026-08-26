@@ -47,7 +47,9 @@ export default async function GamePage({
         <div className={styles.content}>
           <h1 className={styles.title}>{game.title}</h1>
 
-          <p className={styles.description}>{game.description}</p>
+          <p className={`description ${styles.gameDescription}`}>
+            {game.description}
+          </p>
 
           <div className={styles.meta}>
             <div className={styles.genrePlatformContainer}>

@@ -1,0 +1,38 @@
+.section {
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    padding: 3rem 1.5rem 3rem;
+
+    text-align: center;
+}
+
+.eyebrow {
+    margin: 0 0 .5rem;
+
+    color: #cd0909;
+
+    font-size: .85rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+}
+
+.title {
+    margin: 0 0 1.2rem;
+
+    color: #ffffff;
+
+
+    font-size: 2rem;
+}
+
+/* .description {
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    color: #bbb;
+
+    line-height: 1.8;
+} */

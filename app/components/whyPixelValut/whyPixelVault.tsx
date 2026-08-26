@@ -5,9 +5,9 @@ export default function WhyPixelvault() {
   return (
     <section className={styles.whyPixelvaultContainer}>
       <div className={styles.whyPixelvaultIntroText}>
-        <h2 className={styles.header}>Hvorfor PIXELVAULT?</h2>
+        <h2 className="header">Hvorfor PIXELVAULT?</h2>
 
-        <p>
+        <p className="description">
           Gaming skal være nemt. Vi gør det enkelt at finde spil og produkter,
           du rent faktisk har lyst til at spille.
         </p>
@@ -23,7 +23,7 @@ export default function WhyPixelvault() {
                 <Icon />
               </div>
 
-              <h3>{reason.title}</h3>
+              <h3 className="header">{reason.title}</h3>
 
               <p>{reason.text}</p>
             </article>

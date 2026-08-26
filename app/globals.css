@@ -107,12 +107,37 @@ a {
   text-align: center;
 }
 
+h2.header {
+  color: #fff;
+  font-family: Archivo Black, Archivo Black Fallback;
+  font-size: 1.4rem;
+  font-style: normal;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+h3.header {
+  color: #fff;
+  font-family: Archivo Black, Archivo Black Fallback;
+  font-size: 1.1rem;
+  font-style: normal;
+
+}
 
 .subTitle {
   font-size: 2.5rem;
   font-weight: 800;
   color: #ffffff;
   margin-bottom: 2rem;
+}
+
+.description {
+
+  margin: 0 auto;
+
+  color: #bbb;
+
+  line-height: 1.8;
 }
 
 .pageContainer {

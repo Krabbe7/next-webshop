@@ -12,7 +12,7 @@ export default function FeaturedProducts() {
 
   return (
     <section className={styles.featured}>
-      <h2 className={styles.featuredTitle}>Populære spil</h2>
+      <h2 className="header">Populære spil</h2>
 
       {loading ? <p>Henter populære spil...</p> : <ProductGrid games={games} />}
 
