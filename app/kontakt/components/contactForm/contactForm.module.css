@@ -1,0 +1,87 @@
+.form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1.2rem;
+}
+
+.field {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: .4rem;
+}
+
+.field label {
+    color: #ffffff;
+
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+
+    padding: .8rem 1rem;
+
+    border: 1px solid #ddd;
+    border-radius: 7px;
+
+    background: white;
+
+    color: #111;
+
+    font: inherit;
+
+    outline: none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: #cd0909;
+
+    box-shadow: 0 0 0 2px rgba(205, 9, 9, .08);
+}
+
+.field textarea {
+    resize: vertical;
+}
+
+.button {
+    padding: .8rem 1.2rem;
+
+    border: none;
+    border-radius: 7px;
+
+    background: #cd0909;
+
+    color: white;
+
+    font: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background .2s ease;
+}
+
+.button:hover {
+    background: #e31313;
+}
+
+.success {
+    margin: 0;
+
+    color: #198754;
+
+    font-size: .9rem;
+}

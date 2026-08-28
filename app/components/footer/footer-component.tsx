@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   FaFacebookF,
   FaInstagram,
-  FaGithub,
   FaEnvelope,
   FaPhoneAlt,
   FaMapMarkerAlt,
@@ -38,7 +37,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Navigation */}
         <div className={styles.column}>
           <h3>Navigation</h3>
 
@@ -48,7 +46,6 @@ export default function Footer() {
           <Link href="/contact">Kontakt</Link>
         </div>
 
-        {/* Kundeservice */}
         <div className={styles.column}>
           <h3>Kundeservice</h3>
 
@@ -57,20 +54,19 @@ export default function Footer() {
           <Link href="/privacy">Privatlivspolitik</Link>
         </div>
 
-        {/* Kontakt */}
         <div className={styles.column}>
           <h3>Kontakt</h3>
 
           <p>
-            <FaMapMarkerAlt /> Aalborg, Danmark
+            <FaMapMarkerAlt className="icon" /> Aalborg, Danmark
           </p>
 
           <p>
-            <FaEnvelope /> kontakt@pixelvault.dk
+            <FaEnvelope className="icon" /> kontakt@pixelvault.dk
           </p>
 
           <p>
-            <FaPhoneAlt /> +45 12 34 56 78
+            <FaPhoneAlt className="icon" /> +45 12 34 56 78
           </p>
         </div>
       </div>

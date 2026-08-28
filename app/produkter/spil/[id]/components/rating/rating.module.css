@@ -26,12 +26,3 @@
 .ratingLoginText {
     margin-top: 1rem;
 }
-
-.ratingLogin {
-    color: #cd0909;
-    text-decoration: underline;
-}
-
-.ratingLogin:hover {
-    color: #e11111;
-}

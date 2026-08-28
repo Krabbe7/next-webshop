@@ -1,3 +1,4 @@
+import { Game } from "@/app/produkter/types";
 export type Rating = {
   average: number | null;
   total: number;

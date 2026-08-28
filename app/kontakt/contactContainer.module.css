@@ -1,0 +1,39 @@
+.contactContainer {
+    display: grid;
+
+    grid-template-columns: 1.5fr 1fr;
+
+    gap: 2rem;
+
+    align-items: stretch;
+
+    margin-top: 3rem;
+}
+
+.contactDescription {
+    text-align: center;
+}
+
+/* Kontaktformular */
+.contactContainer>div:first-child {
+    min-width: 0;
+}
+
+/* Kontaktinformation */
+.contactContainer>div:last-child {
+    min-width: 0;
+
+    height: 100%;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 850px) {
+    .contactContainer {
+        grid-template-columns: 1fr;
+
+        gap: 2rem;
+    }
+}

@@ -74,8 +74,8 @@
 }
 
 .year {
-    color: #ffffff;
 
+    color: #cd0909;
     font-size: .85rem;
     font-weight: 700;
 }
@@ -83,7 +83,7 @@
 .timelineItem h3 {
     margin: .5rem 0;
 
-    color: #cd0909;
+    color: #ffffff;
 
     font-size: 1rem;
 }

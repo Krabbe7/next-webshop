@@ -73,7 +73,7 @@ export default function RatingSection({ gameId }: Props) {
 
       <div className={styles.ratingTextContainer}>
         <p>
-          <FaStar color="#DF0909" />{" "}
+          <FaStar className="icon" />{" "}
           {rating?.average !== null
             ? rating?.average.toFixed(1)
             : "Ingen ratings endnu"}
@@ -84,9 +84,9 @@ export default function RatingSection({ gameId }: Props) {
 
       {!user ? (
         <p className={styles.ratingLoginText}>
-          <Link className={styles.ratingLogin} href="/login">
+          <Link className="textLink" href="/login">
             Log ind
-          </Link>{" "}
+          </Link>
           for at bedømme
         </p>
       ) : (

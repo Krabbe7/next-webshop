@@ -1,0 +1,65 @@
+.card {
+    height: 100%;
+
+    box-sizing: border-box;
+
+    padding: 2rem;
+
+    background: #111;
+
+    border: 2px solid #cd0909;
+    border-radius: 10px;
+
+    color: white;
+}
+
+.card h2 {
+    margin: 0 0 2rem;
+
+    color: white;
+
+    font-size: 1.8rem;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1.5rem;
+}
+
+.info>div {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 1rem;
+}
+
+/* .contactInfoIcon {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    font-size: 1.2rem;
+} */
+
+.info h3 {
+    margin: 0 0 .25rem;
+
+    color: white;
+
+    font-size: 1rem;
+}
+
+.info p {
+    margin: 0;
+
+    color: #aaa;
+
+    line-height: 1.6;
+}

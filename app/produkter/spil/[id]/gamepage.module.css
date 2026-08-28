@@ -65,6 +65,8 @@
 }
 
 .meta p:not(.price) {
+    display: flex;
+    gap: 0.5rem;
     padding: .45rem .9rem;
     background: #2b2b2b;
     border-radius: 999px;

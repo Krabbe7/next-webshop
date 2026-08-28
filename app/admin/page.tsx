@@ -14,7 +14,7 @@ export default function AdminPage() {
 
       <section className={styles.cards}>
         <Link href="/admin/games" className={styles.card}>
-          <div className={styles.icon}>
+          <div className={`icon ${styles.adminicon}`}>
             <FaGamepad />
           </div>
 
@@ -28,7 +28,7 @@ export default function AdminPage() {
         </Link>
 
         <Link href="/admin/shipping" className={styles.card}>
-          <div className={styles.icon}>
+          <div className={`icon ${styles.adminicon}`}>
             <FaTruck />
           </div>
 
@@ -42,7 +42,7 @@ export default function AdminPage() {
         </Link>
 
         <Link href="/admin/employees" className={styles.card}>
-          <div className={styles.icon}>
+          <div className={`icon ${styles.adminicon}`}>
             <FaUsers />
           </div>
 

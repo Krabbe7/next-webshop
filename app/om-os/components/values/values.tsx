@@ -14,11 +14,11 @@ export default function Values() {
       <div className={styles.grid}>
         {valueItems.map((valueItem) => (
           <article className={styles.card} key={valueItem.title}>
-            <div className={styles.icon}>
+            <div className={`icon ${styles.valuesIcon}`}>
               <valueItem.icon />
             </div>
 
-            <h3>{valueItem.title}</h3>
+            <h3 className="header">{valueItem.title}</h3>
 
             <p>{valueItem.text}</p>
           </article>

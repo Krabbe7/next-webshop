@@ -19,7 +19,7 @@ export default function WhyPixelvault() {
 
           return (
             <article className={styles.card} key={reason.title}>
-              <div className={styles.icon}>
+              <div className="icon">
                 <Icon />
               </div>
 
