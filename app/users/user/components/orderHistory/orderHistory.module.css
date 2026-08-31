@@ -6,6 +6,7 @@
     border-radius: 15px;
 }
 
+
 .orderHistoryTitle {
     font-size: 1.5rem;
     font-weight: 700;
@@ -142,7 +143,7 @@
 .items {
     margin-top: .5rem;
 
-    border-top: 1px solid #252525;
+    border-top: 1px solid #bbb;
 }
 
 
@@ -154,9 +155,13 @@
 
     padding: 1rem 0;
 
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px solid #464646;
 
     gap: 2rem;
+}
+
+.item:last-child {
+    border-bottom: none;
 }
 
 
@@ -200,8 +205,8 @@
 
 .price {
     color: white;
-
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .showMoreButton {

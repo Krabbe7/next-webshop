@@ -9,7 +9,8 @@
     display: grid;
     grid-template-columns: 2fr minmax(250px, 400px);
     gap: 2rem;
-    align-items: start;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .formSection {
@@ -245,6 +246,54 @@
 .orderPrice {
     font-weight: 700;
     color: white;
+}
+
+.orderImage {
+    width: 55px;
+    height: 70px;
+    min-width: 55px;
+
+    border-radius: 8px;
+
+    object-fit: cover;
+}
+
+
+
+.orderProduct {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    flex: 1;
+}
+
+.orderInfo {
+    flex: 1;
+}
+
+.orderInfo p {
+    margin: 0;
+    color: white;
+    font-weight: 600;
+    font-size: .95rem;
+}
+
+
+
+.orderItem {
+    display: flex;
+    align-items: center;
+
+    gap: 1rem;
+
+    padding: 1rem 0;
+
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.orderItem:last-child {
+    border-bottom: none;
 }
 
 .summaryRow,

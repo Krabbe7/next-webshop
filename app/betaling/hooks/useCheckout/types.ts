@@ -6,11 +6,15 @@
 //   Shipping,
 //   PickupPoint,
 // } from "../../types";
-import type { CartItem, PickupPoint } from "../../types";
-import type { CustomerFormState } from "../../types";
-import type { AddressFormState } from "../../types";
-import type { PaymentFormState } from "../../types";
-import type { Shipping } from "../../types";
+import type {
+  PickupPoint,
+  CustomerFormState,
+  AddressFormState,
+  PaymentFormState,
+  Shipping,
+} from "../../types";
+
+import type { CartItem } from "@/app/types";
 export type UseCheckoutArgs = {
   cart: CartItem[];
 

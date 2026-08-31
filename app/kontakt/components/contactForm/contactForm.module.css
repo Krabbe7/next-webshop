@@ -56,7 +56,12 @@
     resize: vertical;
 }
 
-.button {
+/* .sendButton {
+    max-width: 200px;
+    margin: 0 auto;
+} */
+
+/* .button {
     padding: .8rem 1.2rem;
 
     border: none;
@@ -76,7 +81,7 @@
 
 .button:hover {
     background: #e31313;
-}
+} */
 
 .success {
     margin: 0;

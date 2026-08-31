@@ -11,7 +11,7 @@ import { OrderSummary } from "./components/orderSummary/OrderSummary";
 
 import { shippingMethods } from "./shippingMethods";
 
-import { useCart } from "./hooks/useCart";
+import { useCart } from "../hooks/useCart";
 import { useCheckout } from "./hooks/useCheckout/useCheckout";
 import { useCheckoutForm } from "./hooks/useCheckoutForm";
 import { useCheckoutValidation } from "./hooks/useCheckoutValidation/useCheckoutValidation";
@@ -24,7 +24,7 @@ export default function CheckoutPage() {
   const router = useRouter();
 
   // Cart
-  const cart = useCart();
+  const { cart } = useCart();
 
   // Form state
   const {
@@ -92,6 +92,7 @@ export default function CheckoutPage() {
   return (
     <div className="pageContainer">
       <h1 className="pageTitle">Betaling</h1>
+
       <div className={styles.checkoutGrid}>
         <div className={styles.formSection}>
           <CustomerForm

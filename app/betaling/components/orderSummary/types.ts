@@ -1,5 +1,5 @@
 import type { PickupPoint } from "../../types";
-import type { CartItem } from "../../types";
+import type { CartItem } from "@/app/types";
 
 export type PropsOrderSummary = {
   cart: CartItem[];

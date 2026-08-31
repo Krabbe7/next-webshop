@@ -73,7 +73,7 @@
 } */
 
 
-.whyIcon {
+/* .whyIcon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,6 +88,11 @@
     border-radius: 8px;
 
     font-size: 1.2rem;
+} */
+.iconHeadingContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .card h3 {

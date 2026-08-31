@@ -65,11 +65,11 @@ export default function ContactForm() {
           required
         />
       </div>
-
-      <button type="submit" className={styles.button}>
-        Send besked
-      </button>
-
+      <div className="centerButtonContainer">
+        <button type="submit" className="button">
+          Send besked
+        </button>
+      </div>
       {submitted && (
         <p className={styles.success}>
           Tak for din besked! Vi vender tilbage hurtigst muligt.

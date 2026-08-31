@@ -15,13 +15,6 @@ export type CheckoutErrors = {
   pickup?: string;
 };
 
-export type CartItem = {
-  id: string;
-  title: string;
-  price: number;
-  quantity: number;
-};
-
 export type FormProps<T> = {
   value: T;
   onChange: (value: T) => void;

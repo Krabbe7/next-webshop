@@ -11,7 +11,7 @@ export default function contactPage() {
         <p className={`description ${styles.contactDescription}`}>
           Har du spørgsmål til et produkt, en ordre eller noget helt tredje som
           du ikke kan få svar på i vores{" "}
-          <Link className="textLink" href="/login">
+          <Link className="textLink" href="/faq">
             FAQ
           </Link>
           ?

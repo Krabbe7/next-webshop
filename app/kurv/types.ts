@@ -1,10 +1,11 @@
-export type CartItem = {
-  id: number;
-  title: string;
-  image_url: string;
-  price: number;
-  quantity: number;
-};
+import type { CartItem } from "../types";
+// export type CartItem = {
+//   id: number;
+//   title: string;
+//   image_url: string;
+//   price: number;
+//   quantity: number;
+// };
 
 export type PropsCartItem = {
   item: CartItem;

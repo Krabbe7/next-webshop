@@ -38,7 +38,7 @@ export default function ContactInfo() {
           <div>
             <h3>Adresse</h3>
             <p>
-              Pixelvault Gaming
+              PIXELVAULT
               <br />
               Gamingvej 42
               <br />

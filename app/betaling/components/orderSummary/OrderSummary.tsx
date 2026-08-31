@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "../../checkout.module.css";
 import { PropsOrderSummary } from "./types";
 
@@ -18,11 +19,21 @@ export function OrderSummary({
 
         {cart.map((item) => (
           <div className={styles.orderItem} key={item.id}>
-            <div className={styles.orderInfo}>
-              <p>{item.title}</p>
+            <div className={styles.orderProduct}>
+              <Image
+                src={item.image_url}
+                alt={item.title}
+                width={60}
+                height={80}
+                className={styles.orderImage}
+              />
+
+              <div className={styles.orderInfo}>
+                <p>{item.title}</p>
+              </div>
             </div>
 
-            <div className={styles.orderPrice}>{item.price}</div>
+            <div className={styles.orderPrice}>{item.price} kr.</div>
           </div>
         ))}
 
@@ -47,6 +58,7 @@ export function OrderSummary({
           <span>I alt</span>
           <span>{total} kr</span>
         </div>
+
         <div className="centerButtonContainer">
           <button
             className={`button ${cart.length === 0 ? "disabled" : ""}`}

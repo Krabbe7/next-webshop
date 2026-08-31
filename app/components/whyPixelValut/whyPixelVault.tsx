@@ -19,12 +19,13 @@ export default function WhyPixelvault() {
 
           return (
             <article className={styles.card} key={reason.title}>
-              <div className="icon">
-                <Icon />
+              <div className={styles.iconHeadingContainer}>
+                <div className="icon">
+                  <Icon />
+                </div>
+
+                <h3 className="header">{reason.title}</h3>
               </div>
-
-              <h3 className="header">{reason.title}</h3>
-
               <p>{reason.text}</p>
             </article>
           );

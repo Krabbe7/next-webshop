@@ -1,47 +1,47 @@
-"use client";
+// "use client";
 
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
-import type { CartItem } from "../types";
+// import type { CartItem } from "../types";
 
-export function useCart() {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(true);
+// export function useCart() {
+//   const [cart, setCart] = useState<CartItem[]>([]);
+//   const [loading, setLoading] = useState(true);
 
-  async function loadCart() {
-    let cartKey = "cart_guest";
+//   async function loadCart() {
+//     let cartKey = "cart_guest";
 
-    try {
-      const res = await fetch("http://localhost:5000/api/users/user", {
-        credentials: "include",
-      });
+//     try {
+//       const res = await fetch("http://localhost:5000/api/users/user", {
+//         credentials: "include",
+//       });
 
-      if (res.ok) {
-        const data = await res.json();
+//       if (res.ok) {
+//         const data = await res.json();
 
-        cartKey = `cart_${data.user.id}`;
-      }
-    } catch {}
+//         cartKey = `cart_${data.user.id}`;
+//       }
+//     } catch {}
 
-    const savedCart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+//     const savedCart = JSON.parse(localStorage.getItem(cartKey) || "[]");
 
-    setCart(savedCart);
+//     setCart(savedCart);
 
-    setLoading(false);
-  }
+//     setLoading(false);
+//   }
 
-  useEffect(() => {
-    loadCart();
+//   useEffect(() => {
+//     loadCart();
 
-    window.addEventListener("cartUpdated", loadCart);
+//     window.addEventListener("cartUpdated", loadCart);
 
-    return () => {
-      window.removeEventListener("cartUpdated", loadCart);
-    };
-  }, []);
+//     return () => {
+//       window.removeEventListener("cartUpdated", loadCart);
+//     };
+//   }, []);
 
-  return {
-    cart,
-    loading,
-  };
-}
+//   return {
+//     cart,
+//     loading,
+//   };
+// }
