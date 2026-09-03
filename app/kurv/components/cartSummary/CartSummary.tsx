@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import styles from "../../cartPage.module.css";
+import styles from "./cartSummary.module.css";
 
 import type { PropsCartSummary } from "../../types";
 

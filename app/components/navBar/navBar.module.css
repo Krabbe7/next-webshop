@@ -56,11 +56,7 @@
     color: #cd0909;
 }
 
-.navLinks a::after
-
-/* .navLinkDropDownMenu a::after, 
-.navLinkButton::after*/
-    {
+.navLinks a::after {
     content: "";
 
     position: absolute;
@@ -76,11 +72,7 @@
     transition: width .25s ease;
 }
 
-.navLinks a:hover::after
-
-/* .navLinkDropDownMenu a:hover::after, 
-.navLinkButton:hover::after*/
-    {
+.navLinks a:hover::after {
     width: 100%;
 }
 
@@ -166,7 +158,6 @@
 }
 
 
-/* ---------- PRODUCTS MENU ---------- */
 
 .navLinkDropDownMenu {
     z-index: 1001;
@@ -187,14 +178,13 @@
 
     background: #fff;
 
-    /* border-top: 4px solid #cd0909; */
+
     border-radius: 0 0 5px 5px;
 
     box-shadow: 0 12px 30px rgba(0, 0, 0, .15);
 }
 
 
-/* Usynlig hover-bro mellem navbar og dropdown */
 .navLinkDropDownMenu::before {
     content: "";
 
@@ -534,10 +524,8 @@
     .navLinkDropDownMenu {
         position: static;
 
-        /* Nulstil desktop-positionering */
         top: auto;
         left: auto;
-        ;
 
         transform: none;
 

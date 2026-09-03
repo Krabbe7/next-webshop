@@ -1,8 +1,8 @@
 "use client";
 
-import { useCart } from "../hooks/useCart";
+import { useCart } from "./hooks/useCart";
 import { useRemoveFromCart } from "./hooks/useRemoveFromCart";
-import CartList from "./components/CartList";
+import CartList from "./components/cartList/CartList";
 import CartSummary from "./components/cartSummary/CartSummary";
 import styles from "./cartPage.module.css";
 export default function CartPage() {

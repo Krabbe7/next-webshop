@@ -56,33 +56,6 @@
     resize: vertical;
 }
 
-/* .sendButton {
-    max-width: 200px;
-    margin: 0 auto;
-} */
-
-/* .button {
-    padding: .8rem 1.2rem;
-
-    border: none;
-    border-radius: 7px;
-
-    background: #cd0909;
-
-    color: white;
-
-    font: inherit;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: background .2s ease;
-}
-
-.button:hover {
-    background: #e31313;
-} */
-
 .success {
     margin: 0;
 

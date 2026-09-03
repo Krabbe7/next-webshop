@@ -14,14 +14,6 @@
     font-size: 1.4rem;
 }
 
-/* 
-.header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-} */
-
 .seeAllButton {
     display: inline-block;
     width: fit-content;

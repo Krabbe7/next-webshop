@@ -1,5 +1,8 @@
 import type { FormProps, PaymentFormState } from "../../types";
 import styles from "../../checkout.module.css";
+
+import ErrorMessage from "@/app/components/errorMessage/errorMessage";
+
 import {
   formatCardNumber,
   formatCardExpiry,
@@ -15,46 +18,53 @@ export function PaymentForm({
     <section className={styles.card}>
       <h2>Betaling</h2>
 
-      <input
-        className="input"
-        placeholder="Kortnummer"
-        value={value.cardNumber}
-        onChange={(e) =>
-          onChange({
-            ...value,
-            cardNumber: formatCardNumber(e.target.value),
-          })
-        }
-      />
-      {errors?.cardNumber && (
-        <p className={styles.error}>{errors.cardNumber}</p>
-      )}
+      <div className={styles.field}>
+        <input
+          className="input"
+          placeholder="Kortnummer"
+          value={value.cardNumber}
+          onChange={(e) =>
+            onChange({
+              ...value,
+              cardNumber: formatCardNumber(e.target.value),
+            })
+          }
+        />
 
-      <input
-        className="input"
-        placeholder="MM/ÅÅ"
-        value={value.expiry}
-        onChange={(e) =>
-          onChange({
-            ...value,
-            expiry: formatCardExpiry(e.target.value),
-          })
-        }
-      />
-      {errors?.expiry && <p className={styles.error}>{errors.expiry}</p>}
+        <ErrorMessage message={errors?.cardNumber} />
+      </div>
 
-      <input
-        className="input"
-        placeholder="CVV"
-        value={value.cvv}
-        onChange={(e) =>
-          onChange({
-            ...value,
-            cvv: formatCvv(e.target.value),
-          })
-        }
-      />
-      {errors?.cvv && <p className={styles.error}>{errors.cvv}</p>}
+      <div className={styles.field}>
+        <input
+          className="input"
+          placeholder="MM/ÅÅ"
+          value={value.expiry}
+          onChange={(e) =>
+            onChange({
+              ...value,
+              expiry: formatCardExpiry(e.target.value),
+            })
+          }
+        />
+
+        <ErrorMessage message={errors?.expiry} />
+      </div>
+
+      <div className={styles.field}>
+        <input
+          className="input"
+          placeholder="CVV"
+          value={value.cvv}
+          onChange={(e) =>
+            onChange({
+              ...value,
+              cvv: formatCvv(e.target.value),
+            })
+          }
+        />
+
+        <ErrorMessage message={errors?.cvv} />
+      </div>
     </section>
   );
 }

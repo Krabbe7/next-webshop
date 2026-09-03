@@ -115,7 +115,6 @@ export default function RegisterPage() {
         <h1 className="pageTitle">Opret bruger</h1>
 
         <form onSubmit={handleRegister} className={styles.formContainer}>
-          {/* Username */}
           <div>
             <input
               type="text"
@@ -135,7 +134,6 @@ export default function RegisterPage() {
             <ErrorMessage message={errors.username} />
           </div>
 
-          {/* Email */}
           <div>
             <input
               type="email"
@@ -155,7 +153,6 @@ export default function RegisterPage() {
             <ErrorMessage message={errors.email} />
           </div>
 
-          {/* Password */}
           <div>
             <input
               type="password"
@@ -176,7 +173,6 @@ export default function RegisterPage() {
             <ErrorMessage message={errors.password} />
           </div>
 
-          {/* Confirm password */}
           <div>
             <input
               type="password"

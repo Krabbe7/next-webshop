@@ -6,7 +6,7 @@
     background: #000;
 }
 
-/* ---------- HEADER ---------- */
+
 
 .header {
     display: flex;
@@ -31,7 +31,6 @@
     padding: 4rem;
 }
 
-/* ---------- CREATE BUTTON ---------- */
 
 .createButton {
     display: inline-flex;
@@ -59,7 +58,6 @@
     transform: translateY(-2px);
 }
 
-/* ---------- GRID ---------- */
 
 .itemsGrid {
     display: grid;
@@ -68,8 +66,6 @@
 
     gap: 1.75rem;
 }
-
-/* ---------- CARD ---------- */
 
 .card {
     background: #181818;
@@ -108,8 +104,6 @@
         0 0 18px rgba(205, 9, 9, .18);
 }
 
-/* ---------- IMAGE ---------- */
-
 .imageWrapper {
     aspect-ratio: 4 / 5;
 
@@ -143,7 +137,6 @@
     color: #999;
 }
 
-/* ---------- CONTENT ---------- */
 
 .content {
     padding: 1rem;
@@ -156,7 +149,6 @@
     flex: 1;
 }
 
-/* ---------- TEXT ---------- */
 
 .itemTitle {
     margin: 0;
@@ -175,8 +167,6 @@
     font-size: 1.3rem;
     font-weight: 700;
 }
-
-/* ---------- BUTTONS ---------- */
 
 .actions {
     display: flex;
@@ -231,7 +221,6 @@
     background: #b31212;
 }
 
-/* ---------- RESPONSIVE ---------- */
 
 @media (max-width: 768px) {
 

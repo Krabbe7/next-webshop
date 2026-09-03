@@ -13,7 +13,6 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
-        {/* Brand */}
         <div className={styles.column}>
           <img
             className={styles.logo}

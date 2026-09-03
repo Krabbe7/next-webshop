@@ -1,6 +1,8 @@
 import type { FormProps, AddressFormState } from "../../types";
 import styles from "../../checkout.module.css";
 
+import ErrorMessage from "@/app/components/errorMessage/errorMessage";
+
 export function AddressForm({
   value,
   onChange,
@@ -10,38 +12,70 @@ export function AddressForm({
     <section className={styles.card}>
       <h2>Adresse</h2>
 
-      <input
-        className="input"
-        placeholder="Adresse"
-        value={value.street}
-        onChange={(e) => onChange({ ...value, street: e.target.value })}
-      />
-      {errors?.street && <p>{errors.street}</p>}
+      <div className={styles.field}>
+        <input
+          className="input"
+          placeholder="Adresse"
+          value={value.street}
+          onChange={(e) =>
+            onChange({
+              ...value,
+              street: e.target.value,
+            })
+          }
+        />
 
-      <input
-        className="input"
-        placeholder="Postnummer"
-        value={value.postalCode}
-        maxLength={4}
-        onChange={(e) => onChange({ ...value, postalCode: e.target.value })}
-      />
-      {errors?.postalCode && <p>{errors.postalCode}</p>}
+        <ErrorMessage message={errors?.street} />
+      </div>
 
-      <input
-        className="input"
-        placeholder="By"
-        value={value.city}
-        onChange={(e) => onChange({ ...value, city: e.target.value })}
-      />
-      {errors?.city && <p>{errors.city}</p>}
+      <div className={styles.field}>
+        <input
+          className="input"
+          placeholder="Postnummer"
+          value={value.postalCode}
+          maxLength={4}
+          onChange={(e) =>
+            onChange({
+              ...value,
+              postalCode: e.target.value,
+            })
+          }
+        />
 
-      <input
-        className="input"
-        placeholder="Land"
-        value={value.country}
-        onChange={(e) => onChange({ ...value, country: e.target.value })}
-      />
-      {errors?.country && <p>{errors.country}</p>}
+        <ErrorMessage message={errors?.postalCode} />
+      </div>
+
+      <div className={styles.field}>
+        <input
+          className="input"
+          placeholder="By"
+          value={value.city}
+          onChange={(e) =>
+            onChange({
+              ...value,
+              city: e.target.value,
+            })
+          }
+        />
+
+        <ErrorMessage message={errors?.city} />
+      </div>
+
+      <div className={styles.field}>
+        <input
+          className="input"
+          placeholder="Land"
+          value={value.country}
+          onChange={(e) =>
+            onChange({
+              ...value,
+              country: e.target.value,
+            })
+          }
+        />
+
+        <ErrorMessage message={errors?.country} />
+      </div>
     </section>
   );
 }

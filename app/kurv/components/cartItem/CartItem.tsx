@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 
-import styles from "../cartPage.module.css";
+import styles from "./cartItem.module.css";
 
-import type { CartItem as CartItemType } from "../types";
+import type { CartItem as CartItemType } from "../../../types";
 import { FiMinus, FiPlus, FiTrash2 } from "react-icons/fi";
-import { useCartQuantity } from "../hooks/useCartQuantity";
-import { PropsCartItem } from "../types";
+import { useCartQuantity } from "../../hooks/useCartQuantity";
+import { PropsCartItem } from "../../types";
 
 export default function CartItem({ item, onRemove }: PropsCartItem) {
   const { updateQuantity } = useCartQuantity();

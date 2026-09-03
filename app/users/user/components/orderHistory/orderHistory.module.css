@@ -23,7 +23,7 @@
 }
 
 
-/* ---------- ORDER LIST ---------- */
+
 
 .orderCard {
     background: #141414;
@@ -33,37 +33,24 @@
 
 }
 
-/* .orderCard:not(:first-of-type) {
-    border-top: 0;
-}
-*/
+
 .orderCard:first-of-type {
     border-top: none;
 }
 
-/* .orderCard:last-of-type {
-    border-top: 2px solid #cd0909;
-    border-bottom: 2px solid #cd0909;
-
-} */
-
-/* .Card:only-of-type {
-    border-radius: 15px;
-} */
 
 .orderCard {
     background: #1b1b1b;
     border-top: 2px solid #cd0909;
 }
 
-/* rød webshop accent */
+
 
 .orderCard::before {
     display: none;
 }
 
 
-/* ---------- HEADER ---------- */
 
 .orderHeader {
     display: flex;
@@ -138,7 +125,6 @@
 }
 
 
-/* ---------- PRODUCTS ---------- */
 
 .items {
     margin-top: .5rem;
@@ -234,14 +220,10 @@
     background: #b10808;
 }
 
-/* ---------- HOVER ---------- */
 
 .orderCard:hover {
     background: #181818;
 }
-
-
-/* ---------- MOBILE ---------- */
 
 @media (max-width:700px) {
 

@@ -1,0 +1,271 @@
+.cartItem {
+    display: flex;
+    gap: 1.25rem;
+
+    background: #181818;
+
+    border: 1px solid #252525;
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.cartItem:hover {
+    border-color: #cd0909;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, .25),
+        0 0 12px rgba(205, 9, 9, .15);
+}
+
+
+/* ---------- IMAGE ---------- */
+
+.imageWrapper {
+    width: 180px;
+    aspect-ratio: 2 / 3;
+
+    flex-shrink: 0;
+
+    background: #222;
+
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* ---------- INFO ---------- */
+
+.info {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 1.5rem;
+}
+
+.title {
+    margin: 0 0 .8rem;
+
+    color: white;
+
+    font-size: 1.4rem;
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    overflow-wrap: break-word;
+}
+
+.price {
+    color: white;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+
+    margin-bottom: .5rem;
+}
+
+.quantity {
+    color: #bbb;
+
+    margin-bottom: .5rem;
+}
+
+.subtotal {
+    margin-top: auto;
+
+    color: white;
+
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+
+/* ---------- QUANTITY ---------- */
+
+.quantityBox {
+    display: flex;
+    align-items: center;
+
+    gap: .75rem;
+
+    margin: 1rem 0;
+}
+
+.quantityButton {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid #333;
+    border-radius: 8px;
+
+    background: #242424;
+    color: white;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease;
+}
+
+.quantityButton:hover {
+    background: #cd0909;
+    border-color: #cd0909;
+}
+
+.quantityBox span {
+    min-width: 30px;
+
+    text-align: center;
+
+    color: white;
+
+    font-weight: 700;
+}
+
+
+/* ---------- REMOVE ---------- */
+
+.removeButton {
+    display: flex;
+    align-items: center;
+
+    gap: .5rem;
+
+    width: fit-content;
+
+    margin-top: 1.25rem;
+
+    padding: .8rem 1.2rem;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #cd0909;
+    color: white;
+
+    cursor: pointer;
+
+    transition: background .2s ease;
+}
+
+.removeButton:hover {
+    background: #e20b0b;
+}
+
+
+/* ---------- TABLET ---------- */
+
+@media (max-width: 768px) {
+
+    .cartItem {
+        gap: 1rem;
+    }
+
+    .imageWrapper {
+        width: 130px;
+    }
+
+    .info {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .price {
+        font-size: 1.1rem;
+    }
+
+    .quantityBox {
+        margin: .75rem 0;
+    }
+
+    .removeButton {
+        margin-top: .75rem;
+
+        padding: .7rem 1rem;
+    }
+}
+
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 480px) {
+
+    .cartItem {
+        gap: .75rem;
+
+        border-radius: 12px;
+    }
+
+    .imageWrapper {
+       max-width: 120px;
+    }
+
+    .info {
+        padding: .75rem;
+    }
+
+    .title {
+        font-size: 1rem;
+
+        margin-bottom: .4rem;
+    }
+
+    .price {
+        font-size: 1rem;
+
+        margin-bottom: .25rem;
+    }
+
+    .quantityBox {
+        gap: .5rem;
+
+        margin: .5rem 0;
+    }
+
+    .quantityButton {
+        width: 30px;
+        height: 30px;
+
+        border-radius: 6px;
+    }
+
+    .quantityBox span {
+        min-width: 24px;
+    }
+
+    .subtotal {
+        font-size: .95rem;
+    }
+
+    .removeButton {
+        margin-top: .5rem;
+
+        padding: .55rem .75rem;
+
+        font-size: .85rem;
+    }
+}

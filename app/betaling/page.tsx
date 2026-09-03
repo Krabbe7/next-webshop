@@ -11,7 +11,7 @@ import { OrderSummary } from "./components/orderSummary/OrderSummary";
 
 import { shippingMethods } from "./shippingMethods";
 
-import { useCart } from "../hooks/useCart";
+import { useCart } from "../kurv/hooks/useCart";
 import { useCheckout } from "./hooks/useCheckout/useCheckout";
 import { useCheckoutForm } from "./hooks/useCheckoutForm";
 import { useCheckoutValidation } from "./hooks/useCheckoutValidation/useCheckoutValidation";
