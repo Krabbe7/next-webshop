@@ -185,6 +185,10 @@
 }
 
 
+.gamePadIcon {
+    width: auto;
+    height: 24px;
+}
 
 .CTAButton {
     display: flex;

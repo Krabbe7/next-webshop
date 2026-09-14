@@ -93,7 +93,7 @@ export default function HeroSection() {
         </div>
 
         <button className={`button ${styles.CTAButton}`}>
-          <FaGamepad />
+          <FaGamepad className={styles.gamePadIcon} />
 
           <Link href="/products">Se spil</Link>
         </button>
