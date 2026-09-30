@@ -40,9 +40,13 @@ export default function ProductCard({
         <div className={styles.content}>
           <h3 className={styles.gameTitle}>{game.title}</h3>
 
-          <p className={styles.meta}>{game.genre}</p>
+          <p className={styles.meta}>
+            {game.genres.map((genre) => genre.name).join(", ")}
+          </p>
 
-          <p className={styles.meta}>{game.platform}</p>
+          <p className={styles.meta}>
+            {game.platforms.map((platform) => platform.name).join(", ")}
+          </p>
 
           <p className={styles.price}>{game.price} kr.</p>
           <div className="centerButtonContainer">

@@ -14,9 +14,9 @@ export default function PlatformFilter({
     >
       <option value="">Alle platforme</option>
 
-      {options.map((p) => (
-        <option key={p} value={p}>
-          {p}
+      {options.map((platform) => (
+        <option key={platform.id} value={platform.name}>
+          {platform.name}
         </option>
       ))}
     </select>

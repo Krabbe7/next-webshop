@@ -48,6 +48,29 @@
     resize: vertical;
 }
 
+.checkboxGroup {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.checkboxLabel input {
+    width: 16px;
+    height: 16px;
+}
+
+.checkboxName {
+    color: #aaa;
+}
+
 .submitButton {
     margin-top: 1rem;
 

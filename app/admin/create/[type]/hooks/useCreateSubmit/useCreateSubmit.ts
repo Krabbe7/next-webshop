@@ -11,9 +11,6 @@ export function useCreateSubmit({
   const submit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
 
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
-
     const data = { ...formData };
 
     if (config.api === "games" && data.image_url) {
@@ -21,7 +18,7 @@ export function useCreateSubmit({
     }
 
     try {
-      await fetch(`http://localhost:5000/api/${config.api}`, {
+      const response = await fetch(`http://localhost:5000/api/${config.api}`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -29,6 +26,10 @@ export function useCreateSubmit({
         },
         body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        throw new Error("Kunne ikke oprette");
+      }
 
       router.push(`/admin/${type}`);
     } catch (error) {

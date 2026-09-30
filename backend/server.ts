@@ -13,6 +13,8 @@ import employeeRoute from "./routes/employeeRoute";
 import { authMiddleware } from "./middleware/authMiddleware";
 
 import cookieParser from "cookie-parser";
+import platformRoute from "./routes/platformRoutes";
+import genreRoute from "./routes/genreRoute";
 
 dotenv.config();
 
@@ -35,6 +37,8 @@ app.use("/api/orders", orderRoute);
 app.use("/api/rating", ratingRoute);
 app.use("/api/favorites", favoriteRoute);
 app.use("/api/employees", employeeRoute);
+app.use("/api/platforms", platformRoute);
+app.use("/api/genres", genreRoute);
 
 // Beskyt admin-ruter
 app.use("/api/admin", authMiddleware);

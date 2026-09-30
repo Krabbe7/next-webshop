@@ -11,8 +11,21 @@ import { useGameFilters } from "../../hooks/useGameFilters";
 import { PropsProductSearch } from "./types";
 
 export default function ProductSearch({ games }: PropsProductSearch) {
-  const platforms = [...new Set(games.map((g) => g.platform))];
-  const genres = [...new Set(games.map((g) => g.genre))];
+  const platforms = Array.from(
+    new Map(
+      games
+        .flatMap((game) => game.platforms ?? [])
+        .map((platform) => [platform.id, platform]),
+    ).values(),
+  );
+
+  const genres = Array.from(
+    new Map(
+      games
+        .flatMap((game) => game.genres ?? [])
+        .map((genre) => [genre.id, genre]),
+    ).values(),
+  );
 
   const {
     search,
@@ -27,24 +40,22 @@ export default function ProductSearch({ games }: PropsProductSearch) {
   } = useGameFilters(games);
 
   return (
-    <>
-      <div className={styles.productsContent}>
-        <div className={styles.filters}>
-          <SearchBar value={search} onChange={setSearch} />
+    <div className={styles.productsContent}>
+      <div className={styles.filters}>
+        <SearchBar value={search} onChange={setSearch} />
 
-          <PlatformFilter
-            value={platform}
-            onChange={setPlatform}
-            options={platforms}
-          />
+        <PlatformFilter
+          value={platform}
+          onChange={setPlatform}
+          options={platforms}
+        />
 
-          <GenreFilter value={genre} onChange={setGenre} options={genres} />
+        <GenreFilter value={genre} onChange={setGenre} options={genres} />
 
-          <SortSelector value={sort} onChange={setSort} />
-        </div>
-
-        <ProductGrid games={filteredGames} />
+        <SortSelector value={sort} onChange={setSort} />
       </div>
-    </>
+
+      <ProductGrid games={filteredGames} />
+    </div>
   );
 }

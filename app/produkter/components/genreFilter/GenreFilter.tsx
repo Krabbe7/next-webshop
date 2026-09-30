@@ -14,9 +14,9 @@ export default function GenreFilter({
     >
       <option value="">Alle genrer</option>
 
-      {options.map((g) => (
-        <option key={g} value={g}>
-          {g}
+      {options.map((genre) => (
+        <option key={genre.id} value={genre.name}>
+          {genre.name}
         </option>
       ))}
     </select>

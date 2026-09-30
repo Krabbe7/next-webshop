@@ -1,19 +1,16 @@
 "use client";
 
-import { use } from "react";
-
-import { useRouter } from "next/navigation";
+import { use, useEffect, useState } from "react";
 
 import createConfig from "./createConfig";
 
 import { useCreateForm } from "./hooks/useCreateForm";
+
 import { useCreateSubmit } from "./hooks/useCreateSubmit/useCreateSubmit";
 
 import { CreateForm } from "./components/CreateForm";
 
-import type { CreateParams } from "./types";
-
-import styles from "./create.module.css";
+import type { CreateParams, SelectOption } from "./types";
 
 export default function CreatePage({
   params,
@@ -22,11 +19,40 @@ export default function CreatePage({
 }) {
   const { type } = use(params);
 
-  const router = useRouter();
-
   const config = createConfig[type as keyof typeof createConfig];
 
+  const [platforms, setPlatforms] = useState<SelectOption[]>([]);
+  const [genres, setGenres] = useState<SelectOption[]>([]);
+
   const { formData, handleChange } = useCreateForm();
+
+  useEffect(() => {
+    if (type !== "games") return;
+
+    const fetchOptions = async () => {
+      try {
+        const [platformsResponse, genresResponse] = await Promise.all([
+          fetch("http://localhost:5000/api/platforms"),
+          fetch("http://localhost:5000/api/genres"),
+        ]);
+
+        if (!platformsResponse.ok || !genresResponse.ok) {
+          throw new Error("Kunne ikke hente platforme eller genrer");
+        }
+
+        const platformsData = await platformsResponse.json();
+
+        const genresData = await genresResponse.json();
+
+        setPlatforms(platformsData);
+        setGenres(genresData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchOptions();
+  }, [type]);
 
   const { submit } = useCreateSubmit({
     config,
@@ -45,6 +71,8 @@ export default function CreatePage({
       <CreateForm
         config={config}
         formData={formData}
+        platforms={platforms}
+        genres={genres}
         onChange={handleChange}
         onSubmit={submit}
       />

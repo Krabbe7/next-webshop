@@ -1,29 +1,46 @@
 import styles from "../edit.module.css";
-
 import { FormField } from "@/app/admin/components/formField/formField";
-
+import type { FormData, FormFieldValue } from "@/app/admin/types";
 import type { PropsEditForm } from "./types";
 
-export function EditForm({ config, item, onChange, onSubmit }: PropsEditForm) {
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+export function EditForm({
+  config,
+  item,
+  platforms,
+  genres,
+  onChange,
+  onSubmit,
+}: PropsEditForm) {
+  const handleChange = (name: string, value: FormFieldValue) => {
     onChange((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
+      ...(prev ?? {}),
+      [name]: value,
     }));
   };
 
   return (
     <form onSubmit={onSubmit}>
-      {config.fields.map((field) => (
-        <FormField
-          key={field}
-          name={field}
-          value={item[field] ?? ""}
-          onChange={handleChange}
-        />
-      ))}
+      {config.fields.map((field) => {
+        let options = undefined;
+
+        if (field === "platformIds") {
+          options = platforms;
+        }
+
+        if (field === "genreIds") {
+          options = genres;
+        }
+
+        return (
+          <FormField
+            key={field}
+            name={field}
+            value={item[field]}
+            onChange={handleChange}
+            options={options}
+          />
+        );
+      })}
 
       <button className={styles.submitButton} type="submit">
         Gem ændringer

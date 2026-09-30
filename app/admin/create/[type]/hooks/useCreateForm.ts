@@ -1,14 +1,10 @@
 import { useState } from "react";
-import type { FormData } from "../types";
+import type { FormData, FormFieldValue } from "@/app/admin/types";
 
 export function useCreateForm() {
   const [formData, setFormData] = useState<FormData>({});
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-
+  const handleChange = (name: string, value: FormFieldValue) => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,

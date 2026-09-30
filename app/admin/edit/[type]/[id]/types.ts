@@ -1,16 +1,10 @@
-// FORM DATA (EDIT/CREATE)
-
-export type FormData = Record<string, string>;
-
-// EDIT CONFIG
+import type { FormData } from "@/app/admin/types";
 
 export type EditConfig = {
   title: string;
   api: string;
   fields: string[];
 };
-
-// ROUTE PARAMS (EDIT PAGE)
 
 export type EditParams = {
   type: string;

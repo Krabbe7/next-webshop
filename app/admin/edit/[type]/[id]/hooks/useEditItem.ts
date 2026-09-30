@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { FormData } from "../types";
+import type { FormData } from "@/app/admin/types";
 import type { EditConfig } from "../types";
 
 export function useEditItem(config: EditConfig | undefined, id: string) {
@@ -17,6 +17,8 @@ export function useEditItem(config: EditConfig | undefined, id: string) {
       const res = await fetch(`http://localhost:5000/api/${config.api}/${id}`);
 
       const data = await res.json();
+
+      console.log("EDIT DATA:", data);
 
       setItem(data);
       setLoading(false);
