@@ -41,17 +41,18 @@ export default function ProductCard({
           <h3 className={styles.gameTitle}>{game.title}</h3>
 
           <p className={styles.meta}>
-            {game.genres.map((genre) => genre.name).join(", ")}
+            {(game.genres ?? []).map((genre) => genre.name).join(", ")}
           </p>
 
           <p className={styles.meta}>
-            {game.platforms.map((platform) => platform.name).join(", ")}
+            {(game.platforms ?? []).map((platform) => platform.name).join(", ")}
           </p>
 
           <p className={styles.price}>{game.price} kr.</p>
+
           <div className="centerButtonContainer">
             {game.stock === 0 ? (
-              <div className={styles.noStock}> Ikke på lager</div>
+              <div className={styles.noStock}>Ikke på lager</div>
             ) : (
               <AddToCartButton game={game} />
             )}

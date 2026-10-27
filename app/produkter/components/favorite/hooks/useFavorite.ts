@@ -7,56 +7,58 @@ export function useFavorite(gameId: number) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
+
+    async function loadFavorite() {
+      setLoading(true);
+
+      try {
+        const res = await fetch(
+          `http://localhost:5000/api/favorites/${gameId}`,
+          { credentials: "include" },
+        );
+
+        if (!res.ok) {
+          console.error("Kunne ikke hente favorit:", res.status);
+          return;
+        }
+
+        const data = await res.json();
+
+        if (!cancelled) {
+          setFavorite(data.favorite);
+        }
+      } catch (error) {
+        console.error("Fejl ved hentning af favorit:", error);
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
     loadFavorite();
+
+    return () => {
+      cancelled = true;
+    };
   }, [gameId]);
 
-  async function loadFavorite() {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
-    const res = await fetch(`http://localhost:5000/api/favorites/${gameId}`, {
-      credentials: "include",
-    });
-
-    if (!res.ok) {
-      setLoading(false);
-      return;
-    }
-
-    const data = await res.json();
-
-    setFavorite(data.favorite);
-    setLoading(false);
-  }
-
   async function toggleFavorite() {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      alert("Du skal være logget ind.");
-      return;
-    }
-
-    if (favorite) {
-      await fetch(`http://localhost:5000/api/favorites/${gameId}`, {
-        method: "DELETE",
-
+    try {
+      const res = await fetch(`http://localhost:5000/api/favorites/${gameId}`, {
+        method: favorite ? "DELETE" : "POST",
         credentials: "include",
       });
 
-      setFavorite(false);
-    } else {
-      await fetch(`http://localhost:5000/api/favorites/${gameId}`, {
-        method: "POST",
+      if (!res.ok) {
+        console.error("Kunne ikke ændre favorit:", res.status);
+        return;
+      }
 
-        credentials: "include",
-      });
-
-      setFavorite(true);
+      setFavorite(!favorite);
+    } catch (error) {
+      console.error("Fejl ved ændring af favorit:", error);
     }
   }
 
