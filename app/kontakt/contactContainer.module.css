@@ -1,13 +1,9 @@
 .contactContainer {
-    display: grid;
-
-    grid-template-columns: 1.5fr 1fr;
-
+    display: flex;
     gap: 2rem;
-
+    justify-content: space-between;
     align-items: stretch;
-
-    margin-top: 3rem;
+    margin-top: 4rem;
 }
 
 .contactDescription {
@@ -15,21 +11,29 @@
 }
 
 .contactContainer>div:first-child {
+    flex: 1;
     min-width: 0;
+    max-width: 600px;
 }
 
-
 .contactContainer>div:last-child {
+    flex: 0 0 auto;
     min-width: 0;
-
     height: 100%;
 }
 
-
 @media (max-width: 850px) {
     .contactContainer {
-        grid-template-columns: 1fr;
-
+        flex-direction: column;
         gap: 2rem;
+    }
+
+    .contactContainer>div:first-child {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .contactContainer>div:last-child {
+        width: 100%;
     }
 }

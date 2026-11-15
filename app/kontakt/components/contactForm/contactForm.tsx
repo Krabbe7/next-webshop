@@ -118,6 +118,7 @@ export default function ContactForm() {
 
         <select
           id="subject"
+          className={styles.select}
           name="subject"
           defaultValue=""
           onChange={() =>
