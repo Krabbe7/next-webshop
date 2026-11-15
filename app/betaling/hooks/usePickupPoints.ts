@@ -9,7 +9,11 @@ export function usePickupPoints(address: string, provider: string) {
   useEffect(() => {
     const isPickup = ["gls", "postnord", "bring"].includes(provider);
 
-    if (!isPickup || !address || address.length < 5) return;
+    if (!isPickup || !address || address.length < 5) {
+      setPoints([]);
+      setSelected(null);
+      return;
+    }
 
     const timeout = setTimeout(async () => {
       setLoading(true);

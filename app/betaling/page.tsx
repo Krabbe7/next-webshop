@@ -10,7 +10,7 @@ import { PaymentForm } from "./components/paymentForm/PaymentForm";
 import { OrderSummary } from "./components/orderSummary/OrderSummary";
 
 import { shippingMethods } from "./shippingMethods";
-
+import { useMemo } from "react";
 import { useCart } from "../kurv/hooks/useCart";
 import { useCheckout } from "./hooks/useCheckout/useCheckout";
 import { useCheckoutForm } from "./hooks/useCheckoutForm";
@@ -44,9 +44,19 @@ export default function CheckoutPage() {
     setErrors,
   } = useCheckoutForm();
 
+  const fullAddress = useMemo(() => {
+    const street = address.street.trim();
+    const postalCode = address.postalCode.trim();
+    const city = address.city.trim();
+
+    if (street.length < 3 || postalCode.length !== 4 || !city) return "";
+
+    return `${street}, ${postalCode} ${city}`;
+  }, [address.street, address.postalCode, address.city]);
+
   // Pickup points
   const { points, loading, selected, setSelected } = usePickupPoints(
-    address.street,
+    fullAddress,
     shipping.id,
   );
 
@@ -129,7 +139,7 @@ export default function CheckoutPage() {
             selected={selected}
             onSelect={setSelected}
             error={errors.pickup}
-            address={address.street}
+            address={fullAddress}
           />
 
           <PaymentForm

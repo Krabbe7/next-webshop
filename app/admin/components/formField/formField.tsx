@@ -43,9 +43,6 @@ export function FormField({ name, value, onChange, options }: PropsFormField) {
   const placeholder = placeholders[name] ?? "";
   const type = inputTypes[name] ?? "text";
 
-  /*
-   * Genre- og platformfelter
-   */
   if (name === "genreIds" || name === "platformIds") {
     const selectedIds: number[] = Array.isArray(value) ? value : [];
 
@@ -78,9 +75,7 @@ export function FormField({ name, value, onChange, options }: PropsFormField) {
     );
   }
 
-  /*
-   * Beskrivelse
-   */
+
   if (name === "description") {
     const textValue = typeof value === "string" ? value : "";
 
@@ -103,9 +98,6 @@ export function FormField({ name, value, onChange, options }: PropsFormField) {
     );
   }
 
-  /*
-   * Almindelige inputs
-   */
   const inputValue =
     typeof value === "number" || typeof value === "string" ? value : "";
 

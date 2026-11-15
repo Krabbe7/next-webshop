@@ -22,9 +22,6 @@
         0 0 12px rgba(205, 9, 9, .15);
 }
 
-
-/* ---------- IMAGE ---------- */
-
 .imageWrapper {
     width: 180px;
     aspect-ratio: 2 / 3;
@@ -42,9 +39,6 @@
 
     object-fit: cover;
 }
-
-
-/* ---------- INFO ---------- */
 
 .info {
     flex: 1;
@@ -93,9 +87,6 @@
     font-size: 1.1rem;
 }
 
-
-/* ---------- QUANTITY ---------- */
-
 .quantityBox {
     display: flex;
     align-items: center;
@@ -143,9 +134,6 @@
     font-weight: 700;
 }
 
-
-/* ---------- REMOVE ---------- */
-
 .removeButton {
     display: flex;
     align-items: center;
@@ -172,9 +160,6 @@
 .removeButton:hover {
     background: #e20b0b;
 }
-
-
-/* ---------- TABLET ---------- */
 
 @media (max-width: 768px) {
 
@@ -209,9 +194,6 @@
     }
 }
 
-
-/* ---------- MOBILE ---------- */
-
 @media (max-width: 480px) {
 
     .cartItem {
@@ -221,7 +203,7 @@
     }
 
     .imageWrapper {
-       max-width: 120px;
+        max-width: 120px;
     }
 
     .info {

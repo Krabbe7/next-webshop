@@ -83,40 +83,69 @@ async function geocodeAddress(address: string) {
 }
 
 async function getPickupPoints(address: string, provider: string) {
-  const { lat, lng } = await geocodeAddress(address);
-
-  let keyword = "";
-
-  switch (provider) {
-    case "gls":
-      keyword = "GLS PakkeShop";
-      break;
-
-    case "postnord":
-      keyword = "PostNord";
-      break;
-
-    case "bring":
-      keyword = "Bring Pickup Point";
-      break;
-
-    default:
-      keyword = "parcel shop";
+  if (!address?.trim()) {
+    throw new Error("Address is required");
   }
 
+  const key = process.env.GOOGLE_MAPS_API_KEY;
+
+  if (!key) {
+    throw new Error("Missing GOOGLE_MAPS_API_KEY");
+  }
+
+  const keyword = (() => {
+    switch (provider?.trim().toLowerCase()) {
+      case "gls":
+        return "GLS PakkeShop";
+
+      case "postnord":
+        return "PostNord";
+
+      case "bring":
+        return "Bring Pickup Point";
+
+      default:
+        return "pakkeshop";
+    }
+  })();
+
+  const textQuery = `${keyword} nær ${address.trim()}`;
+  console.log("Places textQuery:", textQuery);
+
   const res = await fetch(
-    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&rankby=distance&keyword=${encodeURIComponent(
-      keyword,
-    )}&key=${process.env.GOOGLE_MAPS_API_KEY}`,
+    "https://places.googleapis.com/v1/places:searchText",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": key,
+        "X-Goog-FieldMask":
+          "places.id,places.displayName,places.formattedAddress",
+      },
+      body: JSON.stringify({
+        textQuery,
+        languageCode: "da",
+        regionCode: "DK",
+        maxResultCount: 5,
+      }),
+    },
   );
+
+  if (!res.ok) {
+    const body = await res.text();
+
+    console.error("Places (New) error:", res.status, body);
+
+    throw new Error(`Google Places API error: ${res.status}`);
+  }
 
   const data = await res.json();
 
-  return (data.results || []).slice(0, 5).map((place: any) => ({
-    id: place.place_id,
+  return (data.places || []).map((place: any) => ({
+    id: place.id,
     provider,
-    name: place.name,
-    address: place.vicinity,
+    name: place.displayName?.text ?? "",
+    address: place.formattedAddress ?? "",
   }));
 }
 

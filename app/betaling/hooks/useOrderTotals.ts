@@ -1,4 +1,5 @@
-import type { CartItem, Shipping } from "../types";
+import type { Shipping } from "../types";
+import type { CartItem } from "@/app/types";
 
 export function useOrderTotals(cart: CartItem[], shipping: Shipping) {
   const subtotal = cart.reduce(
