@@ -8,12 +8,12 @@ export async function createOrderController(req: Request, res: Response) {
   try {
     let userId = null;
 
-    const authHeader = req.headers.authorization;
+    // Læs tokenet fra cookien (login kører via cookie), med fallback til Authorization-header
+    const token =
+      req.cookies?.token ?? req.headers.authorization?.split(" ")[1];
 
-    if (authHeader) {
+    if (token) {
       try {
-        const token = authHeader.split(" ")[1];
-
         const decoded = jwt.verify(token, JWT_SECRET) as {
           id: number;
           email: string;
