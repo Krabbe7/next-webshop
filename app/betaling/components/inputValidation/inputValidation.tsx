@@ -67,9 +67,9 @@ export const isValidCardExpiry = (value: string): boolean => {
 };
 
 export const formatCvv = (value: string) => {
-  return value.replace(/\D/g, "").slice(0, 4);
+  return value.replace(/\D/g, "").slice(0, 3);
 };
 
 export const isValidCvv = (value: string) => {
-  return /^\d{3,4}$/.test(value);
+  return /^\d{3}$/.test(value);
 };

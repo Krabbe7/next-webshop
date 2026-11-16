@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import { shippingMethods } from "../shippingMethods";
-
 import type {
   AddressFormState,
   CheckoutErrors,
@@ -13,7 +11,11 @@ import type {
 export function useCheckoutForm() {
   const [errors, setErrors] = useState<CheckoutErrors>({});
 
-  const [shipping, setShipping] = useState<Shipping>(shippingMethods[0]);
+  const [shipping, setShipping] = useState<Shipping>({
+    id: 0,
+    name: "",
+    price: 0,
+  });
 
   const [customer, setCustomer] = useState<CustomerFormState>({
     name: "",
@@ -45,7 +47,7 @@ export function useCheckoutForm() {
     setPayment,
 
     shipping,
-    setShipping, // ✅ FIXED
+    setShipping,
 
     errors,
     setErrors,

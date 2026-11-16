@@ -6,6 +6,6 @@ export type PropsOrderSummary = {
   subtotal: number;
   shipping: number;
   total: number;
-  pickup: PickupPoint | null;
-  onCheckout: () => void | Promise<void>;
+  pickup: Pick<PickupPoint, "name"> | null;
+  onCheckout?: () => void | Promise<void>;
 };

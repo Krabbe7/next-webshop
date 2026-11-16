@@ -59,15 +59,17 @@ export function OrderSummary({
           <span>{total} kr</span>
         </div>
 
-        <div className="centerButtonContainer">
-          <button
-            className={`button ${cart.length === 0 ? "disabled" : ""}`}
-            disabled={cart.length === 0}
-            onClick={onCheckout}
-          >
-            Gennemfør køb
-          </button>
-        </div>
+        {onCheckout && (
+          <div className="centerButtonContainer">
+            <button
+              className={`button ${cart.length === 0 ? "disabled" : ""}`}
+              disabled={cart.length === 0}
+              onClick={onCheckout}
+            >
+              Gennemfør køb
+            </button>
+          </div>
+        )}
       </div>
     </aside>
   );

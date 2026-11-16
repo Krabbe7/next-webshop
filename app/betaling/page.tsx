@@ -9,24 +9,22 @@ import { PickupPointSelector } from "./components/pickUpPointSelector/PickupPoin
 import { PaymentForm } from "./components/paymentForm/PaymentForm";
 import { OrderSummary } from "./components/orderSummary/OrderSummary";
 
-import { shippingMethods } from "./shippingMethods";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useCart } from "../kurv/hooks/useCart";
 import { useCheckout } from "./hooks/useCheckout/useCheckout";
 import { useCheckoutForm } from "./hooks/useCheckoutForm";
 import { useCheckoutValidation } from "./hooks/useCheckoutValidation/useCheckoutValidation";
 import { useOrderTotals } from "./hooks/useOrderTotals";
 import { usePickupPoints } from "./hooks/usePickupPoints";
+import { useShippingMethods } from "./hooks/useShipping/useShipping";
 
 import styles from "./checkout.module.css";
 
 export default function CheckoutPage() {
   const router = useRouter();
 
-  // Cart
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart();
 
-  // Form state
   const {
     customer,
     setCustomer,
@@ -44,6 +42,27 @@ export default function CheckoutPage() {
     setErrors,
   } = useCheckoutForm();
 
+  const {
+    methods: shippingMethods,
+    loading: shippingLoading,
+    error: shippingError,
+  } = useShippingMethods();
+
+  useEffect(() => {
+    if (shippingMethods.length === 0) return;
+
+    const match =
+      shippingMethods.find((m) => m.id === shipping.id) ?? shippingMethods[0];
+
+    if (
+      match.id !== shipping.id ||
+      match.price !== shipping.price ||
+      match.name !== shipping.name
+    ) {
+      setShipping(match);
+    }
+  }, [shippingMethods]);
+
   const fullAddress = useMemo(() => {
     const street = address.street.trim();
     const postalCode = address.postalCode.trim();
@@ -54,20 +73,17 @@ export default function CheckoutPage() {
     return `${street}, ${postalCode} ${city}`;
   }, [address.street, address.postalCode, address.city]);
 
-  // Pickup points
   const { points, loading, selected, setSelected } = usePickupPoints(
     fullAddress,
     shipping.id,
   );
 
-  // Prices
   const {
     subtotal,
     shipping: shippingPrice,
     total,
   } = useOrderTotals(cart, shipping);
 
-  // Validation
   const { validate } = useCheckoutValidation({
     customer,
     address,
@@ -77,7 +93,6 @@ export default function CheckoutPage() {
     setErrors,
   });
 
-  // Checkout
   const { submit } = useCheckout({
     cart,
     customer,
@@ -88,7 +103,8 @@ export default function CheckoutPage() {
     subtotal,
     shippingPrice,
     total,
-    onSuccess: (orderId: string) => {
+    onSuccess: async (orderId: string) => {
+      await clearCart();
       router.push(`/betaling/success/${orderId}`);
     },
   });
@@ -126,6 +142,9 @@ export default function CheckoutPage() {
             }}
           />
 
+          {shippingLoading && <p>Henter fragtmetoder...</p>}
+          {shippingError && <p className={styles.error}>{shippingError}</p>}
+
           <ShippingSelector
             methods={shippingMethods}
             selected={shipping}
@@ -133,7 +152,6 @@ export default function CheckoutPage() {
           />
 
           <PickupPointSelector
-            visible={["gls", "postnord", "bring"].includes(shipping.id)}
             points={points}
             loading={loading}
             selected={selected}

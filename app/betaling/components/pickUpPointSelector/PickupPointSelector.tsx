@@ -6,12 +6,9 @@ export function PickupPointSelector({
   loading,
   selected,
   onSelect,
-  visible,
   error,
   address,
 }: PropsPickUp) {
-  if (!visible) return null;
-
   return (
     <section className={styles.card}>
       <h2>Vælg pakkeshop</h2>
@@ -45,7 +42,7 @@ export function PickupPointSelector({
             </label>
           ))}
 
-          {error && <p className="error">{error}</p>}
+          {error && <p className={styles.error}>{error}</p>}
         </>
       )}
     </section>

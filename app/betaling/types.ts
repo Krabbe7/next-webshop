@@ -48,7 +48,7 @@ export type PickupPoint = {
 };
 
 export type Shipping = {
-  id: string;
+  id: number;
   name: string;
   price: number;
 };

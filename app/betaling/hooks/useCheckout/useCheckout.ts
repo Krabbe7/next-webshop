@@ -47,18 +47,6 @@ export function useCheckout(args: UseCheckoutArgs) {
     const data = await res.json();
 
     if (data.orderId) {
-      // Find korrekt kurv
-      const user = JSON.parse(localStorage.getItem("user") || "null");
-
-      const cartKey = user ? `cart_${user.id}` : "cart_guest";
-
-      // Slet kurven
-      localStorage.removeItem(cartKey);
-
-      // Opdater alle komponenter der viser kurven
-      window.dispatchEvent(new Event("cartUpdated"));
-
-      // Gå til success-siden
       args.onSuccess(data.orderId);
     }
   };

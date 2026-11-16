@@ -337,6 +337,23 @@
     margin-bottom: .35rem;
 }
 
+/* Bekræftigelsessiden */
+.confirmationInfo {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.confirmationInfo p {
+    margin: 0;
+    color: #ddd;
+    line-height: 1.5;
+}
+
+.confirmationLabel {
+    color: white;
+    font-weight: 600;
+}
 
 @media (max-width: 930px) {
 

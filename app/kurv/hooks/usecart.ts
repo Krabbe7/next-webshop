@@ -1,28 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CartItem } from "../../types";
+
+async function getCartKey(): Promise<string> {
+  try {
+    const res = await fetch("http://localhost:5000/api/users/user", {
+      credentials: "include",
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+
+      return `cart_${data.user.id}`;
+    }
+  } catch (error) {
+    console.error("Kunne ikke hente bruger:", error);
+  }
+
+  return "cart_guest";
+}
 
 export function useCart() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const cartKeyRef = useRef<string | null>(null);
+
   async function loadCart() {
-    let cartKey = "cart_guest";
-
-    try {
-      const res = await fetch("http://localhost:5000/api/users/user", {
-        credentials: "include",
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-
-        cartKey = `cart_${data.user.id}`;
-      }
-    } catch (error) {
-      console.error("Kunne ikke hente bruger:", error);
-    }
+    const cartKey = await getCartKey();
+    cartKeyRef.current = cartKey;
 
     try {
       const savedCart = JSON.parse(localStorage.getItem(cartKey) || "[]");
@@ -34,6 +41,17 @@ export function useCart() {
     }
 
     setLoading(false);
+  }
+
+  async function clearCart() {
+    const cartKey = cartKeyRef.current ?? (await getCartKey());
+
+    console.log("clearCart sletter:", cartKey);
+
+    localStorage.removeItem(cartKey);
+    setCart([]);
+
+    window.dispatchEvent(new Event("cartUpdated"));
   }
 
   useEffect(() => {
@@ -50,5 +68,6 @@ export function useCart() {
     cart,
     loading,
     reloadCart: loadCart,
+    clearCart,
   };
 }

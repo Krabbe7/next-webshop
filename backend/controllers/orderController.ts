@@ -66,3 +66,27 @@ export async function getMyOrdersController(req: Request, res: Response) {
     });
   }
 }
+
+export async function getOrderByIdController(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id);
+
+    if (!Number.isInteger(id)) {
+      return res.status(400).json({ message: "Invalid order id" });
+    }
+
+    const order = await orderService.getOrderById(id);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.json(order);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Kunne ikke hente ordre",
+    });
+  }
+}

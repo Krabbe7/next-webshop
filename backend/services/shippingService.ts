@@ -81,8 +81,18 @@ async function geocodeAddress(address: string) {
     lng: data.results[0].geometry.location.lng,
   };
 }
+function cleanAddress(address: string): string {
+  const parts = address
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean);
 
-async function getPickupPoints(address: string, provider: string) {
+  return parts
+    .filter((part, i) => part.toLowerCase() !== parts[i - 1]?.toLowerCase())
+    .join(", ");
+}
+
+async function getPickupPoints(address: string, provider: number | string) {
   if (!address?.trim()) {
     throw new Error("Address is required");
   }
@@ -93,24 +103,28 @@ async function getPickupPoints(address: string, provider: string) {
     throw new Error("Missing GOOGLE_MAPS_API_KEY");
   }
 
-  const keyword = (() => {
-    switch (provider?.trim().toLowerCase()) {
-      case "gls":
-        return "GLS PakkeShop";
+  const providerId = Number(provider);
 
-      case "postnord":
-        return "PostNord";
+  if (!Number.isInteger(providerId) || providerId <= 0) {
+    throw new Error("Invalid provider");
+  }
 
-      case "bring":
-        return "Bring Pickup Point";
+  const providerResult = await pool.query(
+    "SELECT name FROM shipping WHERE id = $1",
+    [providerId],
+  );
 
-      default:
-        return "pakkeshop";
-    }
-  })();
+  const providerName = providerResult.rows[0]?.name;
 
-  const textQuery = `${keyword} nær ${address.trim()}`;
-  console.log("Places textQuery:", textQuery);
+  if (!providerName) {
+    throw new Error("Unknown provider");
+  }
+
+  const keyword = `${providerName} PakkeShop`;
+
+  const { lat, lng } = await geocodeAddress(address.trim());
+
+  console.log("Places search:", keyword, lat, lng);
 
   const res = await fetch(
     "https://places.googleapis.com/v1/places:searchText",
@@ -123,10 +137,17 @@ async function getPickupPoints(address: string, provider: string) {
           "places.id,places.displayName,places.formattedAddress",
       },
       body: JSON.stringify({
-        textQuery,
+        textQuery: keyword,
         languageCode: "da",
         regionCode: "DK",
         maxResultCount: 5,
+        rankPreference: "DISTANCE",
+        locationBias: {
+          circle: {
+            center: { latitude: lat, longitude: lng },
+            radius: 5000,
+          },
+        },
       }),
     },
   );
@@ -143,7 +164,7 @@ async function getPickupPoints(address: string, provider: string) {
 
   return (data.places || []).map((place: any) => ({
     id: place.id,
-    provider,
+    provider: providerName,
     name: place.displayName?.text ?? "",
     address: place.formattedAddress ?? "",
   }));

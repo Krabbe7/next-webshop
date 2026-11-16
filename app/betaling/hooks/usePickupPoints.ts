@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import type { PickupPoint } from "../types";
 
-export function usePickupPoints(address: string, provider: string) {
+export function usePickupPoints(
+  address: string,
+  providerId: number, // ÆNDRET: tal-id fra databasen
+) {
   const [points, setPoints] = useState<PickupPoint[]>([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<PickupPoint | null>(null);
 
   useEffect(() => {
-    const isPickup = ["gls", "postnord", "bring"].includes(provider);
-
-    if (!isPickup || !address || address.length < 5) {
+    if (!address || address.length < 5) {
       setPoints([]);
       setSelected(null);
       return;
@@ -27,7 +28,7 @@ export function usePickupPoints(address: string, provider: string) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ address, provider }),
+            body: JSON.stringify({ address, provider: providerId }), // ÆNDRET
           },
         );
 
@@ -41,7 +42,7 @@ export function usePickupPoints(address: string, provider: string) {
     }, 400);
 
     return () => clearTimeout(timeout);
-  }, [address, provider]);
+  }, [address, providerId]); // ÆNDRET
 
   return { points, loading, selected, setSelected };
 }

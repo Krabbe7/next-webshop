@@ -6,7 +6,6 @@ async function createOrder(orderData: any) {
   try {
     await client.query("BEGIN");
 
-    // Opret ordren
     const orderResult = await client.query(
       `
       INSERT INTO orders (
@@ -50,7 +49,6 @@ async function createOrder(orderData: any) {
 
     const orderId = orderResult.rows[0].id;
 
-    // Opret order items + træk lager
     for (const item of orderData.items) {
       await client.query(
         `
@@ -155,4 +153,34 @@ async function getOrdersByUser(userId: number) {
   return [...ordersMap.values()];
 }
 
-export default { createOrder, getOrdersByUser };
+async function getOrderById(id: number) {
+  const orderResult = await pool.query("SELECT * FROM orders WHERE id = $1", [
+    id,
+  ]);
+
+  const order = orderResult.rows[0];
+
+  if (!order) return null;
+
+  const itemsResult = await pool.query(
+    `
+    SELECT
+      oi.id,
+      oi.game_id,
+      oi.quantity,
+      oi.price,
+      g.title,
+      g.image_url
+    FROM order_items oi
+    JOIN games g
+      ON g.id = oi.game_id
+    WHERE oi.order_id = $1
+    ORDER BY oi.id
+    `,
+    [id],
+  );
+
+  return { ...order, items: itemsResult.rows };
+}
+
+export default { createOrder, getOrdersByUser, getOrderById };
