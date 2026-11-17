@@ -46,13 +46,15 @@ export default function NavBar() {
 
   return (
     <nav className={styles.navbar}>
-      <Link href="/">
-        <img
-          className={styles.logo}
-          src="/images/logo/Pixelvault-logo.svg"
-          alt="PIXELVAULT logo"
-        />
-      </Link>
+<div className={styles.navLogo}>
+  <Link href="/">
+    <img
+      className={styles.logo}
+      src="/images/logo/Pixelvault-logo.svg"
+      alt="PIXELVAULT logo"
+    />
+  </Link>
+</div>
 
       <ul
         className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ""}`}
