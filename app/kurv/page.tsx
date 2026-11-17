@@ -1,6 +1,6 @@
 "use client";
 
-import { useCart } from "./hooks/useCart";
+import { useCart } from "./hooks/usecart";
 import { useRemoveFromCart } from "./hooks/useRemoveFromCart";
 import CartList from "./components/cartList/CartList";
 import CartSummary from "./components/cartSummary/CartSummary";

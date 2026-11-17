@@ -18,11 +18,13 @@ import { useUpdateCartCount } from "./hooks/useUpdateCartCount";
 export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const [navLinkDropDownOpen, setNavLinkDropDownOpen] = useState(false);
 
   const { user, setUser } = useLoadUser();
 
-  const { cartCount, setCartCount } = useUpdateCartCount(user);
+  // const { cartCount, setCartCount } = useUpdateCartCount(user);
+  const { cartCount, setCartCount, cartItems } = useUpdateCartCount(user);
 
   const handleLogout = async () => {
     try {
@@ -139,13 +141,83 @@ export default function NavBar() {
       </ul>
 
       <div className={styles.navActions}>
-        <Link href="/kurv" className={styles.cartLink}>
-          <FaShoppingCart className={styles.cartIcon} />
+        <div
+          className={styles.cartWrapper}
+          onMouseEnter={() => {
+            if (window.innerWidth > 850) {
+              setCartOpen(true);
+            }
+          }}
+          onMouseLeave={() => {
+            if (window.innerWidth > 850) {
+              setCartOpen(false);
+            }
+          }}
+        >
+          <button
+            type="button"
+            className={styles.cartButton}
+            onClick={() => {
+              if (window.innerWidth <= 850) {
+                setCartOpen((prev) => !prev);
+              }
+            }}
+            aria-label="Kurv"
+            aria-expanded={cartOpen}
+          >
+            <FaShoppingCart className={styles.cartIcon} />
 
-          {cartCount > 0 && (
-            <span className={styles.cartBadge}>{cartCount}</span>
+            {cartCount > 0 && (
+              <span className={styles.cartBadge}>{cartCount}</span>
+            )}
+          </button>
+
+          {cartOpen && (
+            <div className={styles.cartDropdown}>
+              <div className={styles.cartDropdownHeader}>
+                <h3>Kurv ({cartCount})</h3>
+              </div>
+
+              <div className={styles.cartDropdownItems}>
+                {cartItems.length > 0 ? (
+                  cartItems.map((item) => (
+                    <div key={item.id} className={styles.cartItem}>
+                      <div className={styles.cartItemImageWrapper}>
+                        <img
+                          src={item.image_url}
+                          alt={item.title}
+                          className={styles.cartItemImage}
+                        />
+                      </div>
+
+                      <div className={styles.cartItemInfo}>
+                        <p className={styles.cartItemTitle}>{item.title}</p>
+
+                        <p className={styles.cartItemPrice}>{item.price} kr.</p>
+
+                        <p className={styles.cartItemQuantity}>
+                          Antal: {item.quantity}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className={styles.cartDropdownEmpty}>Din kurv er tom.</p>
+                )}
+              </div>
+
+              <div className={styles.cartDropdownFooter}>
+                <Link
+                  href="/kurv"
+                  className={styles.cartDropdownButton}
+                  onClick={() => setCartOpen(false)}
+                >
+                  Se kurv
+                </Link>
+              </div>
+            </div>
           )}
-        </Link>
+        </div>
 
         {!user ? (
           <Link href="/login" className={styles.loginButton}>
@@ -154,10 +226,28 @@ export default function NavBar() {
         ) : (
           <div
             className={styles.profileWrapper}
-            onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => setOpen(false)}
+            onMouseEnter={() => {
+              if (window.innerWidth > 850) {
+                setOpen(true);
+              }
+            }}
+            onMouseLeave={() => {
+              if (window.innerWidth > 850) {
+                setOpen(false);
+              }
+            }}
           >
-            <FaUserCircle className={styles.profileIcon} />
+            <button
+              className={styles.profileButton}
+              onClick={() => {
+                if (window.innerWidth <= 850) {
+                  setOpen((prev) => !prev);
+                }
+              }}
+              aria-label="Profil"
+            >
+              <FaUserCircle className={styles.profileIcon} />
+            </button>
 
             {open && (
               <div className={styles.dropDown}>
