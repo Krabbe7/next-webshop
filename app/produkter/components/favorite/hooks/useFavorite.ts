@@ -18,18 +18,21 @@ export function useFavorite(gameId: number) {
           { credentials: "include" },
         );
 
+        if (cancelled) return;
+
         if (!res.ok) {
-          console.error("Kunne ikke hente favorit:", res.status);
+          setFavorite(false);
           return;
         }
 
         const data = await res.json();
 
         if (!cancelled) {
-          setFavorite(data.favorite);
+          setFavorite(Boolean(data.favorite));
         }
       } catch (error) {
         console.error("Fejl ved hentning af favorit:", error);
+        if (!cancelled) setFavorite(false);
       } finally {
         if (!cancelled) {
           setLoading(false);
@@ -39,8 +42,11 @@ export function useFavorite(gameId: number) {
 
     loadFavorite();
 
+    window.addEventListener("authChanged", loadFavorite);
+
     return () => {
       cancelled = true;
+      window.removeEventListener("authChanged", loadFavorite);
     };
   }, [gameId]);
 
