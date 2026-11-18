@@ -12,7 +12,7 @@ export function useCheckout(args: UseCheckoutArgs) {
       city: args.address.city,
       country: args.address.country,
 
-      shipping: args.shipping.id,
+      shippingId: args.shipping.id,
 
       pickupPoint: args.selectedPickup
         ? {
@@ -25,14 +25,7 @@ export function useCheckout(args: UseCheckoutArgs) {
       items: args.cart.map((item) => ({
         gameId: item.id,
         quantity: item.quantity,
-        price: item.price,
       })),
-
-      subtotal: args.subtotal,
-
-      shippingPrice: args.shipping.price,
-
-      totalPrice: args.total,
     };
 
     const res = await fetch("http://localhost:5000/api/orders", {

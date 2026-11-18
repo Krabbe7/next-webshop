@@ -1,10 +1,150 @@
 import { pool } from "../db";
 
+// async function createOrder(orderData: any) {
+//   const client = await pool.connect();
+
+//   try {
+//     await client.query("BEGIN");
+
+//     const orderResult = await client.query(
+//       `
+//       INSERT INTO orders (
+//         user_id,
+//         customer_name,
+//         email,
+//         street_address,
+//         postal_code,
+//         city,
+//         country,
+//         delivery_method,
+//         pickup_point_id,
+//         pickup_point_name,
+//         pickup_point_address,
+//         subtotal,
+//         shipping_price,
+//         total_price
+//       )
+//       VALUES (
+//         $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14
+//       )
+//       RETURNING id
+//       `,
+//       [
+//         orderData.userId,
+//         orderData.customerName,
+//         orderData.email,
+//         orderData.streetAddress,
+//         orderData.postalCode,
+//         orderData.city,
+//         orderData.country,
+//         orderData.shipping,
+//         orderData.pickupPoint?.id ?? null,
+//         orderData.pickupPoint?.name ?? null,
+//         orderData.pickupPoint?.address ?? null,
+//         orderData.subtotal,
+//         orderData.shippingPrice,
+//         orderData.totalPrice,
+//       ],
+//     );
+
+//     const orderId = orderResult.rows[0].id;
+
+//     for (const item of orderData.items) {
+//       await client.query(
+//         `
+//         INSERT INTO order_items (
+//           order_id,
+//           game_id,
+//           quantity,
+//           price
+//         )
+//         VALUES ($1,$2,$3,$4)
+//         `,
+//         [orderId, item.gameId, item.quantity, item.price],
+//       );
+
+//       const stockResult = await client.query(
+//         `
+//         UPDATE games
+//         SET stock = stock - $1
+//         WHERE id = $2
+//           AND stock >= $1
+//         RETURNING stock
+//         `,
+//         [item.quantity, item.gameId],
+//       );
+
+//       if (stockResult.rows.length === 0) {
+//         throw new Error("Ikke nok på lager.");
+//       }
+//     }
+
+//     await client.query("COMMIT");
+
+//     return orderId;
+//   } catch (err) {
+//     await client.query("ROLLBACK");
+//     throw err;
+//   } finally {
+//     client.release();
+//   }
+// }
 async function createOrder(orderData: any) {
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
+
+    if (!Array.isArray(orderData.items) || orderData.items.length === 0) {
+      throw new Error("Ordren har ingen varer");
+    }
+
+    // Slå priserne op i databasen i stedet for at stole på klienten
+    const gameIds = orderData.items.map((i: any) => Number(i.gameId));
+
+    const gamesResult = await client.query(
+      "SELECT id, price FROM games WHERE id = ANY($1)",
+      [gameIds],
+    );
+
+    const priceById = new Map<number, number>(
+      gamesResult.rows.map((g: any) => [Number(g.id), Number(g.price)]),
+    );
+
+    let subtotal = 0;
+
+    for (const item of orderData.items) {
+      const quantity = Number(item.quantity);
+      const price = priceById.get(Number(item.gameId));
+
+      if (
+        price === undefined ||
+        !Number.isInteger(quantity) ||
+        quantity < 1 ||
+        quantity > 10
+      ) {
+        throw new Error("Ugyldig vare");
+      }
+
+      item.price = price; // overskriv klientens pris
+      subtotal += price * quantity;
+    }
+
+    // ÆNDRET: shippingId gemmes i en variabel og bruges som fremmednøgle
+    const shippingId = Number(orderData.shippingId);
+
+    const shippingResult = await client.query(
+      "SELECT id, name, price FROM shipping WHERE id = $1",
+      [shippingId],
+    );
+
+    if (shippingResult.rows.length === 0) {
+      throw new Error("Ugyldig leveringsmetode");
+    }
+
+    const shippingName = shippingResult.rows[0].name;
+    const shippingPrice = Number(shippingResult.rows[0].price);
+    const total = subtotal + shippingPrice;
 
     const orderResult = await client.query(
       `
@@ -16,6 +156,7 @@ async function createOrder(orderData: any) {
         postal_code,
         city,
         country,
+        shipping_id,
         delivery_method,
         pickup_point_id,
         pickup_point_name,
@@ -25,7 +166,7 @@ async function createOrder(orderData: any) {
         total_price
       )
       VALUES (
-        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15
       )
       RETURNING id
       `,
@@ -37,13 +178,14 @@ async function createOrder(orderData: any) {
         orderData.postalCode,
         orderData.city,
         orderData.country,
-        orderData.shipping,
+        shippingId, // NY: fremmednøgle
+        shippingName,
         orderData.pickupPoint?.id ?? null,
         orderData.pickupPoint?.name ?? null,
         orderData.pickupPoint?.address ?? null,
-        orderData.subtotal,
-        orderData.shippingPrice,
-        orderData.totalPrice,
+        subtotal,
+        shippingPrice,
+        total,
       ],
     );
 
@@ -89,7 +231,6 @@ async function createOrder(orderData: any) {
     client.release();
   }
 }
-
 async function getOrdersByUser(userId: number) {
   const result = await pool.query(
     `

@@ -10,7 +10,7 @@ import { PaymentForm } from "./components/paymentForm/PaymentForm";
 import { OrderSummary } from "./components/orderSummary/OrderSummary";
 
 import { useEffect, useMemo } from "react";
-import { useCart } from "../kurv/hooks/useCart";
+import { useCart } from "../kurv/hooks/usecart";
 import { useCheckout } from "./hooks/useCheckout/useCheckout";
 import { useCheckoutForm } from "./hooks/useCheckoutForm";
 import { useCheckoutValidation } from "./hooks/useCheckoutValidation/useCheckoutValidation";
