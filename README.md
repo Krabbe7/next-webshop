@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Webshop
 
-## Getting Started
+En webshop til spil, bygget med **Next.js, React og TypeScript** på frontend og et **Node/Express-API** på backend, forbundet til en **Supabase-database (PostgreSQL)**. 
+Projektet har en komplet checkout med pakkeshop-søgning og et adminpanel, hvor man kan styre produkter, medarbejdere og leverandører.
 
-First, run the development server:
+## Funktioner
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Kundesiden
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Produktvisning og kurv, som gemmes i localStorage og holdes adskilt for hver bruger og for gæster
+- Checkout med kundeoplysninger, adresse, leveringsmetode og betalingsformular
+- Formvalidering med tydelige fejlbeskeder
+- Leveringsmetoder og priser, der hentes fra databasen
+- Pakkeshop-søgning via Google Maps Platform (Geocoding og Places API), som finder de nærmeste pakkeshops til den indtastede adresse og sorterer dem efter afstand
+- Ordrebekræftelsesside, der henter ordren direkte fra databasen
+- Ordrehistorik for indloggede brugere
+- Mulighed for at handle både som gæst og som indlogget bruger
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Adminpanel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Login med JWT gemt i en cookie
+- Oprettelse, visning, redigering og sletning (CRUD) af produkter, medarbejdere og leverandører
 
-## Learn More
+## Teknologier
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Område | Teknologi |
+|---|---|
+| Frontend | Next.js, React, TypeScript, CSS Modules |
+| Backend | Node.js, Express, TypeScript (kørt med tsx) |
+| Database | Supabase (PostgreSQL) |
+| Autentificering | JWT i HttpOnly-cookie |
+| Eksterne API'er | Google Geocoding API, Google Places API |
