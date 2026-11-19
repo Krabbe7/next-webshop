@@ -1,5 +1,6 @@
 import { OrderSummary } from "../../components/orderSummary/OrderSummary";
 import { PropsSucess } from "./types";
+import { cookies } from "next/headers";
 import styles from "../../checkout.module.css";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
@@ -7,8 +8,12 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
 export default async function SuccessPage({ params }: PropsSucess) {
   const { id } = await params;
 
-  const res = await fetch(`${API_URL}/api/orders/${id}`, { cache: "no-store" });
+  const cookieStore = await cookies();
 
+  const res = await fetch(`${API_URL}/api/orders/${id}`, {
+    cache: "no-store",
+    headers: { cookie: cookieStore.toString() },
+  });
   if (!res.ok) {
     return (
       <div className="pageContainer">
@@ -38,7 +43,7 @@ export default async function SuccessPage({ params }: PropsSucess) {
             <div className={styles.confirmationInfo}>
               <p>
                 <span className={styles.confirmationLabel}>Ordrenummer:</span> #
-                {id}
+                {order.id}
               </p>
 
               <p>

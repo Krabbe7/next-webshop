@@ -67,11 +67,14 @@ export async function getMyOrdersController(req: Request, res: Response) {
   }
 }
 
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export async function getOrderByIdController(req: Request, res: Response) {
   try {
-    const id = Number(req.params.id);
+    const id = String(req.params.id);
 
-    if (!Number.isInteger(id)) {
+    if (!UUID_RE.test(id)) {
       return res.status(400).json({ message: "Invalid order id" });
     }
 
@@ -81,12 +84,30 @@ export async function getOrderByIdController(req: Request, res: Response) {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    res.json(order);
+    // Find evt. indlogget bruger (valgfrit login)
+    let userId: number | null = null;
+    const token = req.cookies?.token;
+
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, JWT_SECRET) as { id: number };
+        userId = decoded.id;
+      } catch {
+        // ugyldigt token: behandles som gæst
+      }
+    }
+
+    // Ordre med ejer må kun ses af ejeren (404 for ikke at afsløre, at den findes)
+    if (order.user_id && order.user_id !== userId) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Returnér ikke mere end siden bruger
+    const { user_id, email, ...safeOrder } = order;
+
+    res.json(safeOrder);
   } catch (error) {
     console.error(error);
-
-    res.status(500).json({
-      message: "Kunne ikke hente ordre",
-    });
+    res.status(500).json({ message: "Kunne ikke hente ordre" });
   }
 }

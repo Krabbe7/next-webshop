@@ -46,7 +46,7 @@ app.use("/api/admin", authMiddleware);
 // Health check
 app.get("/api", (req, res) => {
   res.json({
-    message: "Game API running 🚀",
+    message: "Game API running",
     status: "OK",
   });
 });

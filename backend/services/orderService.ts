@@ -1,94 +1,5 @@
 import { pool } from "../db";
 
-// async function createOrder(orderData: any) {
-//   const client = await pool.connect();
-
-//   try {
-//     await client.query("BEGIN");
-
-//     const orderResult = await client.query(
-//       `
-//       INSERT INTO orders (
-//         user_id,
-//         customer_name,
-//         email,
-//         street_address,
-//         postal_code,
-//         city,
-//         country,
-//         delivery_method,
-//         pickup_point_id,
-//         pickup_point_name,
-//         pickup_point_address,
-//         subtotal,
-//         shipping_price,
-//         total_price
-//       )
-//       VALUES (
-//         $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14
-//       )
-//       RETURNING id
-//       `,
-//       [
-//         orderData.userId,
-//         orderData.customerName,
-//         orderData.email,
-//         orderData.streetAddress,
-//         orderData.postalCode,
-//         orderData.city,
-//         orderData.country,
-//         orderData.shipping,
-//         orderData.pickupPoint?.id ?? null,
-//         orderData.pickupPoint?.name ?? null,
-//         orderData.pickupPoint?.address ?? null,
-//         orderData.subtotal,
-//         orderData.shippingPrice,
-//         orderData.totalPrice,
-//       ],
-//     );
-
-//     const orderId = orderResult.rows[0].id;
-
-//     for (const item of orderData.items) {
-//       await client.query(
-//         `
-//         INSERT INTO order_items (
-//           order_id,
-//           game_id,
-//           quantity,
-//           price
-//         )
-//         VALUES ($1,$2,$3,$4)
-//         `,
-//         [orderId, item.gameId, item.quantity, item.price],
-//       );
-
-//       const stockResult = await client.query(
-//         `
-//         UPDATE games
-//         SET stock = stock - $1
-//         WHERE id = $2
-//           AND stock >= $1
-//         RETURNING stock
-//         `,
-//         [item.quantity, item.gameId],
-//       );
-
-//       if (stockResult.rows.length === 0) {
-//         throw new Error("Ikke nok på lager.");
-//       }
-//     }
-
-//     await client.query("COMMIT");
-
-//     return orderId;
-//   } catch (err) {
-//     await client.query("ROLLBACK");
-//     throw err;
-//   } finally {
-//     client.release();
-//   }
-// }
 async function createOrder(orderData: any) {
   const client = await pool.connect();
 
@@ -126,11 +37,10 @@ async function createOrder(orderData: any) {
         throw new Error("Ugyldig vare");
       }
 
-      item.price = price; // overskriv klientens pris
+      item.price = price;
       subtotal += price * quantity;
     }
 
-    // ÆNDRET: shippingId gemmes i en variabel og bruges som fremmednøgle
     const shippingId = Number(orderData.shippingId);
 
     const shippingResult = await client.query(
@@ -168,7 +78,7 @@ async function createOrder(orderData: any) {
       VALUES (
         $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15
       )
-      RETURNING id
+      RETURNING id, public_id
       `,
       [
         orderData.userId,
@@ -190,6 +100,7 @@ async function createOrder(orderData: any) {
     );
 
     const orderId = orderResult.rows[0].id;
+    const publicId = orderResult.rows[0].public_id;
 
     for (const item of orderData.items) {
       await client.query(
@@ -223,7 +134,7 @@ async function createOrder(orderData: any) {
 
     await client.query("COMMIT");
 
-    return orderId;
+    return publicId;
   } catch (err) {
     await client.query("ROLLBACK");
     throw err;
@@ -294,10 +205,11 @@ async function getOrdersByUser(userId: number) {
   return [...ordersMap.values()];
 }
 
-async function getOrderById(id: number) {
-  const orderResult = await pool.query("SELECT * FROM orders WHERE id = $1", [
-    id,
-  ]);
+async function getOrderById(publicId: string) {
+  const orderResult = await pool.query(
+    "SELECT * FROM orders WHERE public_id = $1",
+    [publicId],
+  );
 
   const order = orderResult.rows[0];
 
@@ -318,7 +230,7 @@ async function getOrderById(id: number) {
     WHERE oi.order_id = $1
     ORDER BY oi.id
     `,
-    [id],
+    [order.id],
   );
 
   return { ...order, items: itemsResult.rows };
