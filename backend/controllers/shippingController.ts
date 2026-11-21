@@ -1,5 +1,21 @@
 import { Request, Response } from "express";
+import { z } from "zod";
 import shippingService from "../services/shippingService";
+
+const shippingSchema = z.object({
+  name: z.string().trim().min(1).max(50),
+  price: z.coerce.number().min(0).max(10000),
+});
+
+const pickupSchema = z.object({
+  address: z.string().trim().min(5).max(200),
+  provider: z.coerce.number().int().positive(),
+});
+
+function parseId(value: unknown): number | null {
+  const id = Number(value);
+  return Number.isInteger(id) && id > 0 ? id : null;
+}
 
 export const getShippingController = async (req: Request, res: Response) => {
   try {
@@ -19,10 +35,14 @@ export const getShippingByIdController = async (
   req: Request,
   res: Response,
 ) => {
-  try {
-    const { id } = req.params;
+  const id = parseId(req.params.id);
 
-    const shipping = await shippingService.getShippingById(Number(id));
+  if (!id) {
+    return res.status(400).json({ error: "Invalid id" });
+  }
+
+  try {
+    const shipping = await shippingService.getShippingById(id);
 
     if (!shipping) {
       return res.status(404).json({
@@ -41,10 +61,17 @@ export const getShippingByIdController = async (
 };
 
 export const updateShippingController = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
+  const id = parseId(req.params.id);
+  const parsed = shippingSchema.safeParse(req.body);
 
-    const shipping = await shippingService.updateShipping(Number(id), req.body);
+  if (!id || !parsed.success) {
+    return res.status(400).json({
+      error: "Ugyldigt input. Navn er påkrævet, og prisen skal være et tal.",
+    });
+  }
+
+  try {
+    const shipping = await shippingService.updateShipping(id, parsed.data);
 
     if (!shipping) {
       return res.status(404).json({
@@ -63,8 +90,16 @@ export const updateShippingController = async (req: Request, res: Response) => {
 };
 
 export const createShippingController = async (req: Request, res: Response) => {
+  const parsed = shippingSchema.safeParse(req.body);
+
+  if (!parsed.success) {
+    return res.status(400).json({
+      error: "Ugyldigt input. Navn er påkrævet, og prisen skal være et tal.",
+    });
+  }
+
   try {
-    const shipping = await shippingService.createShipping(req.body);
+    const shipping = await shippingService.createShipping(parsed.data);
 
     if (!shipping) {
       return res.status(404).json({
@@ -83,9 +118,15 @@ export const createShippingController = async (req: Request, res: Response) => {
 };
 
 export const deleteShippingController = async (req: Request, res: Response) => {
+  const id = parseId(req.params.id);
+
+  if (!id) {
+    return res.status(400).json({ error: "Invalid id" });
+  }
+
   try {
-    const { id } = req.params;
-    const shippingMethod = await shippingService.deleteShipping(Number(id));
+    const shippingMethod = await shippingService.deleteShipping(id);
+
     if (!shippingMethod) {
       return res.status(404).json({
         error: "Shipping Method not found",
@@ -93,7 +134,14 @@ export const deleteShippingController = async (req: Request, res: Response) => {
     }
 
     res.json(shippingMethod);
-  } catch (err) {
+  } catch (err: any) {
+    // 23503 = fremmednøgle: leverandøren er brugt i en ordre
+    if (err?.code === "23503") {
+      return res.status(409).json({
+        error: "Leverandøren er brugt i ordrer og kan ikke slettes.",
+      });
+    }
+
     console.error(err);
 
     res.status(500).json({
@@ -106,21 +154,27 @@ export const getPickupPointsController = async (
   req: Request,
   res: Response,
 ) => {
-  try {
-    const { address, provider } = req.body;
+  const parsed = pickupSchema.safeParse(req.body);
 
-    if (!address) {
-      return res.status(400).json({
-        error: "Address is required",
-      });
-    }
+  if (!parsed.success) {
+    return res.status(400).json({
+      error: "Ugyldigt input",
+    });
+  }
+
+  try {
+    const { address, provider } = parsed.data;
 
     const points = await shippingService.getPickupPoints(address, provider);
 
     res.json({
       points,
     });
-  } catch (err) {
+  } catch (err: any) {
+    if (err?.message === "Unknown provider") {
+      return res.status(400).json({ error: "Unknown provider" });
+    }
+
     console.error(err);
 
     res.status(500).json({

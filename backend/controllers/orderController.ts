@@ -1,14 +1,58 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { z } from "zod";
 import orderService from "../services/orderService";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
+const createOrderSchema = z.object({
+  customerName: z.string().trim().min(2).max(100),
+  email: z.string().trim().toLowerCase().email().max(254),
+  phone: z.string().trim().max(30).optional(),
+
+  streetAddress: z.string().trim().min(3).max(200),
+  postalCode: z
+    .string()
+    .trim()
+    .regex(/^\d{4}$/),
+  city: z.string().trim().min(1).max(100),
+  country: z.string().trim().min(1).max(100),
+
+  shippingId: z.coerce.number().int().positive(),
+
+  pickupPoint: z
+    .object({
+      id: z.string().trim().min(1).max(200),
+      name: z.string().trim().max(200),
+      address: z.string().trim().max(300),
+    })
+    .nullable()
+    .optional(),
+
+  items: z
+    .array(
+      z.object({
+        gameId: z.coerce.number().int().positive(),
+        quantity: z.coerce.number().int().min(1).max(10),
+      }),
+    )
+    .min(1)
+    .max(50),
+});
+
 export async function createOrderController(req: Request, res: Response) {
+  const parsed = createOrderSchema.safeParse(req.body);
+
+  if (!parsed.success) {
+    return res.status(400).json({
+      success: false,
+      message: "Ugyldige ordreoplysninger",
+    });
+  }
+
   try {
     let userId = null;
 
-    // Læs tokenet fra cookien (login kører via cookie), med fallback til Authorization-header
     const token =
       req.cookies?.token ?? req.headers.authorization?.split(" ")[1];
 
@@ -21,15 +65,13 @@ export async function createOrderController(req: Request, res: Response) {
         };
 
         userId = decoded.id;
-
-        console.log("Logged in user:", userId);
       } catch (err) {
         console.log("Invalid token, continuing as guest");
       }
     }
 
     const orderId = await orderService.createOrder({
-      ...req.body,
+      ...parsed.data,
       userId,
     });
 
@@ -37,7 +79,24 @@ export async function createOrderController(req: Request, res: Response) {
       success: true,
       orderId,
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Ikke nok på lager.") {
+      return res.status(409).json({
+        success: false,
+        message: "Ikke nok på lager",
+      });
+    }
+
+    if (
+      error?.message === "Ugyldig vare" ||
+      error?.message === "Ugyldig leveringsmetode"
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+
     console.error(error);
 
     res.status(500).json({
@@ -84,7 +143,6 @@ export async function getOrderByIdController(req: Request, res: Response) {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    // Find evt. indlogget bruger (valgfrit login)
     let userId: number | null = null;
     const token = req.cookies?.token;
 
@@ -97,12 +155,10 @@ export async function getOrderByIdController(req: Request, res: Response) {
       }
     }
 
-    // Ordre med ejer må kun ses af ejeren (404 for ikke at afsløre, at den findes)
     if (order.user_id && order.user_id !== userId) {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    // Returnér ikke mere end siden bruger
     const { user_id, email, ...safeOrder } = order;
 
     res.json(safeOrder);

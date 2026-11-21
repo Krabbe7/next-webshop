@@ -3,7 +3,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const SALT_ROUNDS = 10;
-
+// Falsk hash, så login tager lige lang tid, uanset om e-mailen findes
+const DUMMY_HASH = bcrypt.hashSync("dummy-password", SALT_ROUNDS);
 export async function registerUserService(
   username: string,
   email: string,
@@ -39,13 +40,12 @@ export async function loginUserService(email: string, password: string) {
 
   const user = result.rows[0];
 
-  if (!user) {
-    throw new Error("Invalid credentials");
-  }
+  const passwordMatch = await bcrypt.compare(
+    password,
+    user?.password ?? DUMMY_HASH,
+  );
 
-  const passwordMatch = await bcrypt.compare(password, user.password);
-
-  if (!passwordMatch) {
+  if (!user || !passwordMatch) {
     throw new Error("Invalid credentials");
   }
 
