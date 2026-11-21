@@ -6,6 +6,15 @@ export type PickupPoint = {
   address: string;
 };
 
+import { ExpiringCache } from "../utils/expiringCache";
+
+const geocodeCache = new ExpiringCache<{ lat: number; lng: number }>(
+  24 * 60 * 60 * 1000,
+  1000,
+);
+
+const pickupCache = new ExpiringCache<any[]>(60 * 60 * 1000, 500);
+
 async function getAllShipping() {
   const result = await pool.query("SELECT * FROM shipping ORDER BY id");
 
@@ -122,52 +131,63 @@ async function getPickupPoints(address: string, provider: number | string) {
 
   const keyword = `${providerName} PakkeShop`;
 
-  const { lat, lng } = await geocodeAddress(address.trim());
+  // Normaliser, så "Vej 1,  9000 Aalborg" og "vej 1, 9000 aalborg" rammer samme nøgle
+  const normalizedAddress = address.trim().toLowerCase().replace(/\s+/g, " ");
 
-  console.log("Places search:", keyword, lat, lng);
+  const { lat, lng } = await geocodeCache.getOrLoad(normalizedAddress, () => {
+    console.log("Geocode (Google):", normalizedAddress);
+    return geocodeAddress(address.trim());
+  });
 
-  const res = await fetch(
-    "https://places.googleapis.com/v1/places:searchText",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Goog-Api-Key": key,
-        "X-Goog-FieldMask":
-          "places.id,places.displayName,places.formattedAddress",
-      },
-      body: JSON.stringify({
-        textQuery: keyword,
-        languageCode: "da",
-        regionCode: "DK",
-        maxResultCount: 5,
-        rankPreference: "DISTANCE",
-        locationBias: {
-          circle: {
-            center: { latitude: lat, longitude: lng },
-            radius: 5000,
-          },
+  // ~100 m: naboer deler resultat
+  const cacheKey = `${providerId}|${lat.toFixed(3)}|${lng.toFixed(3)}`;
+
+  return pickupCache.getOrLoad(cacheKey, async () => {
+    console.log("Places search (Google):", keyword, lat, lng);
+
+    const res = await fetch(
+      "https://places.googleapis.com/v1/places:searchText",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Goog-Api-Key": key,
+          "X-Goog-FieldMask":
+            "places.id,places.displayName,places.formattedAddress",
         },
-      }),
-    },
-  );
+        body: JSON.stringify({
+          textQuery: keyword,
+          languageCode: "da",
+          regionCode: "DK",
+          maxResultCount: 5,
+          rankPreference: "DISTANCE",
+          locationBias: {
+            circle: {
+              center: { latitude: lat, longitude: lng },
+              radius: 5000,
+            },
+          },
+        }),
+      },
+    );
 
-  if (!res.ok) {
-    const body = await res.text();
+    if (!res.ok) {
+      const body = await res.text();
 
-    console.error("Places (New) error:", res.status, body);
+      console.error("Places (New) error:", res.status, body);
 
-    throw new Error(`Google Places API error: ${res.status}`);
-  }
+      throw new Error(`Google Places API error: ${res.status}`);
+    }
 
-  const data = await res.json();
+    const data = await res.json();
 
-  return (data.places || []).map((place: any) => ({
-    id: place.id,
-    provider: providerName,
-    name: place.displayName?.text ?? "",
-    address: place.formattedAddress ?? "",
-  }));
+    return (data.places || []).map((place: any) => ({
+      id: place.id,
+      provider: providerName,
+      name: place.displayName?.text ?? "",
+      address: place.formattedAddress ?? "",
+    }));
+  });
 }
 
 export default {

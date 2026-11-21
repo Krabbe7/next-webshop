@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import type { PickupPoint } from "../types";
 
-export function usePickupPoints(
-  address: string,
-  providerId: number, // ÆNDRET: tal-id fra databasen
-) {
+export function usePickupPoints(address: string, providerId: number) {
   const [points, setPoints] = useState<PickupPoint[]>([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<PickupPoint | null>(null);
@@ -39,10 +36,10 @@ export function usePickupPoints(
       } finally {
         setLoading(false);
       }
-    }, 400);
+    }, 800);
 
     return () => clearTimeout(timeout);
-  }, [address, providerId]); // ÆNDRET
+  }, [address, providerId]);
 
   return { points, loading, selected, setSelected };
 }
