@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 
-import type { Filters, Game } from "../types";
+import type { Game } from "../types";
+import type { Filters } from "../components/sortSelected/types";
 
 export function useGameFilters(games: Game[]) {
   const [search, setSearch] = useState("");
@@ -20,11 +21,15 @@ export function useGameFilters(games: Game[]) {
     }
 
     if (platform) {
-      result = result.filter((game) => game.platform === platform);
+      result = result.filter((game) =>
+        game.platforms.some((p) => p.name === platform),
+      );
     }
 
     if (genre) {
-      result = result.filter((game) => game.genre === genre);
+      result = result.filter((game) =>
+        game.genres.some((g) => g.name === genre),
+      );
     }
 
     switch (sort) {
@@ -33,11 +38,11 @@ export function useGameFilters(games: Game[]) {
         break;
 
       case "price-low":
-        result.sort((a, b) => a.price - b.price);
+        result.sort((a, b) => Number(a.price) - Number(b.price));
         break;
 
       case "price-high":
-        result.sort((a, b) => b.price - a.price);
+        result.sort((a, b) => Number(b.price) - Number(a.price));
         break;
     }
 

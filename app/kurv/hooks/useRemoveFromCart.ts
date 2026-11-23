@@ -1,7 +1,7 @@
 "use client";
 
 export function useRemoveFromCart() {
-  async function remove(gameId: number) {
+  async function remove(gameId: number | string) {
     let cartKey = "cart_guest";
 
     try {
@@ -16,13 +16,19 @@ export function useRemoveFromCart() {
       }
     } catch {}
 
-    const cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+    try {
+      const cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
 
-    const updated = cart.filter((item: any) => item.id !== gameId);
+      const updated = cart.filter(
+        (item: any) => String(item.id) !== String(gameId),
+      );
 
-    localStorage.setItem(cartKey, JSON.stringify(updated));
+      localStorage.setItem(cartKey, JSON.stringify(updated));
 
-    window.dispatchEvent(new Event("cartUpdated"));
+      window.dispatchEvent(new Event("cartUpdated"));
+    } catch (error) {
+      console.error("Kunne ikke fjerne vare fra kurven:", error);
+    }
   }
 
   return {

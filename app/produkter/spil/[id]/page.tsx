@@ -3,6 +3,9 @@ import Image from "next/image";
 import { FaCircle } from "react-icons/fa";
 import RatingSection from "./components/rating/ratingComponent";
 import FavoriteButton from "@/app/produkter/components/favorite/favoriteButtonComponent";
+
+type Tag = { id: number; name: string };
+
 export async function getGame(id: string) {
   const response = await fetch(`http://localhost:5000/api/games/${id}`, {
     next: {
@@ -25,7 +28,6 @@ export default async function GamePage({
   const { id } = await params;
 
   const game = await getGame(id);
-  console.log(game.image_url);
 
   return (
     <main className={styles.page}>
@@ -53,14 +55,33 @@ export default async function GamePage({
 
           <div className={styles.meta}>
             <div className={styles.genrePlatformContainer}>
-              <p>
-                <b>Genre:</b> {game.genre}
-              </p>
+              {game.genres?.length > 0 && (
+                <div className={styles.tagGroup}>
+                  <b>Genre:</b>
+                  <div className={styles.tags}>
+                    {game.genres.map((genre: Tag) => (
+                      <span key={genre.id} className={styles.tag}>
+                        {genre.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-              <p>
-                <b>Platform:</b> {game.platform}
-              </p>
+              {game.platforms?.length > 0 && (
+                <div className={styles.tagGroup}>
+                  <b>Platform:</b>
+                  <div className={styles.tags}>
+                    {game.platforms.map((platform: Tag) => (
+                      <span key={platform.id} className={styles.tag}>
+                        {platform.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
+
             <p className={styles.price}>{game.price} kr.</p>
 
             <div className={styles.stock}>
@@ -79,8 +100,10 @@ export default async function GamePage({
                 </div>
               )}
             </div>
+
             <RatingSection gameId={game.id} />
           </div>
+
           {game.stock === 0 ? (
             <div className={styles.noStock}> Ikke på lager</div>
           ) : (

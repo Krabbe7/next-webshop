@@ -117,6 +117,25 @@
   font-size: .8rem;
 }
 
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.3rem 0;
+}
+
+.tag {
+  padding: 0.2rem 0.6rem;
+
+  background: #242424;
+  border: 1px solid #333;
+  border-radius: 25px;
+
+  color: white;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
 .price {
   margin-top: auto;
 

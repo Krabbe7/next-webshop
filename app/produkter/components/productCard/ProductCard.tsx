@@ -11,6 +11,9 @@ export default function ProductCard({
   game,
   onFavoriteRemove,
 }: PropsProductCard) {
+  const genres = game.genres ?? [];
+  const platforms = game.platforms ?? [];
+
   return (
     <Link href={`/produkter/spil/${game.id}`} className={styles.cardLink}>
       <div className={styles.card}>
@@ -40,13 +43,25 @@ export default function ProductCard({
         <div className={styles.content}>
           <h3 className={styles.gameTitle}>{game.title}</h3>
 
-          <p className={styles.meta}>
-            {(game.genres ?? []).map((genre) => genre.name).join(", ")}
-          </p>
+          {genres.length > 0 && (
+            <div className={styles.tags}>
+              {genres.map((genre) => (
+                <span key={genre.id} className={styles.tag}>
+                  {genre.name}
+                </span>
+              ))}
+            </div>
+          )}
 
-          <p className={styles.meta}>
-            {(game.platforms ?? []).map((platform) => platform.name).join(", ")}
-          </p>
+          {platforms.length > 0 && (
+            <div className={styles.tags}>
+              {platforms.map((platform) => (
+                <span key={platform.id} className={styles.tag}>
+                  {platform.name}
+                </span>
+              ))}
+            </div>
+          )}
 
           <p className={styles.price}>{game.price} kr.</p>
 

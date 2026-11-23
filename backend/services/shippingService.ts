@@ -6,7 +6,7 @@ export type PickupPoint = {
   address: string;
 };
 
-import { ExpiringCache } from "../utils/expiringCache";
+import { ExpiringCache } from "../utils/cache/expiringCache";
 
 const geocodeCache = new ExpiringCache<{ lat: number; lng: number }>(
   24 * 60 * 60 * 1000,

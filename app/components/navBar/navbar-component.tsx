@@ -14,7 +14,7 @@ import styles from "./navBar.module.css";
 
 import { useLoadUser } from "./hooks/useLoadUser";
 import { useUpdateCartCount } from "./hooks/useUpdateCartCount";
-
+import { useRemoveFromCart } from "@/app/kurv/hooks/useRemoveFromCart";
 export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,8 +23,8 @@ export default function NavBar() {
 
   const { user, setUser } = useLoadUser();
 
-  // const { cartCount, setCartCount } = useUpdateCartCount(user);
   const { cartCount, setCartCount, cartItems } = useUpdateCartCount(user);
+  const { remove: removeFromCart } = useRemoveFromCart();
 
   const handleLogout = async () => {
     try {
@@ -46,15 +46,15 @@ export default function NavBar() {
 
   return (
     <nav className={styles.navbar}>
-<div className={styles.navLogo}>
-  <Link href="/">
-    <img
-      className={styles.logo}
-      src="/images/logo/Pixelvault-logo.svg"
-      alt="PIXELVAULT logo"
-    />
-  </Link>
-</div>
+      <div className={styles.navLogo}>
+        <Link href="/">
+          <img
+            className={styles.logo}
+            src="/images/logo/Pixelvault-logo.svg"
+            alt="PIXELVAULT logo"
+          />
+        </Link>
+      </div>
 
       <ul
         className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ""}`}
@@ -201,6 +201,14 @@ export default function NavBar() {
                           Antal: {item.quantity}
                         </p>
                       </div>
+                      <button
+                        type="button"
+                        className={styles.cartItemRemove}
+                        onClick={() => removeFromCart(item.id)}
+                        aria-label={`Fjern ${item.title} fra kurven`}
+                      >
+                        <FaTimes />
+                      </button>
                     </div>
                   ))
                 ) : (

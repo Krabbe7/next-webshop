@@ -305,6 +305,20 @@
     align-items: center;
 }
 
+.cartWrapper::after {
+    content: "";
+
+    position: absolute;
+
+    top: 100%;
+    right: 0;
+
+    width: 320px;
+    height: 10px;
+
+    z-index: 3;
+}
+
 .cartLink {
     position: relative;
     display: flex;
@@ -357,6 +371,7 @@
 
 .cartItem {
     display: flex;
+    justify-content: space-around;
     gap: 1rem;
     padding: 0.5rem 0;
     border-bottom: 1px solid #333;
@@ -378,7 +393,7 @@
 .cartItemInfo {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     min-width: 0;
 }
 
@@ -397,6 +412,36 @@
     margin: 0;
     font-size: 0.8rem;
     color: #aaa;
+}
+
+.cartItemRemove {
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 26px;
+    height: 26px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+
+    color: #aaa;
+    font-size: 0.9rem;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.cartItemRemove:hover {
+    color: white;
+    background: #cd0909;
 }
 
 .cartDropdownEmpty {
@@ -459,9 +504,9 @@
     position: absolute;
 
     top: 100%;
+    left: 0;
     right: 0;
 
-    width: 220px;
     height: 10px;
 }
 
@@ -575,13 +620,16 @@
 .menuButton {
     display: none;
 
-    background: transparent;
+    padding: 0;
+    margin: 0;
 
+    background: transparent;
     border: none;
 
     color: #111;
 
     font-size: 1.7rem;
+    line-height: 1;
 
     cursor: pointer;
 }
@@ -591,9 +639,16 @@
 
     .navbar {
         padding: 0 1rem;
+        grid-template-columns: 1fr 1fr;
     }
 
     .menuButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .menuButton svg {
         display: block;
     }
 
@@ -714,7 +769,4 @@
 
 
 
-    .navActions {
-        gap: .8rem;
-    }
 }

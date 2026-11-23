@@ -1,7 +1,7 @@
-type Entry<T> = { value: T; expiresAt: number };
+import type { Cache } from "./type";
 
 export class ExpiringCache<T> {
-  private entries = new Map<string, Entry<T>>();
+  private entries = new Map<string, Cache<T>>();
   private pendingLoads = new Map<string, Promise<T>>();
 
   constructor(
@@ -13,7 +13,6 @@ export class ExpiringCache<T> {
     const cached = this.entries.get(key);
 
     if (cached && cached.expiresAt > Date.now()) {
-      // Flyt til sidst, så de mest brugte nøgler overlever oprydning
       this.entries.delete(key);
       this.entries.set(key, cached);
       return cached.value;
@@ -21,7 +20,6 @@ export class ExpiringCache<T> {
 
     if (cached) this.entries.delete(key);
 
-    // Samme opslag er allerede i gang: del resultatet
     const pending = this.pendingLoads.get(key);
     if (pending) return pending;
 
@@ -32,7 +30,6 @@ export class ExpiringCache<T> {
           expiresAt: Date.now() + this.lifetimeMs,
         });
 
-        // Hold cachen i en fast størrelse (fjern de ældste)
         while (this.entries.size > this.maxEntries) {
           const oldest = this.entries.keys().next().value;
           if (oldest === undefined) break;
