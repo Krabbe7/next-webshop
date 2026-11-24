@@ -84,7 +84,7 @@ export default function NavBar() {
             }`}
             onClick={() => setNavLinkDropDownOpen((prev) => !prev)}
           >
-            Produkter
+            <Link href="/produkter">Produkter</Link>
             <FaChevronDown
               className={`${styles.chevron} ${
                 navLinkDropDownOpen ? styles.chevronOpen : ""

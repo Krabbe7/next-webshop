@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -66,11 +67,13 @@ export default function ProductCard({
           <p className={styles.price}>{game.price} kr.</p>
 
           <div className="centerButtonContainer">
-            {game.stock === 0 ? (
-              <div className={styles.noStock}>Ikke på lager</div>
-            ) : (
-              <AddToCartButton game={game} />
-            )}
+            <div className={styles.productAction}>
+              {game.stock === 0 ? (
+                <div className={styles.noStock}>Ikke på lager</div>
+              ) : (
+                <AddToCartButton game={game} />
+              )}
+            </div>
           </div>
         </div>
       </div>

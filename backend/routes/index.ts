@@ -9,6 +9,7 @@ import favoriteRoute from "./favoriteRoute";
 import employeeRoute from "./employeeRoute";
 import platformRoute from "./platformRoutes";
 import genreRoute from "./genreRoute";
+import productCategoryRoute from "./productCategoriesRoute";
 
 import { authMiddleware } from "../middleware/authMiddleware";
 
@@ -23,6 +24,7 @@ router.use("/favorites", favoriteRoute);
 router.use("/employees", employeeRoute);
 router.use("/platforms", platformRoute);
 router.use("/genres", genreRoute);
+router.use("/productCategories", productCategoryRoute);
 
 // Beskyt admin-ruter
 router.use("/admin", authMiddleware);

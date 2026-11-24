@@ -116,21 +116,7 @@
     padding: 0.4rem 0;
 }
 
-.navLinkButton::after {
-    content: "";
 
-    position: absolute;
-
-    left: 0;
-    bottom: -5px;
-
-    width: 0;
-    height: 3px;
-
-    background: #cd0909;
-
-    transition: width .25s ease;
-}
 
 .navLinkButton:hover::after,
 .navLinkButtonOpen::after {

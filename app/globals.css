@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -74,7 +76,7 @@ h3.header {
 
   border: none;
   padding: .8rem .8rem;
-
+  margin: 0 auto 1rem;
   border-radius: 10px;
 
   cursor: pointer;
@@ -101,7 +103,7 @@ h3.header {
 .centerButtonContainer {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  width: 100%;
 }
 
 .input {

@@ -2,6 +2,11 @@ export type GameRelation = {
   id: number;
   name: string;
 };
+export type Category = {
+  id: number;
+  name: string;
+  slug: string;
+};
 
 export type Game = {
   id: number;
@@ -17,4 +22,6 @@ export type Game = {
 
   platformIds: number[];
   genreIds: number[];
+
+  category_id: number;
 };
